@@ -51,18 +51,19 @@ export default function About() {
         />
         About
       </h2>
-      <div className="max-w-2xl text-neutral-400 leading-relaxed mb-10 space-y-4">
+      <div className="text-neutral-400 leading-relaxed mb-10 space-y-4">
         <p>
-          I&apos;m a full-stack developer specialized in building front-ends for
-          web and mobile applications, with a recent focus on hybrid apps built
-          on React Native and Expo. I&apos;ve shipped everything from
-          offline-first e-commerce apps to Web3 trading platforms.
+          I’m a motivated full-stack developer specialized in building
+          front-ends for diverse web and mobile applications, with a recent
+          focus on hybrid apps built on React Native. I have a proven ability to
+          leverage a keen eye for design to implement intuitive solutions in
+          accordance with best practices.
         </p>
         <p>
-          My background is a little unusual — I studied Art History at
-          Complutense University of Madrid before moving into development, which
-          is where my eye for design and attention to detail come from. Native
-          Spanish, advanced English (C1), and years of remote collaboration.
+          As an effective communicator, I bring native Spanish and advanced
+          English (CAE/C1) skills, along with significant experience in remote
+          roles. My background also includes work on crypto and Web3 projects,
+          and I’m currently seeking dynamic web development roles.
         </p>
       </div>
       <div className="grid sm:grid-cols-2 gap-8">
