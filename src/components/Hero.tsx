@@ -33,7 +33,7 @@ export default function Hero() {
           </a>
         </div>
       </div>
-      <div className="shrink-0 w-full md:w-auto flex justify-center">
+      <div className="shrink-0 opacity-95 w-full md:w-auto flex justify-center">
         <Image
           src="/neon-image-portrait.png"
           alt=""
@@ -41,7 +41,7 @@ export default function Hero() {
           width={580}
           height={580}
           priority
-          className="w-full [filter:drop-shadow(0_0_100px_var(--color-primary))_drop-shadow(0_0_200px_rgba(124,92,255,0.20))]  opacity-95 h-auto select-none pointer-events-none"
+          className="w-full  [filter:drop-shadow(0_0_100px_var(--color-primary))_drop-shadow(0_0_200px_rgba(124,92,255,0.20))]  opacity-95 h-auto select-none pointer-events-none"
         />
       </div>
     </section>
