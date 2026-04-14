@@ -2,7 +2,7 @@ export default function Hero() {
   return (
     <section className="py-24 sm:py-32">
       <p className="text-sm uppercase tracking-widest text-primary mb-4">
-        Frontend Developer
+        Full-Stack Developer · React Native · Web3
       </p>
       <h1 className="text-4xl sm:text-6xl font-semibold tracking-tight leading-tight">
         Hi, I&apos;m{" "}
@@ -12,7 +12,7 @@ export default function Hero() {
         .
         <br />
         <span className="text-neutral-500">
-          I build fast, accessible web experiences.
+          I build fast, accessible web and mobile apps.
         </span>
       </h1>
       <div className="mt-8 flex gap-4">
@@ -24,7 +24,7 @@ export default function Hero() {
         </a>
         <a
           href="#contact"
-          className="rounded-full border border-neutral-300 dark:border-neutral-700 px-5 py-2.5 text-sm font-medium hover:border-primary hover:text-primary transition"
+          className="rounded-full border border-neutral-700 px-5 py-2.5 text-sm font-medium hover:border-primary hover:text-primary transition"
         >
           Get in touch
         </a>
