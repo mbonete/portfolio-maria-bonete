@@ -29,15 +29,29 @@ const skillGroups: { title: string; items: string[] }[] = [
   },
   {
     title: "Tooling",
-    items: ["GitHub", "Git", "Jest", "Figma", "OAuth", "Photoshop", "Illustrator"],
+    items: [
+      "GitHub",
+      "Git",
+      "Jest",
+      "Figma",
+      "OAuth",
+      "Photoshop",
+      "Illustrator",
+    ],
   },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="py-20 border-t border-neutral-200 dark:border-neutral-800">
+    <section
+      id="about"
+      className="py-20 border-t border-neutral-200 dark:border-neutral-800"
+    >
       <h2 className="text-2xl font-semibold tracking-tight mb-6 flex items-center gap-3">
-        <span aria-hidden className="inline-block h-5 w-1.5 rounded-sm bg-primary" />
+        <span
+          aria-hidden
+          className="inline-block h-8 w-1.5 rounded-sm bg-primary"
+        />
         About
       </h2>
       <p className="max-w-2xl text-neutral-600 dark:text-neutral-400 leading-relaxed mb-10">

@@ -38,9 +38,15 @@ const projects: Project[] = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-20 border-t border-neutral-200 dark:border-neutral-800">
+    <section
+      id="projects"
+      className="py-20 border-t border-neutral-200 dark:border-neutral-800"
+    >
       <h2 className="text-2xl font-semibold tracking-tight mb-6 flex items-center gap-3">
-        <span aria-hidden className="inline-block h-5 w-1.5 rounded-sm bg-primary" />
+        <span
+          aria-hidden
+          className="inline-block h-8 w-1.5 rounded-sm bg-primary"
+        />
         Projects
       </h2>
       <div className="grid sm:grid-cols-2 gap-5">

@@ -1,8 +1,14 @@
 export default function Contact() {
   return (
-    <section id="contact" className="py-20 border-t border-neutral-200 dark:border-neutral-800">
+    <section
+      id="contact"
+      className="py-20 border-t border-neutral-200 dark:border-neutral-800"
+    >
       <h2 className="text-2xl font-semibold tracking-tight mb-6 flex items-center gap-3">
-        <span aria-hidden className="inline-block h-5 w-1.5 rounded-sm bg-primary" />
+        <span
+          aria-hidden
+          className="inline-block h-8 w-1.5 rounded-sm bg-primary"
+        />{" "}
         Contact
       </h2>
       <p className="text-neutral-600 dark:text-neutral-400 max-w-xl">
