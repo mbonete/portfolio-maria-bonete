@@ -60,7 +60,7 @@ export default function Contact() {
                 <Icon className="h-5 w-5" strokeWidth={1.75} />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-xs uppercase tracking-widest text-neutral-500">
+                <div className="text-xs uppercase tracking-widest text-neutral-400">
                   {c.label}
                 </div>
                 <div className="truncate text-sm text-neutral-200 group-hover:text-primary transition-colors">

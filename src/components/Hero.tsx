@@ -33,16 +33,18 @@ export default function Hero() {
           </a>
         </div>
       </div>
-      <div className="shrink-0 opacity-95 md:mt-0 mt-12 flex justify-center">
-        <Image
-          src="/neonimage.png"
-          alt=""
-          aria-hidden
-          width={580}
-          height={580}
-          priority
-          className="md:w-full w-44 [filter:drop-shadow(0_0_100px_var(--color-primary))_drop-shadow(0_0_200px_rgba(124,92,255,0.20))] opacity-95 h-auto select-none pointer-events-none"
-        />
+      <div className="shrink-0 md:mt-0 mt-12 flex justify-center">
+        <div className="relative w-44 md:w-[420px] aspect-square">
+          <Image
+            src="/neonimage.png"
+            alt=""
+            aria-hidden
+            fill
+            sizes="(min-width: 768px) 420px, 176px"
+            priority
+            className="opacity-95 object-contain select-none pointer-events-none [filter:drop-shadow(0_0_100px_var(--color-primary))_drop-shadow(0_0_200px_rgba(124,92,255,0.20))]"
+          />
+        </div>
       </div>
     </section>
   );

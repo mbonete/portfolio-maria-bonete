@@ -83,9 +83,9 @@ export default function Experience() {
             <div className="flex flex-wrap items-baseline justify-between gap-x-4">
               <h3 className="font-medium">
                 {role.title}{" "}
-                <span className="text-neutral-500">· {role.company}</span>
+                <span className="text-neutral-400">· {role.company}</span>
               </h3>
-              <span className="text-xs uppercase tracking-widest text-neutral-500">
+              <span className="text-xs uppercase tracking-widest text-neutral-400">
                 {role.period}
               </span>
             </div>

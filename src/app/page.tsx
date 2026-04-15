@@ -16,7 +16,7 @@ export default function Home() {
         <Projects />
         <Contact />
       </main>
-      <footer className="mx-auto max-w-5xl px-6 py-10 text-sm text-neutral-500">
+      <footer className="mx-auto max-w-5xl px-6 py-10 text-sm text-neutral-400">
         © {new Date().getFullYear()} Maria Bonete. Made with love from Spain.
       </footer>
     </>

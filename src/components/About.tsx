@@ -69,7 +69,7 @@ export default function About() {
       <div className="grid sm:grid-cols-2 gap-8">
         {skillGroups.map((group) => (
           <div key={group.title}>
-            <h3 className="text-sm font-medium text-neutral-500 uppercase tracking-widest mb-3">
+            <h3 className="text-sm font-medium text-neutral-400 uppercase tracking-widest mb-3">
               {group.title}
             </h3>
             <ul className="flex flex-wrap gap-2">
