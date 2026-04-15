@@ -41,6 +41,7 @@ export default function Hero() {
             aria-hidden
             fill
             sizes="(min-width: 768px) 420px, 176px"
+            quality={65}
             priority
             className="opacity-95 object-contain select-none pointer-events-none [filter:drop-shadow(0_0_100px_var(--color-primary))_drop-shadow(0_0_200px_rgba(124,92,255,0.20))]"
           />

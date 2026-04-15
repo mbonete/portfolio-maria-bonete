@@ -81,8 +81,8 @@ export default function Projects() {
                   alt={`${project.title} preview`}
                   width={800}
                   height={450}
-                  unoptimized
-                  loading="eager"
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  quality={75}
                   className="w-full h-auto"
                 />
               </div>
