@@ -1,4 +1,5 @@
 import Image from "next/image";
+import LiteYouTube from "./LiteYouTube";
 
 type Project = {
   title: string;
@@ -6,7 +7,8 @@ type Project = {
   tags: string[];
   href: string;
   preview?: string;
-  video?: string;
+  videoId?: string;
+  poster?: string;
 };
 
 const projects: Project[] = [
@@ -40,7 +42,8 @@ const projects: Project[] = [
       "A minimal real estate platform built as a proof of concept for integration with a CRUD API.",
     tags: ["React", "React Hook Form", "React Query", "MaterialUI"],
     href: "https://github.com/mbonete/homely",
-    video: "https://www.youtube.com/embed/lGpt8-h8XWY",
+    videoId: "lGpt8-h8XWY",
+    poster: "/homely-poster.webp",
   },
 ];
 
@@ -87,16 +90,12 @@ export default function Projects() {
                 />
               </div>
             )}
-            {project.video && (
-              <div className="relative aspect-video overflow-hidden rounded-xl my-4">
-                <iframe
-                  src={project.video}
-                  title={`${project.title} video`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                />
-              </div>
+            {project.videoId && project.poster && (
+              <LiteYouTube
+                videoId={project.videoId}
+                title={`${project.title} demo`}
+                poster={project.poster}
+              />
             )}
             <ul className="mt-4 flex flex-wrap gap-2">
               {project.tags.map((tag) => (
