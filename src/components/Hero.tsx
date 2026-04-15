@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="py-24 sm:py-32 flex flex-col md:flex-row items-center">
+    <section className="md:py-20 py-16 flex flex-col md:flex-row items-center">
       <div className="flex-1">
         <p className="text-sm uppercase tracking-widest text-primary mb-4">
           Full-Stack Developer · React Native · Web3
@@ -33,7 +33,7 @@ export default function Hero() {
           </a>
         </div>
       </div>
-      <div className="shrink-0 opacity-95 w-full md:w-auto flex justify-center">
+      <div className="shrink-0 opacity-95 md:mt-0 mt-12 flex justify-center">
         <Image
           src="/neonimage.png"
           alt=""
@@ -41,7 +41,7 @@ export default function Hero() {
           width={580}
           height={580}
           priority
-          className="w-full  [filter:drop-shadow(0_0_100px_var(--color-primary))_drop-shadow(0_0_200px_rgba(124,92,255,0.20))]  opacity-95 h-auto select-none pointer-events-none"
+          className="md:w-full w-44 [filter:drop-shadow(0_0_100px_var(--color-primary))_drop-shadow(0_0_200px_rgba(124,92,255,0.20))] opacity-95 h-auto select-none pointer-events-none"
         />
       </div>
     </section>

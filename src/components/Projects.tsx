@@ -46,7 +46,10 @@ const projects: Project[] = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-20 border-t border-neutral-800">
+    <section
+      id="projects"
+      className="md:py-20 py-16 border-t border-neutral-800"
+    >
       <h2 className="text-2xl font-semibold tracking-tight mb-6 flex items-center gap-3">
         <span
           aria-hidden
@@ -99,7 +102,7 @@ export default function Projects() {
               {project.tags.map((tag) => (
                 <li
                   key={tag}
-                  className="text-xs px-2 py-0.5 rounded-full bg-neutral-800"
+                  className="text-xs px-2 py-0.5 rounded-full bg-neutral-900"
                 >
                   {tag}
                 </li>

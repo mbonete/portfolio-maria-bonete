@@ -62,7 +62,10 @@ const roles: Role[] = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-20 border-t border-neutral-800">
+    <section
+      id="experience"
+      className="md:py-20 py-16 border-t border-neutral-800"
+    >
       <h2 className="text-2xl font-semibold tracking-tight mb-8 flex items-center gap-3">
         <span
           aria-hidden
@@ -75,7 +78,7 @@ export default function Experience() {
           <li key={`${role.company}-${role.period}`} className="pl-6 relative">
             <span
               aria-hidden
-              className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_20px_var(--color-primary)]"
+              className="absolute -left-1.25 top-2 h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_20px_var(--color-primary)]"
             />
             <div className="flex flex-wrap items-baseline justify-between gap-x-4">
               <h3 className="font-medium">

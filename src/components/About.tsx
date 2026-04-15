@@ -43,7 +43,7 @@ const skillGroups: { title: string; items: string[] }[] = [
 
 export default function About() {
   return (
-    <section id="about" className="py-20 border-t border-neutral-800">
+    <section id="about" className="md:py-20 py-16 border-t border-neutral-800">
       <h2 className="text-2xl font-semibold tracking-tight mb-6 flex items-center gap-3">
         <span
           aria-hidden
