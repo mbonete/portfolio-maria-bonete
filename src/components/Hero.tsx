@@ -35,7 +35,7 @@ export default function Hero() {
       </div>
       <div className="shrink-0 opacity-95 w-full md:w-auto flex justify-center">
         <Image
-          src="/neon-image-portrait.png"
+          src="/neonimage.png"
           alt=""
           aria-hidden
           width={580}
