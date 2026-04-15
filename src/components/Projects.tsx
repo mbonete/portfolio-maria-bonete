@@ -16,7 +16,7 @@ const projects: Project[] = [
       "Showcases the artistry of a fictional coffee shop, letting users explore offerings and place orders.",
     tags: ["Next.js", "JavaScript", "Styled Components"],
     href: "https://the-coffee-place.vercel.app/",
-    preview: "/coffee-place.svg",
+    preview: "/coffee-place.webp",
   },
   {
     title: "Mago del Regalo",
@@ -24,7 +24,7 @@ const projects: Project[] = [
       "AI-powered app that eliminates the challenge of finding gift ideas.",
     tags: ["Next.js", "TypeScript", "MaterialUI", "React Query"],
     href: "https://www.magodelregalo.com",
-    preview: "/magodelregalo.svg",
+    preview: "/magodelregalo.png",
   },
   {
     title: "Guess The BPM",
@@ -32,7 +32,7 @@ const projects: Project[] = [
       "A web-based game where users guess the beats per minute of a song. YouTube API integration with i18n support.",
     tags: ["React", "Styled Components"],
     href: "https://www.guess-the-bpm.com",
-    preview: "/guessthebpm.svg",
+    preview: "/guessthebpm.png",
   },
   {
     title: "Homely",
