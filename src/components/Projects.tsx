@@ -39,10 +39,10 @@ const projects: Project[] = [
   {
     title: "Homely",
     description:
-      "A minimal real estate platform built as a proof of concept for integration with a CRUD API.",
-    tags: ["React", "React Hook Form", "React Query", "MaterialUI"],
+      "A full-stack real estate listings app with authentication, image uploads, and a SQLite-backed CRUD flow.",
+    tags: ["Next.js", "Tailwind", "shadcn/ui", "Drizzle", "Auth.js"],
     href: "https://github.com/mbonete/homely",
-    videoId: "lGpt8-h8XWY",
+    videoId: "Ygp6AJwHytE",
     poster: "/homely-poster.webp",
   },
 ];
