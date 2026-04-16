@@ -26,7 +26,7 @@ const projects: Project[] = [
       "AI-powered app that eliminates the challenge of finding gift ideas.",
     tags: ["Next.js", "TypeScript", "MaterialUI", "React Query"],
     href: "https://www.magodelregalo.com",
-    preview: "/magodelregalo.png",
+    preview: "/magodelregalo.webp",
   },
   {
     title: "Guess The BPM",
@@ -34,7 +34,7 @@ const projects: Project[] = [
       "A web-based game where users guess the beats per minute of a song. YouTube API integration with i18n support.",
     tags: ["React", "Styled Components"],
     href: "https://www.guess-the-bpm.com",
-    preview: "/guessthebpm.png",
+    preview: "/guessthebpm.webp",
   },
   {
     title: "Homely",
@@ -84,8 +84,8 @@ export default function Projects() {
                   alt={`${project.title} preview`}
                   width={800}
                   height={450}
-                  sizes="(min-width: 640px) 50vw, 100vw"
-                  quality={75}
+                  sizes="(min-width: 1024px) 580px, (min-width: 640px) 50vw, 100vw"
+                  quality={70}
                   className="w-full h-auto"
                 />
               </div>

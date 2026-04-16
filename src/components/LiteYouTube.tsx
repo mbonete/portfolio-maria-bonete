@@ -40,7 +40,7 @@ export default function LiteYouTube({ videoId, title, poster }: Props) {
             src={poster}
             alt=""
             fill
-            sizes="(min-width: 640px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 580px, (min-width: 640px) 50vw, 100vw"
             className="object-cover"
           />
           <span className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/video:bg-black/20 transition-colors">

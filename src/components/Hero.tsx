@@ -35,15 +35,19 @@ export default function Hero() {
       </div>
       <div className="shrink-0 md:mt-0 mt-12 flex justify-center">
         <div className="relative w-44 md:w-[420px] aspect-square">
+          <div
+            aria-hidden
+            className="absolute inset-0 rounded-full bg-primary/30 blur-[100px]"
+          />
           <Image
-            src="/neonimage.png"
+            src="/neonimage.webp"
             alt=""
             aria-hidden
             fill
             sizes="(min-width: 768px) 420px, 176px"
             quality={65}
             priority
-            className="opacity-95 object-contain select-none pointer-events-none [filter:drop-shadow(0_0_100px_var(--color-primary))_drop-shadow(0_0_200px_rgba(124,92,255,0.20))]"
+            className="opacity-95 object-contain select-none pointer-events-none"
           />
         </div>
       </div>
