@@ -23,7 +23,7 @@ const channels: Channel[] = [
   {
     label: "CV",
     value: "Download PDF",
-    href: "https://www.mariabonete.com/static/cv.pdf",
+    href: "/cv.pdf",
     icon: FileText,
   },
 ];
