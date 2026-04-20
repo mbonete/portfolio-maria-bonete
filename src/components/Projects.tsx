@@ -13,20 +13,13 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "The Coffee Place",
+    title: "Homely",
     description:
-      "Showcases the artistry of a fictional coffee shop, letting users explore offerings and place orders.",
-    tags: ["Next.js", "JavaScript", "Styled Components"],
-    href: "https://the-coffee-place.vercel.app/",
-    preview: "/coffee-place.webp",
-  },
-  {
-    title: "Mago del Regalo",
-    description:
-      "AI-powered app that eliminates the challenge of finding gift ideas.",
-    tags: ["Next.js", "TypeScript", "MaterialUI", "React Query"],
-    href: "https://www.magodelregalo.com",
-    preview: "/magodelregalo.webp",
+      "A full-stack real estate listings app with authentication, image uploads, and a SQLite-backed CRUD flow.",
+    tags: ["Next.js", "Tailwind", "shadcn/ui", "Drizzle", "Auth.js"],
+    href: "https://github.com/mbonete/homely",
+    videoId: "Ygp6AJwHytE",
+    poster: "/homely-poster.webp",
   },
   {
     title: "Guess The BPM",
@@ -37,13 +30,12 @@ const projects: Project[] = [
     preview: "/guessthebpm.webp",
   },
   {
-    title: "Homely",
+    title: "The Coffee Place",
     description:
-      "A full-stack real estate listings app with authentication, image uploads, and a SQLite-backed CRUD flow.",
-    tags: ["Next.js", "Tailwind", "shadcn/ui", "Drizzle", "Auth.js"],
-    href: "https://github.com/mbonete/homely",
-    videoId: "Ygp6AJwHytE",
-    poster: "/homely-poster.webp",
+      "Showcases the artistry of a fictional coffee shop, letting users explore offerings and place orders.",
+    tags: ["Next.js", "JavaScript", "Styled Components"],
+    href: "https://the-coffee-place.vercel.app/",
+    preview: "/coffee-place.webp",
   },
 ];
 
@@ -67,7 +59,9 @@ export default function Projects() {
             href={project.href}
             target="_blank"
             rel="noreferrer"
-            className="group flex flex-col justify-between rounded-xl border border-neutral-800 p-5 bg-background/40 backdrop-blur-sm hover:border-primary/60 hover:shadow-[0_0_30px_-10px_var(--color-primary)] transition"
+            className={`group flex flex-col justify-between rounded-xl border border-neutral-800 p-5 bg-background/40 backdrop-blur-sm hover:border-primary/60 hover:shadow-[0_0_30px_-10px_var(--color-primary)] transition ${
+              index === 0 ? "sm:col-span-2" : ""
+            }`}
           >
             <div>
               <h3 className="font-medium group-hover:translate-x-0.5 transition-transform">
@@ -86,7 +80,6 @@ export default function Projects() {
                   height={450}
                   sizes="(min-width: 1024px) 580px, (min-width: 640px) 50vw, 100vw"
                   quality={70}
-                  priority={index === 0}
                   className="w-full h-auto"
                 />
               </div>
