@@ -33,7 +33,7 @@ const projects: Project[] = [
     description:
       "A web-based game where users guess the beats per minute of a song. YouTube API integration with i18n support.",
     tags: ["React", "Styled Components"],
-    href: "https://www.guess-the-bpm.com",
+    href: "https://guessthebpm.netlify.app",
     preview: "/guessthebpm.webp",
   },
   {
