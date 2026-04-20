@@ -61,7 +61,7 @@ export default function Projects() {
         Projects
       </h2>
       <div className="grid sm:grid-cols-2 gap-5">
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <a
             key={project.title}
             href={project.href}
@@ -86,6 +86,7 @@ export default function Projects() {
                   height={450}
                   sizes="(min-width: 1024px) 580px, (min-width: 640px) 50vw, 100vw"
                   quality={70}
+                  priority={index === 0}
                   className="w-full h-auto"
                 />
               </div>
