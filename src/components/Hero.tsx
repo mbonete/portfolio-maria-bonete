@@ -1,4 +1,4 @@
-import Image from "next/image";
+import HeroImage from "./HeroImage";
 
 export default function Hero() {
   return (
@@ -34,21 +34,12 @@ export default function Hero() {
         </div>
       </div>
       <div className="shrink-0 md:mt-0 mt-12 flex justify-center">
-        <div className="relative w-44 md:w-[420px] aspect-square">
+        <div className="relative w-44 md:w-105 aspect-square">
           <div
             aria-hidden
             className="absolute inset-0 rounded-full bg-primary/30 blur-[100px]"
           />
-          <Image
-            src="/neonimage.webp"
-            alt=""
-            aria-hidden
-            fill
-            sizes="(min-width: 768px) 420px, 176px"
-            quality={65}
-            priority
-            className="opacity-95 object-contain select-none pointer-events-none"
-          />
+          <HeroImage />
         </div>
       </div>
     </section>
