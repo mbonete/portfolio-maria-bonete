@@ -10,13 +10,7 @@ export default function HeroImage() {
           <stop offset="0%" stopColor="var(--secondary)" />
           <stop offset="100%" stopColor="var(--primary)" />
         </linearGradient>
-        <filter
-          id="laptop-glow"
-          x="-30%"
-          y="-30%"
-          width="160%"
-          height="160%"
-        >
+        <filter id="laptop-glow" x="-30%" y="-30%" width="160%" height="160%">
           <feGaussianBlur stdDeviation="1.8" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
@@ -27,7 +21,6 @@ export default function HeroImage() {
 
       <g
         className="laptop"
-        transform="rotate(-8 100 100)"
         stroke="url(#laptop-stroke)"
         strokeWidth="1.5"
         strokeLinecap="butt"
@@ -48,7 +41,7 @@ export default function HeroImage() {
         <path
           className="laptop__bevel"
           pathLength={1}
-          d="M100 138 L172 138 Q176 138 178 141.4 L180 144.6 Q182 148 178 148 L22 148 Q18 148 20 144.6 L22 141.4 Q24 138 28 138 L100 138 Z"
+          d="M100 142 L172 142 Q176 142 178 145.4 L180 148.6 Q182 152 178 152 L22 152 Q18 152 20 148.6 L22 145.4 Q24 142 28 142 L100 142 Z"
         />
         <path
           className="laptop__screen"
@@ -66,12 +59,12 @@ export default function HeroImage() {
         <path
           className="laptop__trackpad"
           pathLength={1}
-          d="M100 120 L116 120 Q118 120 119 121.8 L124 132.2 Q125 134 123 134 L77 134 Q75 134 76 132.2 L81 121.8 Q82 120 84 120 L100 120 Z"
+          d="M100 122 L112 122 Q114 122 114.7 123.9 L116.3 128.1 Q117 130 115 130 L85 130 Q83 130 83.7 128.1 L85.3 123.9 Q86 122 88 122 L100 122 Z"
         />
         <path
           className="laptop__shadow"
           pathLength={1}
-          strokeWidth={1}
+          strokeWidth={2}
           d="M55 162 Q100 167 145 162"
         />
       </g>
