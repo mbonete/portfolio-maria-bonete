@@ -37,9 +37,80 @@ body {
   50%      { transform: translate3d(-5%, -4%, 0) scale(1.1); }
 }
 
+.laptop path:not(.laptop__shadow) {
+  stroke-linecap: square;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .animate-drift-a { animation: drift-a 22s ease-in-out infinite; }
   .animate-drift-b { animation: drift-b 26s ease-in-out infinite; }
+
+  .laptop path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .laptop__camera { opacity: 0; }
+
+  .laptop__lid      { animation: laptop-trace-lid 7s linear infinite; }
+  .laptop__deck     { animation: laptop-trace-deck 7s linear infinite; }
+  .laptop__bevel    { animation: laptop-trace-bevel 7s linear infinite; }
+  .laptop__screen   { animation: laptop-trace-screen 7s linear infinite; }
+  .laptop__camera   { animation: laptop-fade-camera 7s linear infinite; }
+  .laptop__trackpad { animation: laptop-trace-trackpad 7s linear infinite; }
+  .laptop__shadow   { animation: laptop-trace-shadow 7s linear infinite; }
+}
+
+@keyframes laptop-trace-lid {
+  0%         { opacity: 1; stroke-dashoffset: 1; }
+  13%        { opacity: 1; stroke-dashoffset: 0; }
+  78%        { opacity: 1; stroke-dashoffset: 0; }
+  92%, 100%  { opacity: 0; stroke-dashoffset: 0; }
+}
+
+@keyframes laptop-trace-deck {
+  0%, 10.99% { opacity: 0; stroke-dashoffset: 1; }
+  11%        { opacity: 1; stroke-dashoffset: 1; }
+  23%        { opacity: 1; stroke-dashoffset: 0; }
+  78%        { opacity: 1; stroke-dashoffset: 0; }
+  92%, 100%  { opacity: 0; stroke-dashoffset: 0; }
+}
+
+@keyframes laptop-trace-bevel {
+  0%, 20.99% { opacity: 0; stroke-dashoffset: 1; }
+  21%        { opacity: 1; stroke-dashoffset: 1; }
+  31%        { opacity: 1; stroke-dashoffset: 0; }
+  78%        { opacity: 1; stroke-dashoffset: 0; }
+  92%, 100%  { opacity: 0; stroke-dashoffset: 0; }
+}
+
+@keyframes laptop-trace-screen {
+  0%, 29.99% { opacity: 0; stroke-dashoffset: 1; }
+  30%        { opacity: 1; stroke-dashoffset: 1; }
+  42%        { opacity: 1; stroke-dashoffset: 0; }
+  78%        { opacity: 1; stroke-dashoffset: 0; }
+  92%, 100%  { opacity: 0; stroke-dashoffset: 0; }
+}
+
+@keyframes laptop-fade-camera {
+  0%, 42%    { opacity: 0; }
+  46%        { opacity: 1; }
+  78%        { opacity: 1; }
+  92%, 100%  { opacity: 0; }
+}
+
+@keyframes laptop-trace-trackpad {
+  0%, 44.99% { opacity: 0; stroke-dashoffset: 1; }
+  45%        { opacity: 1; stroke-dashoffset: 1; }
+  56%        { opacity: 1; stroke-dashoffset: 0; }
+  78%        { opacity: 1; stroke-dashoffset: 0; }
+  92%, 100%  { opacity: 0; stroke-dashoffset: 0; }
+}
+
+@keyframes laptop-trace-shadow {
+  0%, 54%    { opacity: 0; stroke-dashoffset: 1; }
+  66%        { opacity: 0.55; stroke-dashoffset: 0; }
+  78%        { opacity: 0.55; stroke-dashoffset: 0; }
+  92%, 100%  { opacity: 0; stroke-dashoffset: 0; }
 }
 
 @media (max-width: 640px) {
