@@ -3,6 +3,7 @@ export default function HeroImage() {
     <svg
       viewBox="0 0 200 200"
       aria-hidden
+      overflow="visible"
       className="absolute inset-0 w-full h-full select-none pointer-events-none"
     >
       <defs>
@@ -10,7 +11,7 @@ export default function HeroImage() {
           <stop offset="0%" stopColor="var(--secondary)" />
           <stop offset="100%" stopColor="var(--primary)" />
         </linearGradient>
-        <filter id="laptop-glow" x="-30%" y="-30%" width="160%" height="160%">
+        <filter id="laptop-glow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="1.8" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
