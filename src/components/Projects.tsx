@@ -37,6 +37,14 @@ const projects: Project[] = [
     href: "https://the-coffee-place.vercel.app/",
     preview: "/coffee-place.webp",
   },
+  {
+    title: "Dwelltrace",
+    description:
+      "A lightweight maintenance quote approval portal for small property managers — vendor quotes, owner approvals, and job tracking in one workflow.",
+    tags: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Drizzle"],
+    href: "https://github.com/mbonete/dwelltrace",
+    videoId: "VIHxOCpGPLg",
+  },
 ];
 
 export default function Projects() {
@@ -53,15 +61,13 @@ export default function Projects() {
         Projects
       </h2>
       <div className="grid sm:grid-cols-2 gap-5">
-        {projects.map((project, index) => (
+        {projects.map((project) => (
           <a
             key={project.title}
             href={project.href}
             target="_blank"
             rel="noreferrer"
-            className={`group flex flex-col justify-between rounded-xl border border-neutral-800 p-5 bg-background/40 backdrop-blur-sm hover:border-primary/60 hover:shadow-[0_0_30px_-10px_var(--color-primary)] transition ${
-              index === 0 ? "sm:col-span-2" : ""
-            }`}
+            className="group flex flex-col justify-between rounded-xl border border-neutral-800 p-5 bg-background/40 backdrop-blur-sm hover:border-primary/60 hover:shadow-[0_0_30px_-10px_var(--color-primary)] transition"
           >
             <div>
               <h3 className="font-medium group-hover:translate-x-0.5 transition-transform">
@@ -84,7 +90,7 @@ export default function Projects() {
                 />
               </div>
             )}
-            {project.videoId && project.poster && (
+            {project.videoId && (
               <LiteYouTube
                 videoId={project.videoId}
                 title={`${project.title} demo`}
