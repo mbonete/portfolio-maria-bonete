@@ -13,6 +13,15 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "Dwelltrace",
+    description:
+      "A lightweight maintenance quote approval portal for small property managers — vendor quotes, owner approvals, and job tracking in one workflow.",
+    tags: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Drizzle"],
+    href: "https://github.com/mbonete/dwelltrace",
+    videoId: "VIHxOCpGPLg",
+    poster: "/dwelltrace-poster.webp",
+  },
+  {
     title: "Homely",
     description:
       "A full-stack real estate listings app with authentication, image uploads, and a SQLite-backed CRUD flow.",
@@ -35,16 +44,7 @@ const projects: Project[] = [
       "Showcases the artistry of a fictional coffee shop, letting users explore offerings and place orders.",
     tags: ["Next.js", "JavaScript", "Styled Components"],
     href: "https://the-coffee-place.vercel.app/",
-    preview: "/coffee-place.webp",
-  },
-  {
-    title: "Dwelltrace",
-    description:
-      "A lightweight maintenance quote approval portal for small property managers — vendor quotes, owner approvals, and job tracking in one workflow.",
-    tags: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Drizzle"],
-    href: "https://github.com/mbonete/dwelltrace",
-    videoId: "VIHxOCpGPLg",
-    poster: "/dwelltrace-poster.webp",
+    preview: "/the-coffee-place.webp",
   },
 ];
 
