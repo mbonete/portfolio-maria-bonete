@@ -44,6 +44,7 @@ const projects: Project[] = [
     tags: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Drizzle"],
     href: "https://github.com/mbonete/dwelltrace",
     videoId: "VIHxOCpGPLg",
+    poster: "/dwelltrace-poster.webp",
   },
 ];
 
