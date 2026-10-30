@@ -1,0 +1,647 @@
+/* POC E: the Gold Screen. A dark lacquer room; her shadow on gold leaf owns the frame.
+   All interface sits in the room's dark, left of the screen (below it on phones). Scoped under .le. */
+
+.le {
+  --room: #0a0806;
+  --bone: #f2e8d5;
+  --bone-2: #cbbd9f;
+  --accent: #d8b061;
+  --gold-ink: #1b1309;
+  --seal: #b3362b;
+  --violet: #5d44b3;
+  --line: color-mix(in oklab, var(--bone) 18%, transparent);
+  --line-2: color-mix(in oklab, var(--bone) 40%, transparent);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --gutter: clamp(20px, 6vw, 104px);
+
+  /* Hooks for the shared command palette. */
+  --bg-2: #15100b;
+  --ink: var(--bone);
+  --ink-2: var(--bone-2);
+  --ink-3: var(--bone-2);
+  --signal: var(--accent);
+
+  background: var(--room);
+  color: var(--bone);
+  font-family: var(--font-e-text), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  min-height: 100svh;
+  scrollbar-color: color-mix(in oklab, var(--accent) 45%, var(--room)) var(--room);
+}
+
+.le ::selection { background: var(--violet); color: var(--bone); }
+.le :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.le a { color: inherit; text-decoration: none; }
+.le-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- Stage ---------- */
+
+.le-hero {
+  position: relative;
+  height: 100svh;
+  min-height: 600px;
+  /* The floor runs on below the hero, so only the sides are clipped. */
+  overflow-x: clip;
+  isolation: isolate;
+}
+
+/* The render is half as tall again as the hero: the extra floor carries the reflection down
+   under the Work heading, where it dissolves into the room. */
+.le-plates {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 150%;
+  z-index: -1;
+  pointer-events: none;
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 54%,
+    rgb(0 0 0 / 0.88) 62%,
+    rgb(0 0 0 / 0.62) 75%,
+    rgb(0 0 0 / 0.3) 88%,
+    transparent 100%
+  );
+}
+.le-plate,
+.le-plate img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* 33.33% keeps the top two thirds framed exactly as a hero-height render centred in the hero. */
+.le-plate img {
+  object-fit: cover;
+  object-position: 100% 33.333%;
+}
+/* Before the script takes over, only the gold render paints. */
+.le-plate { visibility: hidden; }
+.le-plate:first-child { visibility: visible; }
+
+/* ---------- Light track: the day's light as a thin line, with a marker riding it ---------- */
+
+.le-light { display: inline-flex; align-items: center; gap: 12px; }
+.le-track {
+  position: relative;
+  display: block;
+  width: 120px;
+  height: 24px;
+  cursor: pointer;
+  touch-action: none;
+}
+.le-track::before {
+  content: "";
+  position: absolute;
+  inset: 11px 0;
+  border-radius: 1px;
+  background: linear-gradient(90deg, #e0a83f, #e8692c 25%, #8f7ff0 50%, #eef1f6 75%, #e0a83f);
+  opacity: 0.85;
+}
+.le-track:focus-visible { outline-offset: 2px; }
+.le-marker {
+  position: absolute;
+  top: 50%;
+  left: var(--at, 0%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--room), 0 0 0 3px var(--bone);
+  translate: -50% -50%;
+}
+.le-playpause {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bone-2);
+  cursor: pointer;
+  transition: color 200ms var(--ease);
+}
+.le-playpause:hover { color: var(--bone); }
+.le-playpause svg { width: 11px; height: 11px; fill: currentColor; }
+
+/* ---------- Top line ---------- */
+
+.le-top {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 40px);
+  padding: 24px var(--gutter) 0;
+}
+
+.le-seal { display: block; width: 34px; height: 34px; flex: none; }
+.le-seal svg { width: 100%; height: 100%; display: block; }
+.le-seal path { fill: var(--seal); }
+.le-seal text {
+  font-family: var(--font-e-display), serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  fill: #f6e9dc;
+}
+
+.le-nav {
+  margin-left: auto;
+  display: flex;
+  gap: clamp(16px, 2.2vw, 32px);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--bone-2);
+}
+.le-nav a { padding-block: 6px; transition: color 200ms var(--ease); }
+.le-nav a:hover { color: var(--bone); }
+
+.le .mono {
+  font-family: var(--font-e-text), sans-serif;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+}
+.le .mono-lc { font-family: var(--font-e-text), sans-serif; font-weight: 500; }
+.le-cmd button.mono {
+  border: 0;
+  padding: 0;
+  height: auto;
+  background: none;
+  color: var(--bone-2);
+  cursor: pointer;
+}
+.le-cmd button.mono:hover { background: none; color: var(--bone); }
+.le-cmd kbd { border-color: var(--line-2) !important; border-radius: 3px; color: var(--bone) !important; }
+.le .crop { display: none; }
+.le .pal-input { font-family: var(--font-e-text), sans-serif; }
+.le [role="dialog"] { border-radius: 4px; box-shadow: 0 30px 80px -10px rgb(0 0 0 / 0.75) !important; }
+.le .pal-scrim { background: rgb(6 4 3 / 0.82) !important; }
+
+/* ---------- Intro: name, role, four areas, one primary action ---------- */
+
+.le-intro {
+  position: absolute;
+  z-index: 2;
+  left: var(--gutter);
+  top: clamp(96px, 19vh, 200px);
+  width: min(390px, 25.5vw);
+}
+
+.le-intro h1 {
+  margin: 0;
+  font-family: var(--font-e-display), serif;
+  font-weight: 500;
+  font-size: clamp(3rem, 5.6vw, 5.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  /* One name per line, set like a vertical inscription read across. */
+  max-width: 6.2ch;
+}
+
+.le-role {
+  margin: 22px 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--bone-2);
+  max-width: 32ch;
+  text-wrap: pretty;
+}
+
+.le-areas {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 18px 22px;
+}
+.le-areas li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 11px;
+  border-top: 1px solid color-mix(in oklab, var(--accent) 38%, transparent);
+}
+.le-areas strong {
+  font-family: var(--font-e-display), serif;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1.25;
+  color: var(--bone);
+}
+.le-areas span { font-size: 0.8125rem; line-height: 1.45; color: var(--bone-2); }
+
+.le-actions {
+  margin-top: 38px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+}
+.le-primary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 3px;
+  background: var(--accent);
+  color: var(--gold-ink) !important;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 10px 28px -12px color-mix(in oklab, var(--accent) 55%, transparent);
+  transition: background-color 220ms var(--ease), box-shadow 220ms var(--ease), translate 220ms var(--ease);
+}
+.le-primary:hover { background: color-mix(in oklab, var(--accent) 80%, #fff); translate: 0 -1px; box-shadow: 0 16px 34px -12px color-mix(in oklab, var(--accent) 60%, transparent); }
+.le-primary:active { translate: 0 0; }
+.le-secondary {
+  font-weight: 500;
+  font-size: 0.9375rem;
+  padding-block: 8px;
+  text-decoration: underline !important;
+  text-decoration-color: color-mix(in oklab, var(--accent) 70%, transparent) !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 6px;
+  transition: text-underline-offset 220ms var(--ease), color 220ms var(--ease);
+}
+.le-secondary:hover { text-underline-offset: 9px; color: #fff7e8; }
+
+/* ---------- Now line ---------- */
+
+.le-now {
+  position: absolute;
+  z-index: 2;
+  left: var(--gutter);
+  bottom: clamp(20px, 4vh, 40px);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.8125rem;
+  color: var(--bone-2);
+}
+.le-now-sep { width: 22px; height: 1px; background: var(--line-2); }
+.le-clock { font-variant-numeric: tabular-nums; color: var(--bone); }
+
+.le-next {
+  padding: 96px var(--gutter);
+  color: var(--bone-2);
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- Narrow landscape: the screen moves under the text, so the room darkens behind it ---------- */
+@media (max-aspect-ratio: 3/2) and (min-aspect-ratio: 4/5) {
+  .le-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgb(10 8 6 / 0.82) 0%, rgb(10 8 6 / 0.6) 34%, rgb(10 8 6 / 0) 58%);
+  }
+  .le-intro { width: min(400px, 40vw); }
+}
+
+/* ---------- Portrait (phones, portrait tablets): name above the screen, actions on the floor ---------- */
+@media (max-aspect-ratio: 4/5) {
+  /* 3420 / 2532 tall: the hero frame is the top 74%, held to the hero's bottom edge as before. */
+  .le-plates {
+    height: 135.07%;
+    mask-image: linear-gradient(
+      180deg,
+      #000 0%,
+      #000 44%,
+      rgb(0 0 0 / 0.55) 56%,
+      rgb(0 0 0 / 0.42) 74%,
+      rgb(0 0 0 / 0.22) 88%,
+      transparent 100%
+    );
+  }
+  .le-plate img { object-position: 50% 74.035%; }
+  /* The now line sits at the very bottom; its track rises into the row above the button. */
+  .le-light { position: absolute; left: 0; bottom: 104px; }
+  .le-now-light-sep { display: none; }
+  .le-top { padding-top: 16px; }
+  .le-seal { width: 30px; height: 30px; }
+  .le-nav { font-size: 0.875rem; gap: 18px; }
+  .le-nav-wide, .le-cmd { display: none; }
+
+  .le-intro {
+    position: absolute;
+    inset: 72px var(--gutter) clamp(20px, 3vh, 32px);
+    width: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .le-intro h1 { font-size: clamp(2.5rem, 12vw, 3.5rem); max-width: none; }
+  .le-role { margin-top: 12px; font-size: 0.9375rem; max-width: 34ch; }
+  .le-areas {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 0;
+  }
+  .le-areas li { border: 0; padding: 0; }
+  .le-areas li:not(:last-child)::after {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin: 0 10px 2px;
+    vertical-align: middle;
+    background: var(--accent);
+    rotate: 45deg;
+  }
+  .le-areas li { display: inline; }
+  .le-areas strong { font-size: 0.9375rem; }
+  .le-areas span { display: none; }
+  .le-actions { margin-top: auto; padding-bottom: 34px; gap: 12px 24px; }
+  .le-primary { flex: 1 1 auto; justify-content: center; }
+  .le-now { bottom: clamp(16px, 2.5vh, 24px); font-size: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .le { transition: none; }
+  .le-primary, .le-secondary, .le-nav a { transition: none; }
+}
+
+/* =====================================================================================
+   Below the hero: the same room. Images are mounted like the screen's paintings (indigo
+   silk mat, gold piping); type is Mincho for names and headings, Gothic for reading.
+   ===================================================================================== */
+
+.le { --indigo: #0d0f22; --measure: 60ch; }
+
+.le-sec {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(16px, 2.4vw, 40px);
+  padding: clamp(88px, 11vw, 168px) var(--gutter) 0;
+}
+.le-sec-head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  padding-top: 22px;
+  margin-bottom: clamp(48px, 6vw, 80px);
+  border-top: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+}
+.le h2 {
+  margin: 0;
+  font-family: var(--font-e-display), serif;
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.le-sec-head p { margin: 0; max-width: 46ch; color: var(--bone-2); }
+.le h3, .le h4 { margin: 0; font-family: var(--font-e-display), serif; font-weight: 600; letter-spacing: -0.01em; }
+
+.le-lede { margin: 16px 0 0; font-size: 1.0625rem; line-height: 1.6; color: var(--bone-2); max-width: 52ch; text-wrap: pretty; }
+.le-stack { margin: 14px 0 0; font-size: 0.8125rem; letter-spacing: 0.02em; color: var(--bone-2); }
+.le-stack-lg { font-size: 1rem; line-height: 1.7; }
+.le-links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 22px; font-size: 0.9375rem; font-weight: 500; }
+.le-links a,
+.le-aside a,
+.le-foot a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--accent) 65%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  transition: text-underline-offset 220ms var(--ease), color 220ms var(--ease);
+}
+.le-links a:hover, .le-aside a:hover, .le-foot a:hover { text-underline-offset: 8px; color: #fff7e8; }
+.le-link-strong { font-weight: 700; color: var(--bone); }
+
+/* the mount: indigo silk mat, gold piping on the picture's edge */
+.le-mount {
+  display: block;
+  padding: clamp(8px, 0.9vw, 14px);
+  background: var(--indigo);
+  border-radius: 2px;
+  box-shadow: 0 34px 60px -34px rgb(0 0 0 / 0.85);
+}
+.le-mount > img,
+.le-mount > video {
+  display: block;
+  width: 100%;
+  height: auto;
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 70%, transparent);
+}
+a.le-mount { transition: translate 400ms var(--ease), box-shadow 400ms var(--ease); }
+a.le-mount:hover { translate: 0 -3px; box-shadow: 0 44px 70px -34px rgb(0 0 0 / 0.9); }
+
+/* ---------- Work ---------- */
+
+.le-mw {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(32px, 5vw, 88px);
+  align-items: center;
+}
+.le-mw-media { position: relative; justify-self: center; padding: 0 0 40px 70px; }
+.le-phone { position: relative; z-index: 1; width: clamp(200px, 19vw, 270px); }
+.le-phone video { border-radius: 2px; }
+.le-mw-nautilus { position: absolute; left: 0; bottom: 0; width: clamp(120px, 11vw, 170px); height: auto; z-index: 2; filter: drop-shadow(0 18px 24px rgb(0 0 0 / 0.55)); }
+.le-mw-copy h3, .le-case-copy h3 { font-size: clamp(2rem, 3.6vw, 3.25rem); font-weight: 500; line-height: 1.02; }
+.le-status { margin: 10px 0 0; font-size: 0.875rem; color: var(--accent); font-weight: 500; }
+.le-facts { margin: 26px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px 28px; max-width: 620px; }
+.le-facts div { padding-top: 10px; border-top: 1px solid var(--line); }
+.le-facts dt { font-size: 0.75rem; letter-spacing: 0.04em; color: var(--bone-2); }
+.le-facts dd { margin: 4px 0 0; font-size: 0.9375rem; line-height: 1.45; }
+
+.le-case {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(28px, 4vw, 72px);
+  align-items: center;
+  margin-top: clamp(96px, 11vw, 160px);
+}
+.le-case[data-flip] { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.le-case[data-flip] .le-case-media { order: 2; }
+.le-case-copy h3 a { transition: color 200ms var(--ease); }
+.le-case-copy h3 a:hover { color: #fff7e8; }
+
+.le-entries {
+  grid-column: 1 / -1;
+  list-style: none;
+  margin: clamp(96px, 11vw, 160px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px clamp(24px, 4vw, 64px);
+}
+.le-entries h3 { margin-top: 22px; font-size: 1.5rem; font-weight: 500; }
+.le-entries p:not(.le-stack) { margin: 8px 0 0; color: var(--bone-2); max-width: 50ch; line-height: 1.55; }
+.le-entry-media img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+
+/* ---------- AI ---------- */
+
+.le-stance {
+  grid-column: 1 / span 10;
+  margin: 0 0 clamp(64px, 8vw, 112px);
+  font-family: var(--font-e-display), serif;
+  font-size: clamp(1.5rem, 2.7vw, 2.375rem);
+  line-height: 1.32;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+.le-sub {
+  grid-column: 1 / -1;
+  margin-bottom: 8px !important;
+  font-size: 1.375rem;
+  font-weight: 500 !important;
+  color: var(--bone);
+}
+.le-principles, .le-toolkit { grid-column: 1 / -1; list-style: none; margin: 0 0 clamp(64px, 8vw, 104px); padding: 0; }
+.le-principles li {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  column-gap: clamp(20px, 3vw, 48px);
+  padding: 26px 0;
+  border-top: 1px solid var(--line);
+}
+.le-principles h4 { grid-row: span 2; font-size: 1.25rem; line-height: 1.3; }
+.le-principles p { margin: 0; max-width: var(--measure); color: var(--bone-2); line-height: 1.6; }
+.le-result { margin-top: 10px !important; color: var(--bone) !important; font-variant-numeric: tabular-nums; }
+.le-result span {
+  margin-right: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+.le-toolkit { display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(24px, 4vw, 64px); }
+.le-toolkit li { padding: 24px 0 26px; border-top: 1px solid var(--line); }
+.le-toolkit h4 { font-size: 1.1875rem; }
+.le-toolkit p { margin: 8px 0 0; color: var(--bone-2); max-width: 54ch; line-height: 1.55; }
+.le-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px !important; }
+.le-tags code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  padding: 3px 7px;
+  border-radius: 2px;
+  color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+}
+.le-aside { grid-column: 1 / span 8; margin: 0; max-width: var(--measure); color: var(--bone-2); line-height: 1.6; }
+
+/* ---------- Experience ---------- */
+
+.le-roles { grid-column: 1 / -1; list-style: none; margin: 0; padding: 0; }
+.le-roles > li {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  column-gap: clamp(20px, 3vw, 48px);
+  padding: 30px 0 34px;
+  border-top: 1px solid var(--line);
+}
+.le-dates { margin: 4px 0 0; font-size: 0.875rem; color: var(--bone-2); font-variant-numeric: tabular-nums; }
+.le-roles h3 { font-size: clamp(1.375rem, 2vw, 1.75rem); font-weight: 500; }
+.le-roles h3 span { color: var(--bone-2); }
+.le-roles ul { margin: 14px 0 0; padding: 0; list-style: none; max-width: 68ch; }
+.le-roles ul li { position: relative; padding-left: 22px; margin-top: 8px; line-height: 1.6; color: var(--bone-2); }
+.le-roles ul li::before { content: ""; position: absolute; left: 0; top: 0.8em; width: 10px; height: 1px; background: var(--accent); }
+
+/* ---------- About ---------- */
+
+.le-about-body { grid-column: 1 / span 7; }
+.le-about-body p { margin: 0 0 18px; font-size: 1.1875rem; line-height: 1.6; max-width: 52ch; text-wrap: pretty; }
+.le-about-facts { grid-column: 9 / -1; grid-template-columns: 1fr; margin-top: 0; align-self: start; }
+
+/* ---------- Contact and footer ---------- */
+
+.le-contact { padding-bottom: clamp(88px, 10vw, 140px); }
+.le-contact h2 { grid-column: 1 / -1; padding-top: 22px; border-top: 1px solid color-mix(in oklab, var(--accent) 40%, transparent); }
+.le-contact > p { grid-column: 1 / -1; margin: 18px 0 0; color: var(--bone-2); }
+.le-contact-links { grid-column: 1 / -1; list-style: none; margin: 34px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px clamp(28px, 4vw, 64px); }
+.le-contact-links a {
+  font-family: var(--font-e-display), serif;
+  font-size: clamp(2rem, 4.4vw, 3.75rem);
+  line-height: 1.15;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--accent) 60%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 10px;
+  transition: text-underline-offset 260ms var(--ease), color 260ms var(--ease);
+}
+.le-contact-links a:hover { text-underline-offset: 14px; color: #fff7e8; }
+.le-foot {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 28px var(--gutter) 40px;
+  border-top: 1px solid var(--line);
+  font-size: 0.875rem;
+  color: var(--bone-2);
+}
+.le-foot p { margin: 0; }
+
+/* ---------- Case study and build pages ---------- */
+
+.le-page { padding-bottom: 120px; }
+.le-page-top { display: flex; align-items: center; gap: 24px; padding: 28px var(--gutter); }
+.le-back {
+  font-weight: 500;
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--accent) 65%, transparent);
+  text-underline-offset: 5px;
+}
+.le-page-crumb { font-size: 0.8125rem; color: var(--bone-2); }
+.le-cs { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2.4vw, 40px); padding: 0 var(--gutter); }
+.le-cs-head { grid-column: 1 / span 9; padding: clamp(40px, 7vw, 96px) 0 clamp(40px, 5vw, 64px); }
+.le-cs h1 { margin: 0; font-family: var(--font-e-display), serif; font-weight: 500; font-size: clamp(3rem, 7vw, 5.75rem); line-height: 0.98; letter-spacing: -0.025em; }
+.le-cs-head .le-lede { font-size: 1.1875rem; max-width: 56ch; }
+.le-cs-hero { grid-column: 1 / span 10; max-width: 960px; margin: 0 0 clamp(64px, 8vw, 112px); }
+.le-cs-block { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); column-gap: clamp(20px, 3vw, 48px); padding: 30px 0 40px; border-top: 1px solid var(--line); }
+.le-cs-block h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
+.le-cs-block > p { margin: 0; font-size: 1.0625rem; line-height: 1.65; max-width: var(--measure); color: var(--bone-2); }
+.le-cs-list { margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 40px; }
+.le-cs-list li { break-inside: avoid; position: relative; padding-left: 22px; margin-bottom: 12px; line-height: 1.55; color: var(--bone-2); }
+.le-cs-list li::before { content: ""; position: absolute; left: 0; top: 0.78em; width: 10px; height: 1px; background: var(--accent); }
+.le-cs-decisions { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px; }
+.le-cs-decisions h3 { font-size: 1.1875rem; }
+.le-cs-decisions p { margin: 8px 0 0; line-height: 1.6; color: var(--bone-2); }
+.le-cs-next { grid-column: 1 / -1; padding-top: 30px; border-top: 1px solid color-mix(in oklab, var(--accent) 40%, transparent); }
+.le-cs-next a { display: inline-flex; flex-direction: column; gap: 6px; font-family: var(--font-e-display), serif; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.05; }
+.le-cs-next span { font-family: var(--font-e-text), sans-serif; font-size: 0.8125rem; color: var(--bone-2); }
+.le-cs-next a:hover { color: #fff7e8; }
+.le-built { grid-column: 1 / -1; list-style: none; margin: 0 0 56px; padding: 0; }
+.le-built li { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: clamp(20px, 3vw, 48px); padding: 28px 0 32px; border-top: 1px solid var(--line); }
+.le-built h2 { font-size: clamp(1.375rem, 2vw, 1.75rem); line-height: 1.2; }
+.le-built p { margin: 0; line-height: 1.65; color: var(--bone-2); max-width: var(--measure); }
+
+/* view transition into and out of a case study: the project image morphs, the rest crossfades */
+::view-transition-group(*) { animation-duration: 0.55s; animation-timing-function: cubic-bezier(0.2, 0.7, 0.1, 1); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.3s; }
+
+@media (max-width: 900px), (max-aspect-ratio: 4/5) {
+  .le-mw, .le-case, .le-case[data-flip], .le-entries, .le-toolkit, .le-cs-decisions { grid-template-columns: 1fr; }
+  .le-case[data-flip] .le-case-media { order: 0; }
+  .le-mw-media { justify-self: start; }
+  .le-principles li, .le-roles > li, .le-cs-block, .le-built li { grid-template-columns: 1fr; row-gap: 10px; }
+  .le-principles h4 { grid-row: auto; }
+  .le-stance, .le-about-body, .le-about-facts, .le-cs-head { grid-column: 1 / -1; }
+  .le-about-facts { margin-top: 24px; }
+  .le-cs-list { columns: 1; }
+  .le-facts { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  a.le-mount { transition: none; }
+}
+
+/* Content rides above the reflection that spills out of the hero. */
+.le-main { position: relative; z-index: 1; }

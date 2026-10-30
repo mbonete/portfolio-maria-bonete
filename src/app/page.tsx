@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
 import Nav from "@/components/Nav";
+import BackgroundFx from "@/components/BackgroundFx";
 
 const About = dynamic(() => import("@/components/About"));
 const Experience = dynamic(() => import("@/components/Experience"));
@@ -10,6 +11,7 @@ const Contact = dynamic(() => import("@/components/Contact"));
 export default function Home() {
   return (
     <>
+      <BackgroundFx />
       <Nav />
       <main className="mx-auto max-w-5xl px-6">
         <Hero />

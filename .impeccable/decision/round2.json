@@ -1,0 +1,108 @@
+{
+  "title": "Choose the visual world",
+  "question": "The re-roll assigned The Plate Archive. Keep it, take the alternate, or re-roll again.",
+  "options": [
+    {
+      "id": "assigned",
+      "kind": "assigned",
+      "label": "The Plate Archive",
+      "kicker": "THE ROLL",
+      "lineage": "observatory glass-plate archives and their ink-annotated measurements",
+      "thesis": "Her work as an observatory's plate archive: every object catalogued, measured and annotated in ink; nothing claimed that isn't on the plate.",
+      "palette": ["#08090b", "#b9bcbf", "#7a5a3a", "#d9a35f"],
+      "materials": ["bevelled glass plates with silver emulsion", "kraft plate envelopes", "iron-gall ink annotations"],
+      "viewport": "One large glass plate holding her portrait in silver grain, four objects circled in ink and labelled Full-stack, Mobile, Web3, AI-driven engineering; beside it the kraft envelope with catalogue number, her name and 'Plate log: CV (PDF)'.",
+      "risk": "Drifts into a generic space theme if any annotation is decorative rather than real data.",
+      "raised": [
+        { "from": "challenger-jackfield", "raise": "State is drawn by ink stroke, never colour: solid circle shipped, dashed in development, double ring case study." },
+        { "from": "challenger-teletext", "raise": "Every plate has a catalogue number that is also its address (/plate/014), and ⌘K takes numbers." },
+        { "from": "challenger-terminal", "raise": "One type family across the archive; hierarchy comes from case, indentation and rules." },
+        { "from": "challenger-raygun", "raise": "Exactly one annotation per view may break the plate grid: the most important fact on it." },
+        { "from": "challenger-quarry", "raise": "Sections are discrete plates stacked with deep, constant gaps; measurements always sit on the plate edge." },
+        { "from": "challenger-nightcity", "raise": "One axis carries time: plates file along a single dated spine, newest first." }
+      ],
+      "html": ".impeccable/mocks/decision/r2-assigned.html"
+    },
+    {
+      "id": "model-pick",
+      "kind": "pick",
+      "label": "Four Lines",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "metro line diagrams and enamel station signage",
+      "thesis": "Her career as a transit diagram: four coloured lines for her four areas, stations for projects and roles, interchanges where work crosses areas.",
+      "palette": ["#101418", "#e4572e", "#2fa66a", "#f2b134", "#3e7be0", "#f5f3ee"],
+      "materials": ["enamel signage", "45° line geometry", "station roundels"],
+      "viewport": "Her name as the map title; four lines run in and meet at a 'Now: Wandity' interchange; every station is a project or role you can open.",
+      "risk": "Familiar: transit-map résumés are a known infographic trope and can read as a CV template.",
+      "html": ".impeccable/mocks/decision/r2-pick.html"
+    },
+    {
+      "id": "challenger-jackfield", "kind": "challenger", "catalogId": "operate-b-normalled-jackfield",
+      "label": "Jackfield Schedule", "verdict": "declined", "lineage": "studio patchbay normalling schedules",
+      "thesis": "Projects as numbered amber lanes with link-line states.", "palette": ["#060606", "#f0a020"],
+      "materials": ["black glass", "amber link lines"], "viewport": "48 numbered lanes under a legend strip.",
+      "case": "Fuses poorly: an operator's console recruiters don't identify with, and dense lanes bury the four areas.",
+      "kept": "State drawn by stroke pattern, never colour.", "risk": "Reads as equipment.",
+      "hero": "https://impeccable.style/worlds/cards/operate-b-normalled-jackfield-hero.webp"
+    },
+    {
+      "id": "challenger-teletext", "kind": "challenger", "catalogId": "digital-design-canon-teletext-weather-mosaic",
+      "label": "Teletext Pages", "verdict": "declined", "lineage": "broadcast teletext mosaics",
+      "thesis": "Every section a numbered teletext page.", "palette": ["#000000", "#ffff00", "#00ffff", "#ff0000"],
+      "materials": ["mosaic blocks", "character cells"], "viewport": "P100 index in double-height type.",
+      "case": "Fuses poorly: retro novelty, and block mosaics can't show project screenshots.",
+      "kept": "Everything addressed by a number.", "risk": "Reads as nostalgia.",
+      "hero": "https://impeccable.style/worlds/cards/digital-design-canon-teletext-weather-mosaic-hero.webp"
+    },
+    {
+      "id": "challenger-terminal", "kind": "challenger", "catalogId": "signals-instruments-phosphor-terminal-midnight",
+      "label": "Phosphor Terminal", "verdict": "declined", "lineage": "green-phosphor terminals",
+      "thesis": "The portfolio as a typed transcript.", "palette": ["#050805", "#33ff66"],
+      "materials": ["curved glass", "scanlines"], "viewport": "A blinking cursor and an 80-column transcript.",
+      "case": "Fuses poorly: exactly the developer costume ruled out in the brief.",
+      "kept": "One face; hierarchy by case, indentation and rules.", "risk": "Developer cliché.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-phosphor-terminal-midnight-hero.webp"
+    },
+    {
+      "id": "challenger-raygun", "kind": "challenger", "catalogId": "design-canon-raygun-layout-desk",
+      "label": "Layout Desk", "verdict": "declined", "lineage": "90s surf-music magazine layouts",
+      "thesis": "Colliding type you feel before you read.", "palette": ["#e9e4d6", "#111111", "#ff3d7f"],
+      "materials": ["overprinted type", "bleached photos"], "viewport": "Three overlapping headlines over a photo.",
+      "case": "Fuses poorly: deliberately hard to read, the opposite of a ten-second shortlist.",
+      "kept": "Break the grid only where the content is most urgent.", "risk": "Illegible.",
+      "hero": "https://impeccable.style/worlds/cards/design-canon-raygun-layout-desk-hero.webp"
+    },
+    {
+      "id": "challenger-quarry", "kind": "challenger", "catalogId": "dream-surreal-impossible-worlds-cloud-quarry",
+      "label": "Cloud Quarry", "verdict": "declined", "lineage": "surreal weather architecture",
+      "thesis": "Projects cut as blocks of weather.", "palette": ["#f4f6f8", "#7fb3e6", "#6c7178"],
+      "materials": ["cumulus blocks", "stencil tallies"], "viewport": "A cloud cliff with a saw line.",
+      "case": "Fuses poorly: surreal and light-ground, against the audience and dark-only.",
+      "kept": "Measurements on tally edges; deep constant gaps between blocks.", "risk": "Whimsical.",
+      "hero": "https://impeccable.style/worlds/cards/dream-surreal-impossible-worlds-cloud-quarry-hero.webp"
+    },
+    {
+      "id": "challenger-nightcity", "kind": "challenger", "catalogId": "light-shadow-caustics-rain-night-cityscape",
+      "label": "Rain Nocturne", "verdict": "declined", "lineage": "blue-hour city at night",
+      "thesis": "The portfolio as a city lighting up.", "palette": ["#0b1530", "#f2a33a", "#c8ced6"],
+      "materials": ["wet streets", "neon signs"], "viewport": "Skyline over river reflections.",
+      "case": "Fuses poorly: atmosphere without a place for proof; neon on dark is the AI-default look.",
+      "kept": "One axis carries time.", "risk": "Mood over content.",
+      "hero": "https://impeccable.style/worlds/cards/light-shadow-caustics-rain-night-cityscape-hero.webp"
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "code" },
+  "canon": true,
+  "canonCard": {
+    "kind": "canon",
+    "label": "The category standard",
+    "thesis": "A dark developer portfolio as the category ships it, executed impeccably.",
+    "palette": ["#0b0b0c", "#fafafa", "#3b82f6"],
+    "materials": ["clean grid", "project screenshots"],
+    "viewport": "Name and role headline, short intro, buttons, then a grid of project cards.",
+    "risk": "Indistinguishable from other developer portfolios by design.",
+    "html": ".impeccable/mocks/decision/canon.html"
+  },
+  "steer": true
+}
