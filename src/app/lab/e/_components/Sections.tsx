@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { person } from "@/lab/content";
 import { ai, caseStudies, entries, experience, marineWobbles } from "../_content";
+import LoopVideo from "./LoopVideo";
 import TransitionLink from "./TransitionLink";
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
@@ -17,17 +18,12 @@ export default function Sections() {
         <article className="le-mw" aria-labelledby="mw-h">
           <div className="le-mw-media">
             <div className="le-mount le-phone">
-              <video
+              <LoopVideo
                 src="/lab/d/mw-map.mp4"
                 poster="/lab/d/mw-map-poster.webp"
                 width={540}
                 height={958}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="none"
-                aria-label="The painted episode map of Marine Wobbles, scrolling between levels."
+                label="The painted episode map of Marine Wobbles, scrolling between levels."
               />
             </div>
             <Image className="le-mw-nautilus" src="/lab/d/mw-nautilus.webp" width={882} height={903} alt="" sizes="(max-width: 760px) 40vw, 260px" />

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import TransitionLink from "../_components/TransitionLink";
 
-export const metadata: Metadata = { title: "How this site was built" };
+export const metadata: Metadata = {
+  title: "How this site was built",
+  description: "The portfolio as a worked example of agent-driven engineering: decisions, prototypes, a rendered hero, and checks.",
+};
 
 const steps = [
   {

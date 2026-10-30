@@ -17,6 +17,7 @@ export default function LightScreen() {
   // Paint every position change: layer opacities and the page's accent.
   useEffect(() => {
     const page = rootRef.current?.closest<HTMLElement>(".le");
+    let accent = "";
     return light.onFrame((p) => {
       const i = Math.floor(p) % LIGHTS.length;
       const next = (i + 1) % LIGHTS.length;
@@ -28,7 +29,13 @@ export default function LightScreen() {
         el.style.zIndex = k === next ? "1" : "0";
         el.style.opacity = k === next ? f.toFixed(4) : "1";
       });
-      page?.style.setProperty("--accent", accentAt(p));
+      // The accent restyles the whole page, so it steps in 32nds of a light (about 13 writes a
+      // second while flowing) and is written only when it actually changes.
+      const next_ = accentAt(Math.round(p * 32) / 32);
+      if (next_ !== accent) {
+        accent = next_;
+        page?.style.setProperty("--accent", accent);
+      }
     });
   }, []);
 

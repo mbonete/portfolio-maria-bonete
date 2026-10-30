@@ -18,8 +18,11 @@ export default function LightTrack() {
         markerRef.current?.style.setProperty("--at", `${(p / LIGHTS.length) * 100}%`);
         const t = trackRef.current;
         if (t) {
-          t.setAttribute("aria-valuenow", ((p / LIGHTS.length) * 100).toFixed(0));
-          t.setAttribute("aria-valuetext", describe(p));
+          // Only touch the ARIA values when they change, so a focused slider is not re-announced every frame.
+          const now = ((p / LIGHTS.length) * 100).toFixed(0);
+          const text = describe(p);
+          if (t.getAttribute("aria-valuenow") !== now) t.setAttribute("aria-valuenow", now);
+          if (t.getAttribute("aria-valuetext") !== text) t.setAttribute("aria-valuetext", text);
         }
       }),
     [],

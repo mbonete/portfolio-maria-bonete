@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import { currently, person } from "@/lab/content";
 import CommandPalette from "../d/_components/CommandPalette";
 import LightScreen from "./_components/LightScreen";
 import LightTrack from "./_components/LightTrack";
 import MadridTime from "./_components/MadridTime";
 import Sections from "./_components/Sections";
+
+export const metadata: Metadata = {
+  title: "Maria Bonete: full-stack developer",
+  description:
+    "Full-stack developer in Madrid, specialising in React Native, Web3 and AI-driven engineering. Shipped work, case studies and a measured AI practice.",
+};
 
 // Each area carries one checkable fact, so the first viewport is proof, not a list of labels.
 const areas = [

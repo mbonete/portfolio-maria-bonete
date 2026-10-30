@@ -55,13 +55,17 @@ const subscribeReduced = (cb: () => void) => {
   return () => mq.removeEventListener("change", cb);
 };
 
-/** Whether the light should flow: the visitor's choice, else on unless they prefer reduced motion. */
-export function usePlaying() {
-  const reduced = useSyncExternalStore(
+export function useReducedMotion() {
+  return useSyncExternalStore(
     subscribeReduced,
     () => window.matchMedia(reducedQuery).matches,
     () => false,
   );
+}
+
+/** Whether the light should flow: the visitor's choice, else on unless they prefer reduced motion. */
+export function usePlaying() {
+  const reduced = useReducedMotion();
   const chosen = useSyncExternalStore(
     subscribeState,
     () => userPlaying,
