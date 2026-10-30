@@ -17,6 +17,7 @@
 
   /* Hooks for the shared command palette. */
   --bg-2: #15100b;
+  --bg-3: #261c12;
   --ink: var(--bone);
   --ink-2: var(--bone-2);
   --ink-3: var(--bone-2);
@@ -38,14 +39,18 @@
 
 /* ---------- Stage ---------- */
 
+/* A column: on a short screen the hero grows rather than letting the intro and the now line collide. */
 .le-hero {
   position: relative;
-  height: 100svh;
-  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  min-height: max(100svh, 600px);
   /* The floor runs on below the hero, so only the sides are clipped. */
   overflow-x: clip;
   isolation: isolate;
 }
+/* The palette lives in the hero's stacking context, so while open the hero rides above the page. */
+.le-hero:has([role="dialog"]) { z-index: 30; }
 
 /* The render is half as tall again as the hero: the extra floor carries the reflection down
    under the Work heading, where it dissolves into the room. */
@@ -180,16 +185,16 @@
 .le-cmd kbd { border-color: var(--line-2) !important; border-radius: 3px; color: var(--bone) !important; }
 .le .crop { display: none; }
 .le .pal-input { font-family: var(--font-e-text), sans-serif; }
+.le .pal-input:focus-visible { outline: none; }
 .le [role="dialog"] { border-radius: 4px; box-shadow: 0 30px 80px -10px rgb(0 0 0 / 0.75) !important; }
 .le .pal-scrim { background: rgb(6 4 3 / 0.82) !important; }
 
 /* ---------- Intro: name, role, four areas, one primary action ---------- */
 
 .le-intro {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  left: var(--gutter);
-  top: clamp(96px, 19vh, 200px);
+  margin: clamp(96px, 19vh, 200px) 0 24px var(--gutter);
   width: min(390px, 25.5vw);
 }
 
@@ -275,11 +280,10 @@
 /* ---------- Now line ---------- */
 
 .le-now {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  left: var(--gutter);
-  bottom: clamp(20px, 4vh, 40px);
-  margin: 0;
+  margin: auto 0 0 var(--gutter);
+  padding-bottom: clamp(20px, 4vh, 40px);
   display: flex;
   align-items: center;
   gap: 14px;
@@ -335,6 +339,7 @@
   .le-intro {
     position: absolute;
     inset: 72px var(--gutter) clamp(20px, 3vh, 32px);
+    margin: 0;
     width: auto;
     display: flex;
     flex-direction: column;
@@ -363,7 +368,14 @@
   .le-areas span { display: none; }
   .le-actions { margin-top: auto; padding-bottom: 34px; gap: 12px 24px; }
   .le-primary { flex: 1 1 auto; max-width: 22rem; justify-content: center; }
-  .le-now { bottom: clamp(16px, 2.5vh, 24px); font-size: 0.75rem; }
+  .le-now {
+    position: absolute;
+    left: var(--gutter);
+    bottom: clamp(16px, 2.5vh, 24px);
+    margin: 0;
+    padding: 0;
+    font-size: 0.75rem;
+  }
 }
 
 /* Short portrait screens (small phones): the screen rises behind the name, so the room darkens there. */
@@ -381,6 +393,19 @@
   .le-areas strong { font-size: 0.875rem; }
 }
 
+/* Short laptops: the intro tightens so the now line stays on the first screen. */
+@media (min-aspect-ratio: 4/5) and (max-height: 820px) {
+  .le-intro { margin-top: clamp(76px, 13vh, 104px); }
+  .le-role { margin-top: 14px; }
+  .le-areas { margin-top: 20px; gap: 12px 22px; }
+  .le-actions { margin-top: 22px; }
+}
+
+/* Shorter still: the facts give way and the area names, which link to the proof, carry the screen. */
+@media (min-aspect-ratio: 4/5) and (max-height: 700px) {
+  .le-areas span { display: none; }
+}
+
 /* Short landscape (phones on their side): no room for the facts, so the areas become one line of
    names, the name sets on one line, and everything sits in the first screen. */
 @media (min-aspect-ratio: 4/5) and (max-height: 560px) {
@@ -393,7 +418,7 @@
     background: linear-gradient(90deg, rgb(10 8 6 / 0.88) 0%, rgb(10 8 6 / 0.7) 38%, rgb(10 8 6 / 0) 62%);
   }
   .le-top { padding-top: 14px; }
-  .le-intro { top: 70px; width: min(420px, 46vw); }
+  .le-intro { margin-top: 70px; width: min(420px, 46vw); }
   .le-intro h1 { font-size: clamp(2.25rem, 4.8vw, 3rem); max-width: none; }
   .le-role { margin-top: 10px; font-size: 0.9375rem; }
   .le-areas { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 2px 0; }
@@ -417,6 +442,7 @@
 @media (pointer: coarse) {
   .le-nav a, .le-links a, .le-back, .le-secondary { display: inline-flex; align-items: center; min-height: 44px; padding-block: 0; }
   .le-links { gap: 0 24px; }
+  .le-areas a { padding-block: 11px; }
   .le-playpause { width: 44px; height: 44px; margin-inline: -10px; }
 }
 
@@ -464,6 +490,7 @@
 .le-stack-lg { font-size: 1rem; line-height: 1.7; }
 .le-links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 22px; font-size: 0.9375rem; font-weight: 500; }
 .le-links a,
+.le-areas a,
 .le-aside a,
 .le-foot a {
   text-decoration: underline;
@@ -472,7 +499,7 @@
   text-underline-offset: 5px;
   transition: text-underline-offset 220ms var(--ease), color 220ms var(--ease);
 }
-.le-links a:hover, .le-aside a:hover, .le-foot a:hover { text-underline-offset: 8px; color: var(--bone-hi); }
+.le-links a:hover, .le-areas a:hover, .le-aside a:hover, .le-foot a:hover { text-underline-offset: 8px; color: var(--bone-hi); }
 .le-link-strong { font-weight: 700; color: var(--bone); }
 
 /* the mount: indigo silk mat, gold piping on the picture's edge */
@@ -588,6 +615,26 @@ a.le-mount:hover { translate: 0 -3px; box-shadow: 0 44px 70px -34px rgb(0 0 0 / 
   color: var(--accent);
   background: color-mix(in oklab, var(--accent) 10%, transparent);
 }
+.le-toolkit-more {
+  display: none;
+  grid-column: 1 / -1;
+  justify-self: start;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: clamp(48px, 8vw, 104px);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bone);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--accent) 65%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  cursor: pointer;
+}
 .le-aside { grid-column: 1 / span 8; margin: 0; max-width: var(--measure); color: var(--bone-2); line-height: 1.6; }
 
 /* ---------- Experience ---------- */
@@ -611,14 +658,37 @@ a.le-mount:hover { translate: 0 -3px; box-shadow: 0 44px 70px -34px rgb(0 0 0 / 
 
 .le-about-body { grid-column: 1 / span 7; }
 .le-about-body p { margin: 0 0 18px; font-size: 1.1875rem; line-height: 1.6; max-width: 52ch; text-wrap: pretty; }
-.le-about-facts { grid-column: 9 / -1; grid-template-columns: 1fr; margin-top: 0; align-self: start; }
+.le-about-side { grid-column: 9 / -1; align-self: start; }
+.le-about-photo { margin: 0 0 28px; width: min(100%, 260px); }
+.le-about-facts { grid-template-columns: 1fr; margin-top: 0; }
 
 /* ---------- Contact and footer ---------- */
 
-.le-contact { padding-bottom: clamp(88px, 10vw, 140px); }
-.le-contact h2 { grid-column: 1 / -1; padding-top: 22px; border-top: 1px solid color-mix(in oklab, var(--accent) 40%, transparent); }
-.le-contact > p { grid-column: 1 / -1; margin: 18px 0 0; color: var(--bone-2); }
-.le-contact-links { grid-column: 1 / -1; list-style: none; margin: 34px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px clamp(28px, 4vw, 64px); }
+/* The hero's composition again, in the same room: words on the left, the screen on the right. The
+   top and bottom of the render dissolve into the room, so it has no edges to read as a banner. */
+.le-contact {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: max(100svh, 600px);
+  margin-top: clamp(40px, 5vw, 80px);
+  padding: 96px var(--gutter);
+}
+.le-contact::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--room) 0%, transparent 24%, transparent 78%, var(--room) 100%);
+}
+.le-contact-head, .le-contact-end { width: min(390px, 25.5vw); }
+.le-contact-head p { margin: 18px 0 0; color: var(--bone-2); text-wrap: pretty; }
+.le-contact-links { list-style: none; margin: 34px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.le-contact .le-light { position: static; margin-top: 28px; }
 .le-contact-links a {
   font-family: var(--font-e-display), serif;
   font-size: clamp(2rem, 4.4vw, 3.75rem);
@@ -630,6 +700,21 @@ a.le-mount:hover { translate: 0 -3px; box-shadow: 0 44px 70px -34px rgb(0 0 0 / 
   transition: text-underline-offset 260ms var(--ease), color 260ms var(--ease);
 }
 .le-contact-links a:hover { text-underline-offset: 14px; color: var(--bone-hi); }
+@media (max-aspect-ratio: 3/2) and (min-aspect-ratio: 4/5) {
+  .le-contact::after {
+    background:
+      linear-gradient(90deg, rgb(10 8 6 / 0.82) 0%, rgb(10 8 6 / 0.6) 34%, rgb(10 8 6 / 0) 58%),
+      linear-gradient(180deg, var(--room) 0%, transparent 24%, transparent 78%, var(--room) 100%);
+  }
+  .le-contact-head, .le-contact-end { width: min(400px, 40vw); }
+}
+/* Portrait: as in the hero, the heading sits above the screen and the actions on its floor. */
+@media (max-aspect-ratio: 4/5) {
+  .le-contact { justify-content: space-between; padding: 64px var(--gutter) 32px; }
+  .le-contact-head, .le-contact-end { width: auto; }
+  .le-contact-links { flex-direction: row; flex-wrap: wrap; gap: 8px 28px; }
+  .le-contact .le-light { margin-top: 16px; }
+}
 .le-foot {
   display: flex;
   justify-content: space-between;
@@ -676,6 +761,8 @@ a.le-mount:hover { translate: 0 -3px; box-shadow: 0 44px 70px -34px rgb(0 0 0 / 
 .le-built li { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: clamp(20px, 3vw, 48px); padding: 28px 0 32px; border-top: 1px solid var(--line); }
 .le-built h2 { font-size: clamp(1.375rem, 2vw, 1.75rem); line-height: 1.2; }
 .le-built p { margin: 0; line-height: 1.65; color: var(--bone-2); max-width: var(--measure); }
+.le-strip { grid-column: 1 / -1; margin-top: clamp(56px, 7vw, 88px); padding-top: 22px; border-top: 1px solid var(--line); }
+.le-strip p { margin: 0; color: var(--bone-2); }
 
 /* view transition into and out of a case study: the project image morphs, the rest crossfades */
 ::view-transition-group(*) { animation-duration: 0.55s; animation-timing-function: cubic-bezier(0.2, 0.7, 0.1, 1); }
@@ -687,8 +774,11 @@ a.le-mount:hover { translate: 0 -3px; box-shadow: 0 44px 70px -34px rgb(0 0 0 / 
   .le-mw-media { justify-self: start; }
   .le-principles li, .le-roles > li, .le-cs-block, .le-built li { grid-template-columns: 1fr; row-gap: 10px; }
   .le-principles h4 { grid-row: auto; }
-  .le-stance, .le-about-body, .le-about-facts, .le-cs-head { grid-column: 1 / -1; }
-  .le-about-facts { margin-top: 24px; }
+  .le-stance, .le-about-body, .le-about-side, .le-cs-head { grid-column: 1 / -1; }
+  .le-about-side { margin-top: 24px; }
+  .le-toolkit[data-folded] { margin-bottom: 0; }
+  .le-toolkit[data-folded] li:nth-child(n + 4) { display: none; }
+  .le-toolkit-more { display: inline-flex; }
   .le-cs-list { columns: 1; }
   .le-facts { grid-template-columns: 1fr; }
 }
@@ -696,6 +786,7 @@ a.le-mount:hover { translate: 0 -3px; box-shadow: 0 44px 70px -34px rgb(0 0 0 / 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*), ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
   a.le-mount { transition: none; }
+  .le-bar, .le-bar[data-shown] { transition: none; }
 }
 
 /* Content rides above the reflection that spills out of the hero. */
@@ -704,6 +795,40 @@ a.le-mount:hover { translate: 0 -3px; box-shadow: 0 44px 70px -34px rgb(0 0 0 / 
 /* Headings break into even lines; paragraphs and list items keep a partner for their last word. */
 .le h2, .le h3, .le h4 { text-wrap: balance; }
 .le p, .le li, .le dd { text-wrap: pretty; }
+
+/* ---------- The strip that follows the visitor once the hero's nav has gone ---------- */
+
+html:has(.le-bar) { scroll-padding-top: 68px; }
+
+.le-bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 32px);
+  height: 52px;
+  padding-inline: var(--gutter);
+  background: var(--room);
+  border-bottom: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--bone-2);
+  translate: 0 -100%;
+  visibility: hidden;
+  transition: translate 260ms var(--ease), visibility 0s linear 260ms;
+}
+.le-bar[data-shown] { translate: 0 0; visibility: visible; transition: translate 260ms var(--ease), visibility 0s; }
+.le-bar a { display: inline-flex; align-items: center; height: 44px; transition: color 200ms var(--ease); }
+.le-bar a:hover, .le-bar a[aria-current] { color: var(--bone); }
+.le-bar a[aria-current] {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+.le-bar .le-seal { width: 28px; flex: none; }
+.le-bar-end { margin-left: auto; display: flex; gap: inherit; }
 
 /* The clip's own pause control, on the mount's corner. */
 .le-phone { position: relative; }

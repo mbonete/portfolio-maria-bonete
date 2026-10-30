@@ -11,7 +11,7 @@ export type CaseStudy = {
   built: string[];
   decisions: { title: string; body: string }[];
   model: string;
-  repo: string;
+  repo?: string; // Left out for private repos: a link only a logged-in owner can open is a dead link.
   videoId: string;
 };
 
@@ -57,7 +57,6 @@ export const caseStudies: CaseStudy[] = [
     ],
     model:
       "Users, owner contacts, properties, maintenance jobs, quotes (amounts in cents), attachments, comments and a typed event stream with JSON metadata. UUID keys, timestamps with time zones, and a unique index on the owner's access token.",
-    repo: "https://github.com/mbonete/dwelltrace",
     videoId: "VIHxOCpGPLg",
   },
   {
@@ -107,7 +106,6 @@ export const marineWobbles = {
     { k: "Tests", v: "45 unit-test files over pure game rules" },
   ],
   stack: ["Kotlin", "Jetpack Compose", "kotlinx-serialization", "JUnit"],
-  repo: "https://github.com/mbonete/marine-wobbles",
 };
 
 export const entries = [
@@ -128,6 +126,30 @@ export const entries = [
     repo: "https://github.com/mbonete/coffee-place",
   },
 ];
+
+// The command palette's rows here: the site's own words, and the site's own pages where they exist.
+export const paletteSections = [
+  { id: "projects", label: "Work" },
+  { id: "ai", label: "AI" },
+  { id: "experience", label: "Experience" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
+];
+
+export const paletteWork = [
+  { id: "marine-wobbles", label: "Marine Wobbles", hint: "In development", keywords: "kotlin android game", href: "#marine-wobbles" },
+  ...caseStudies.map((c) => ({
+    id: c.slug,
+    label: c.title,
+    hint: "Case study",
+    keywords: c.stack.join(" "),
+    href: `/lab/e/work/${c.slug}`,
+  })),
+  ...entries.map((e) => ({ id: e.title, label: e.title, hint: "Live site", keywords: e.stack.join(" "), href: e.live })),
+  { id: "built", label: "How this site was built", hint: "Page", keywords: "agents process", href: "/lab/e/built" },
+];
+
+export const contactLine = "The quickest way to reach me is a message on LinkedIn.";
 
 export const ai = {
   stance:
@@ -173,6 +195,7 @@ export const ai = {
 
 export const experience = [
   {
+    id: "wandity",
     company: "Wandity",
     role: "Full Stack Developer",
     dates: "Sept 2024 – now",
@@ -184,6 +207,7 @@ export const experience = [
     stack: "Next.js · React Native · TypeScript · tRPC · Drizzle · SQLite · React Query · Zod · Sentry",
   },
   {
+    id: "bidz-labs",
     company: "Bidz Labs",
     role: "Front-end Architect, Web3",
     dates: "Mar – Sept 2024",
@@ -195,6 +219,7 @@ export const experience = [
     stack: "React · TypeScript · Redux Toolkit · React Query · Wagmi · RainbowKit · WebSockets",
   },
   {
+    id: "aventu",
     company: "Aventu",
     role: "Front-end Developer, freelance",
     dates: "Sept 2023 – Mar 2024",
@@ -204,6 +229,7 @@ export const experience = [
     stack: "React · TypeScript · React Flow · Redux Toolkit · RTK Query",
   },
   {
+    id: "canelab",
     company: "CaneLab Ltd.",
     role: "Front-end Developer",
     dates: "Aug 2022 – Dec 2023",

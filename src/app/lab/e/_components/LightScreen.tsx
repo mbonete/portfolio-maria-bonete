@@ -8,7 +8,8 @@ const ALT =
 
 // The same render of the screen under four lamps. Between two lights, the next render sits on top of
 // the current one at the in-between opacity, so the colour flows like a string of fading lights.
-export default function LightScreen() {
+// `echo` is the same screen seen again at the end of the page: decorative, and sharing the one light.
+export default function LightScreen({ echo = false }: { echo?: boolean }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const plates = useRef<(HTMLElement | null)[]>([]);
   const playing = usePlaying();
@@ -80,9 +81,10 @@ export default function LightScreen() {
             src={`/lab/e/light-${l.id}-1600.webp`}
             srcSet={`/lab/e/light-${l.id}-1600.webp 1600w, /lab/e/light-${l.id}-2560.webp 2560w`}
             sizes="100vw"
-            alt={i === 0 ? ALT : ""}
-            aria-hidden={i === 0 ? undefined : true}
-            fetchPriority={i === 0 ? "high" : "low"}
+            alt={i === 0 && !echo ? ALT : ""}
+            aria-hidden={i === 0 && !echo ? undefined : true}
+            fetchPriority={i === 0 && !echo ? "high" : "low"}
+            loading={echo ? "lazy" : undefined}
             decoding="async"
           />
         </picture>

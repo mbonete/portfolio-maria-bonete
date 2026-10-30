@@ -9,7 +9,18 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
-import { person, projects, sections } from "@/lab/content";
+import { useRouter } from "next/navigation";
+import { person, projects, sections as defaultSections } from "@/lab/content";
+
+type WorkRow = { id: string; label: string; hint: string; href: string; keywords?: string };
+
+const defaultWork: WorkRow[] = projects.map((p) => ({
+  id: p.slug,
+  label: p.title,
+  hint: p.kind === "case-study" ? "Case study" : "Entry",
+  keywords: p.tags.join(" "),
+  href: p.href,
+}));
 
 type Item = {
   id: string;
@@ -61,7 +72,16 @@ const openExternal = (href: string) => {
 const isMac = () => /Mac|iPhone|iPad/.test(navigator.platform);
 const noopSubscribe = () => () => {};
 
-export default function CommandPalette() {
+export default function CommandPalette({
+  sections = defaultSections,
+  work = defaultWork,
+  workHeading = "Projects",
+}: {
+  sections?: { id: string; label: string }[];
+  work?: WorkRow[];
+  workHeading?: string;
+}) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
@@ -132,13 +152,17 @@ export default function CommandPalette() {
         run: () => scrollToId(s.id),
       }));
 
-    const work: Item[] = projects.map((p) => ({
-      id: `project-${p.slug}`,
+    const workRows: Item[] = work.map((w) => ({
+      id: `project-${w.id}`,
       group: "Projects",
-      label: p.title,
-      hint: p.kind === "case-study" ? "Case study" : "Entry",
-      keywords: p.tags.join(" "),
-      run: () => openExternal(p.href),
+      label: w.label,
+      hint: w.hint,
+      keywords: w.keywords,
+      run: () => {
+        if (w.href.startsWith("#")) scrollToId(w.href.slice(1));
+        else if (w.href.startsWith("/")) router.push(w.href);
+        else openExternal(w.href);
+      },
     }));
 
     const links: Item[] = [
@@ -165,8 +189,8 @@ export default function CommandPalette() {
       },
     ];
 
-    return [...nav, ...work, ...links, ...actions];
-  }, [open]);
+    return [...nav, ...workRows, ...links, ...actions];
+  }, [open, sections, work, router]);
 
   const results = useMemo(() => {
     const scored = items
@@ -327,7 +351,7 @@ export default function CommandPalette() {
                         role="presentation"
                         className="mono px-4 pb-1 pt-3 text-(--ink-3)"
                       >
-                        {item.group}
+                        {item.group === "Projects" ? workHeading : item.group}
                       </div>
                     )}
                     <div

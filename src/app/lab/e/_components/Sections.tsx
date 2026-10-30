@@ -1,7 +1,10 @@
 import Image from "next/image";
 import { person } from "@/lab/content";
-import { ai, caseStudies, entries, experience, marineWobbles } from "../_content";
+import { ai, caseStudies, contactLine, entries, experience, marineWobbles } from "../_content";
+import LightScreen from "./LightScreen";
+import LightTrack from "./LightTrack";
 import LoopVideo from "./LoopVideo";
+import Toolkit from "./Toolkit";
 import TransitionLink from "./TransitionLink";
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
@@ -15,7 +18,7 @@ export default function Sections() {
           <p>A game in development, two products taken apart as case studies, and two smaller builds.</p>
         </div>
 
-        <article className="le-mw" aria-labelledby="mw-h">
+        <article id="marine-wobbles" className="le-mw" aria-labelledby="mw-h">
           <div className="le-mw-media">
             <div className="le-mount le-phone">
               <LoopVideo
@@ -41,14 +44,11 @@ export default function Sections() {
               ))}
             </dl>
             <p className="le-stack">{marineWobbles.stack.join(" · ")}</p>
-            <div className="le-links">
-              <a href={marineWobbles.repo} {...ext}>Code on GitHub</a>
-            </div>
           </div>
         </article>
 
         {caseStudies.map((c, i) => (
-          <article key={c.slug} className="le-case" data-flip={i % 2 ? "" : undefined} aria-labelledby={`${c.slug}-h`}>
+          <article key={c.slug} id={c.slug} className="le-case" data-flip={i % 2 ? "" : undefined} aria-labelledby={`${c.slug}-h`}>
             <TransitionLink href={`/lab/e/work/${c.slug}`} className="le-mount le-case-media" aria-hidden tabIndex={-1}>
               <Image
                 src={c.image.src}
@@ -70,7 +70,7 @@ export default function Sections() {
                   Read the case study
                 </TransitionLink>
                 <a href={`https://www.youtube.com/watch?v=${c.videoId}`} {...ext}>Watch the demo</a>
-                <a href={c.repo} {...ext}>Code</a>
+                {c.repo && <a href={c.repo} {...ext}>Code</a>}
               </div>
             </div>
           </article>
@@ -114,19 +114,7 @@ export default function Sections() {
         </ol>
 
         <h3 className="le-sub">Toolkit</h3>
-        <ul className="le-toolkit">
-          {ai.toolkit.map((t) => (
-            <li key={t.title}>
-              <h4>{t.title}</h4>
-              <p>{t.body}</p>
-              <p className="le-tags">
-                {t.tags.map((g) => (
-                  <code key={g}>{g}</code>
-                ))}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <Toolkit items={ai.toolkit} />
         <p className="le-aside">
           This site is one worked example: <TransitionLink href="/lab/e/built">how it was built</TransitionLink>.
         </p>
@@ -139,7 +127,7 @@ export default function Sections() {
         </div>
         <ol className="le-roles">
           {experience.map((r) => (
-            <li key={r.company}>
+            <li key={r.company} id={r.id}>
               <p className="le-dates">{r.dates}</p>
               <div>
                 <h3>
@@ -171,36 +159,48 @@ export default function Sections() {
             my method: in an interface, in a pull request, and in whatever an agent hands back.
           </p>
         </div>
-        <dl className="le-facts le-about-facts">
-          <div>
-            <dt>Based in</dt>
-            <dd>Madrid, Spain</dd>
-          </div>
-          <div>
-            <dt>Languages</dt>
-            <dd>Spanish (native), English (C1)</dd>
-          </div>
-          <div>
-            <dt>Education</dt>
-            <dd>BA Art History, Complutense University of Madrid: Extraordinary Award (9.48/10)</dd>
-          </div>
-        </dl>
+        <div className="le-about-side">
+          <figure className="le-mount le-about-photo">
+            <Image src={person.photo} width={430} height={448} alt="Maria Bonete, smiling, with long brown hair." sizes="260px" />
+          </figure>
+          <dl className="le-facts le-about-facts">
+            <div>
+              <dt>Based in</dt>
+              <dd>Madrid, Spain</dd>
+            </div>
+            <div>
+              <dt>Languages</dt>
+              <dd>Spanish (native), English (C1)</dd>
+            </div>
+            <div>
+              <dt>Education</dt>
+              <dd>BA Art History, Complutense University of Madrid: Extraordinary Award (9.48/10)</dd>
+            </div>
+          </dl>
+        </div>
       </section>
 
+      {/* The page ends where it began: the screen again, under the same light. */}
       <section id="contact" className="le-sec le-contact" aria-labelledby="contact-h">
-        <h2 id="contact-h">Contact</h2>
-        <p>The quickest way to reach me is a message on LinkedIn.</p>
-        <ul className="le-contact-links">
-          <li>
-            <a href={person.links.linkedin} {...ext}>LinkedIn</a>
-          </li>
-          <li>
-            <a href={person.links.github} {...ext}>GitHub</a>
-          </li>
-          <li>
-            <a href={person.links.cv} {...ext}>CV (PDF)</a>
-          </li>
-        </ul>
+        <LightScreen echo />
+        <div className="le-contact-head">
+          <h2 id="contact-h">Contact</h2>
+          <p>{contactLine}</p>
+        </div>
+        <div className="le-contact-end">
+          <ul className="le-contact-links">
+            <li>
+              <a href={person.links.linkedin} {...ext}>LinkedIn</a>
+            </li>
+            <li>
+              <a href={person.links.github} {...ext}>GitHub</a>
+            </li>
+            <li>
+              <a href={person.links.cv} {...ext}>CV (PDF)</a>
+            </li>
+          </ul>
+          <LightTrack />
+        </div>
       </section>
 
       <footer className="le-foot">

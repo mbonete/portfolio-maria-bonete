@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ContactStrip from "../_components/ContactStrip";
 import TransitionLink from "../_components/TransitionLink";
 
 export const metadata: Metadata = {
@@ -61,6 +62,8 @@ export default function BuiltPage() {
           Left out on purpose: a chatbot that answers questions about me. It would be a cliché, it could make things up in
           front of a recruiter, and it would need a paid key and abuse protection.
         </p>
+
+        <ContactStrip />
       </main>
     </div>
   );

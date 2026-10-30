@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { caseStudies } from "../../_content";
+import ContactStrip from "../../_components/ContactStrip";
 import TransitionLink from "../../_components/TransitionLink";
 
 export function generateStaticParams() {
@@ -25,7 +26,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   return (
     <div className="le le-page">
       <header className="le-page-top">
-        <TransitionLink href="/lab/e#projects" className="le-back">
+        <TransitionLink href={`/lab/e#${c.slug}`} className="le-back">
           Back to work
         </TransitionLink>
         <span className="le-page-crumb">Case study</span>
@@ -39,9 +40,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <a href={`https://www.youtube.com/watch?v=${c.videoId}`} {...ext} className="le-link-strong">
               Watch the demo
             </a>
-            <a href={c.repo} {...ext}>
-              Code on GitHub
-            </a>
+            {c.repo && (
+              <a href={c.repo} {...ext}>
+                Code on GitHub
+              </a>
+            )}
           </div>
         </div>
 
@@ -99,6 +102,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             {other.title}
           </TransitionLink>
         </nav>
+
+        <ContactStrip />
       </main>
     </div>
   );
