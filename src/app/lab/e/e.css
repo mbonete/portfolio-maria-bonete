@@ -11,6 +11,7 @@
   --seal: #b3362b;
   --violet: #5d44b3;
   --leaf: #c6a160;
+  --leaf-hi: #e2c48a;
   --line: color-mix(in oklab, var(--leaf) 34%, transparent);
   --line-2: color-mix(in oklab, var(--leaf) 58%, transparent);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -105,7 +106,7 @@
   position: absolute;
   inset: 11px 0;
   border-radius: 1px;
-  background: linear-gradient(90deg, #e0a83f, #e8692c 25%, #8f7ff0 50%, #eef1f6 75%, #e0a83f);
+  background: linear-gradient(90deg, #e0a83f, #8f7ff0 25%, #e8692c 50%, #eef1f6 75%, #e0a83f);
   opacity: 0.85;
 }
 .le-track:focus-visible { outline-offset: 2px; }
@@ -235,6 +236,7 @@
   gap: 3px;
   padding-top: 11px;
   border-top: 1px solid color-mix(in oklab, var(--accent) 38%, transparent);
+  transition: border-color 220ms var(--ease);
 }
 .le-areas strong {
   font-family: var(--font-e-display), serif;
@@ -244,6 +246,11 @@
   color: var(--bone);
 }
 .le-areas span { font-size: 0.8125rem; line-height: 1.45; color: var(--bone-2); }
+/* The area names jump to their proof. Hierarchy by tone: the name rests in ivory over its beige
+   fact. No underline: on hover or focus the name turns gold-leaf and its hairline brightens. */
+.le-areas a { color: var(--bone); transition: color 220ms var(--ease); }
+.le-areas a:hover, .le-areas a:focus-visible { color: var(--leaf-hi); }
+.le-areas li:has(a:hover), .le-areas li:has(a:focus-visible) { border-top-color: var(--leaf); }
 
 .le-actions {
   margin-top: 38px;
@@ -493,7 +500,6 @@
 .le-stack-lg { font-size: 1rem; line-height: 1.7; }
 .le-links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 22px; font-size: 0.9375rem; font-weight: 500; }
 .le-links a,
-.le-areas a,
 .le-aside a,
 .le-foot a {
   text-decoration: underline;
@@ -502,7 +508,7 @@
   text-underline-offset: 5px;
   transition: text-underline-offset 220ms var(--ease), color 220ms var(--ease);
 }
-.le-links a:hover, .le-areas a:hover, .le-aside a:hover, .le-foot a:hover { text-underline-offset: 8px; color: var(--bone-hi); }
+.le-links a:hover, .le-aside a:hover, .le-foot a:hover { text-underline-offset: 8px; color: var(--bone-hi); }
 .le-link-strong { font-weight: 700; color: var(--bone); }
 
 /* the mount: indigo silk mat, gold piping on the picture's edge */

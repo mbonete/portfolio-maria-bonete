@@ -26,7 +26,7 @@ const steps = [
   },
   {
     title: "One scene, four lamps",
-    body: "The same render exists under gold, sunset, dusk and daylight lamps. The page blends between them at a constant pace, the accent colour follows, and the light track lets you stop on any light. It respects reduced motion and pauses off screen.",
+    body: "The same render exists under gold, dusk, sunset and daylight lamps. The page blends between them at a constant pace, the accent colour follows, and the light track lets you stop on any light. It respects reduced motion and pauses off screen.",
   },
   {
     title: "Verified like any other change",

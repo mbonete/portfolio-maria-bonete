@@ -2,12 +2,12 @@
 
 import { useSyncExternalStore } from "react";
 
-// The lamp's colour as one continuous position: 0 gold, 1 sunset, 2 dusk, 3 daylight, 4 = gold again.
+// The lamp's colour as one continuous position: 0 gold, 1 dusk, 2 sunset, 3 daylight, 4 = gold again.
 // The screen and the track share it; per-frame updates go straight to the DOM, not through React.
 export const LIGHTS = [
   { id: "gold", label: "Gold", accent: [0xd8, 0xb0, 0x61] },
-  { id: "sunset", label: "Sunset", accent: [0xec, 0x8a, 0x4c] },
   { id: "dusk", label: "Dusk", accent: [0xb7, 0xa5, 0xf0] },
+  { id: "sunset", label: "Sunset", accent: [0xec, 0x8a, 0x4c] },
   { id: "daylight", label: "Daylight", accent: [0xec, 0xe0, 0xc4] },
 ] as const;
 
