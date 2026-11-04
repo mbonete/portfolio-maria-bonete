@@ -1,20 +1,18 @@
-import { Shippori_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
+import { Hina_Mincho, Instrument_Sans } from "next/font/google";
 import "./e.css";
 
-// Both faces are Japanese, so Google splits them into hundreds of slices and next/font would preload
-// every one. Without preload, unicode-range fetches only the slices the page's characters need.
-const display = Shippori_Mincho({
+// Display: Hina Mincho, a slender Mincho, at its one weight. Text: Instrument Sans, variable,
+// with a true italic for the quiet secondary lines.
+const display = Hina_Mincho({
   variable: "--font-e-display",
-  weight: ["500", "600"],
+  weight: "400",
   subsets: ["latin"],
-  preload: false,
 });
 
-const text = Zen_Kaku_Gothic_New({
+const text = Instrument_Sans({
   variable: "--font-e-text",
-  weight: ["400", "500", "700"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
-  preload: false,
 });
 
 export default function LabELayout({ children }: { children: React.ReactNode }) {
