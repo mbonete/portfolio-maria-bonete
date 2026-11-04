@@ -74,12 +74,12 @@ export default function LightScreen({ echo = false }: { echo?: boolean }) {
         >
           <source
             media="(max-aspect-ratio: 4/5)"
-            srcSet={`/lab/e/light-${l.id}-m780.webp 780w, /lab/e/light-${l.id}-m1170.webp 1170w`}
+            srcSet={`/lab/e/light-${l.id}-m780.webp 780w, /lab/e/light-${l.id}-m1170.webp 1170w, /lab/e/light-${l.id}-m1560.webp 1560w`}
             sizes="100vw"
           />
           <img
             src={`/lab/e/light-${l.id}-1600.webp`}
-            srcSet={`/lab/e/light-${l.id}-1600.webp 1600w, /lab/e/light-${l.id}-2560.webp 2560w`}
+            srcSet={`/lab/e/light-${l.id}-1600.webp 1600w, /lab/e/light-${l.id}-2560.webp 2560w, /lab/e/light-${l.id}-2880.webp 2880w, /lab/e/light-${l.id}-3840.webp 3840w`}
             sizes="100vw"
             alt={i === 0 && !echo ? ALT : ""}
             aria-hidden={i === 0 && !echo ? undefined : true}
