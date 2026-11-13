@@ -6,6 +6,7 @@ const pocs = [
   { href: "/lab/c", name: "C — Hybrid", note: "A's restraint + one shader moment" },
   { href: "/lab/d", name: "D — Drench", note: "Real subject over giant type, añil or almagre ground, four area tokens" },
   { href: "/lab/e", name: "E — Gold Screen", note: "Her shadow on a gold-leaf screen in a dark lacquer room, Blender render" },
+  { href: "/lab/f", name: "F — Object", note: "One crafted object on one flat colour per project; the hero screen folds shut at a click" },
 ];
 
 export default function LabIndex() {

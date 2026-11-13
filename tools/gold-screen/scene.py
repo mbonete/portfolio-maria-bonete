@@ -173,7 +173,11 @@ fig, n, l, p = mat("figure")
 FIGSET = os.environ.get("FIGSET", "2")
 ft = n.new("ShaderNodeTexImage"); ft.image = bpy.data.images.load(os.path.join(HERE, "figure2.png" if FIGSET == "2" else "figure.png"))
 p.inputs["Base Color"].default_value = (0, 0, 0, 1)
-l.new(ft.outputs["Alpha"], p.inputs["Alpha"])
+# SIL: how much of her is there, 1 to 0. The fold sequence fades her out as the screen shuts,
+# since with the panels turned away there is no one left standing in the lamp.
+SIL = float(os.environ.get("SIL", "1"))
+silk = n.new("ShaderNodeMath"); silk.operation = "MULTIPLY"; silk.inputs[1].default_value = SIL
+l.new(ft.outputs["Alpha"], silk.inputs[0]); l.new(silk.outputs["Value"], p.inputs["Alpha"])
 
 # ---------- screen geometry ----------
 PW, PH, T, FR, LEG = 1.0, 1.6, 0.035, 0.04, 0.05
@@ -194,6 +198,11 @@ p.inputs["Base Color"].default_value = (0.90, 0.70, 0.36, 1)
 p.inputs["Metallic"].default_value = 1.0
 p.inputs["Roughness"].default_value = 0.3
 angles = [FOLD if i % 2 == 0 else -FOLD for i in range(4)]
+# OPEN: the fold the camera and the lamp are set for. A render at a tighter FOLD is the same screen
+# folding in front of the same camera and lamp, its middle held still, so the renders make one sequence.
+OPEN = math.radians(float(os.environ.get("OPEN", math.degrees(FOLD))))
+DY = 0.5 * PW * (math.sin(FOLD) - math.sin(OPEN))
+open_centres = [Vector(((i - 1.5) * PW * math.cos(OPEN), 0.5 * PW * math.sin(OPEN), LEG + PH / 2)) for i in range(4)]
 
 def box(name, size, loc, rz, m, bevel=0.0):
     bpy.ops.mesh.primitive_cube_add(size=1, location=loc, rotation=(0, 0, rz))
@@ -214,7 +223,8 @@ for a in angles:
 cx = (pts[0].x + pts[-1].x) / 2
 centres = []
 for i, a in enumerate(angles):
-    c = (pts[i] + pts[i + 1]) / 2; c.x -= cx; c.z = LEG + PH / 2
+    made = set(bpy.data.objects)
+    c = (pts[i] + pts[i + 1]) / 2; c.x -= cx; c.y -= DY; c.z = LEG + PH / 2
     centres.append(c)
     box(f"frame{i}", (PW, T, PH), c, a, lac, 0.005)
     bpy.ops.mesh.primitive_plane_add(size=1)
@@ -251,9 +261,24 @@ for i, a in enumerate(angles):
                 nail = bpy.context.active_object; nail.data.materials.append(brs); bpy.ops.object.shade_smooth()
         f = c + d * (sx * (PW / 2 - 0.07)); f.z = LEG / 2
         box(f"foot{i}{sx}", (0.07, T + 0.02, LEG), f, a, lac, 0.004)
+    for ob in set(bpy.data.objects) - made:
+        ob["panel"] = i
 
 bpy.ops.mesh.primitive_plane_add(size=40)
-bpy.context.active_object.data.materials.append(flo)
+floor = bpy.context.active_object
+floor.data.materials.append(flo)
+# CUTOUT: the screen alone on a transparent ground, for pages that set it on a flat colour. The floor
+# keeps only the shadow it receives, and a pale world stands in for the lit room the leaf mirrors.
+CUTOUT = os.environ.get("CUTOUT") == "1"
+if CUTOUT:
+    scn.render.film_transparent = True
+    floor.is_shadow_catcher = True
+    # matte, so the catcher keeps a soft contact shadow and no mirror image
+    mf, _, _, mp_ = mat("matte floor"); mp_.inputs["Roughness"].default_value = 1.0
+    mp_.inputs["Base Color"].default_value = (0.8, 0.8, 0.8, 1)
+    floor.data.materials[0] = mf
+    wc = tuple(float(v) for v in os.environ.get("WORLDC", "0.30,0.28,0.26").split(","))
+    world.node_tree.nodes["Background"].inputs["Color"].default_value = (*wc, 1)
 
 # ---------- her silhouette: a caster parallel to panel 2, near the fold with panel 1 ----------
 P1 = centres[1]; A1 = angles[1]; D1 = Vector((math.cos(A1), math.sin(A1), 0))
@@ -272,7 +297,7 @@ figob.data.materials.append(fig)
 # Gold is mostly mirror: inside a real cast shadow it still reflects the candles behind the camera,
 # so the silhouette washes out. Project the same matte from the caster onto the screen face and
 # darken the whole surface there; with the caster close to the panel this sits on the cast shadow.
-SHK = float(os.environ.get("SHK", "0.95"))
+SHK = float(os.environ.get("SHK", "0.95")) * SIL
 if SHK > 0:
     fn_, fl_ = face.node_tree.nodes, face.node_tree.links
     out_ = fn_["Material Output"]
@@ -299,13 +324,16 @@ def aim(ob, target):
 
 WARM = (1.0, 0.90, 0.78)
 # lamp: from the front, a little left and above, along panel 2's normal; casts the silhouette
-lamp_dir = (front(A1) * 1.0 + D1 * -0.18 + Vector((0, 0, 0.14))).normalized()
-bpy.ops.object.light_add(type="SPOT", location=figob.location + lamp_dir * 5.5)
+# set for the open screen, so it stays put while the screen folds
+A1o = -OPEN; P1o = open_centres[1]; D1o = Vector((math.cos(A1o), math.sin(A1o), 0))
+fig_open = P1o + D1o * FIG_OFF + front(A1o) * DIST; fig_open.z = FIG_Z
+lamp_dir = (front(A1o) * 1.0 + D1o * -0.18 + Vector((0, 0, 0.14))).normalized()
+bpy.ops.object.light_add(type="SPOT", location=fig_open + lamp_dir * 5.5)
 key = bpy.context.active_object
 key.data.energy = float(os.environ.get("KEY", "500")); key.data.color = tuple(float(v) for v in os.environ.get("LAMPC", "1.0,0.84,0.64").split(","))
 key.data.spot_size = math.radians(float(os.environ.get("SPOT", "30"))); key.data.spot_blend = float(os.environ.get("BLEND", "0.55"))
 key.data.shadow_soft_size = float(os.environ.get("SOFT", "0.025"))
-aim(key, P1 + D1 * 0.1 + Vector((0, 0, float(os.environ.get("AIMZ", "-0.05")))))
+aim(key, P1o + D1o * 0.1 + Vector((0, 0, float(os.environ.get("AIMZ", "-0.05")))))
 # candle wall behind the camera: what the burnished leaf mirrors
 WALLE = float(os.environ.get("WALL", "160"))
 for k, (x, z, s, e) in enumerate([(-4.2, 1.0, 0.9, 1.0), (-2.6, 1.6, 0.7, 0.7), (-1.2, 0.8, 1.2, 1.25),
@@ -322,8 +350,8 @@ aim(rim, (0, 0, 0.8)); rim.visible_camera = False; rim.visible_glossy = False
 # ---------- camera: square-on to panel 2 so her profile is not skewed ----------
 bpy.ops.object.camera_add()
 cam = bpy.context.active_object; scn.camera = cam
-screen_mid = (centres[1] + centres[2]) / 2
-look = (front(A1) * 0.85 + front(angles[2]) * 0.15).normalized()
+screen_mid = (open_centres[1] + open_centres[2]) / 2
+look = (front(A1o) * 0.85 + front(OPEN) * 0.15).normalized()
 if VIEW == "desktop":
     cam.data.lens = float(os.environ.get("LENS", "38"))
     cam.location = screen_mid + look * float(os.environ.get("CAMD", "4.4")) + Vector((0, 0, -0.1))
@@ -332,6 +360,13 @@ elif VIEW == "mobile":
     cam.data.lens = float(os.environ.get("LENS", "30"))
     cam.location = screen_mid + look * float(os.environ.get("CAMD", "3.6")) + Vector((0, 0, -0.25))
     cam.data.shift_x = float(os.environ.get("SHX", "-0.1")); cam.data.shift_y = float(os.environ.get("SHY", "0.12"))
+elif VIEW == "object":
+    # the whole screen, centred, still square-on to panel 2: an object photographed for a catalogue
+    mid = sum(open_centres, Vector()) / 4
+    screen_mid = Vector((mid.x, mid.y, 0))
+    cam.data.lens = float(os.environ.get("LENS", "50"))
+    cam.location = screen_mid + look * float(os.environ.get("CAMD", "6.2")) + Vector((0, 0, float(os.environ.get("CAMZ", "1.05"))))
+    cam.data.shift_y = float(os.environ.get("SHY", "0.0"))
 cam.location.z = max(cam.location.z, 0.55)
 # Tall renders keep the original frame and extend it downward, so the floor's reflection can run on
 # below the hero. BASEH is the height the framing was designed at.
@@ -346,7 +381,17 @@ if BASEH != RH:
         # shift is measured in the fitted dimension: the height before, the width now
         cam.data.shift_y = (cam.data.shift_y * BASEH + BASEH / 2 - RH / 2) / RW
         cam.data.shift_x = cam.data.shift_x * BASEH / RW
-aim(cam, Vector((screen_mid.x, screen_mid.y, cam.location.z)))
+aim(cam, Vector((screen_mid.x, screen_mid.y, LEG + PH / 2 if VIEW == "object" else cam.location.z)))
+
+# FRONT=1,3: a matte of those panels only (the rest held out, the floor unseen), so a page can set
+# type between the panels that fold toward the viewer and the ones that fold away.
+if os.environ.get("FRONT"):
+    keep = {int(v) for v in os.environ["FRONT"].split(",")}
+    for ob in scn.objects:
+        if ob.type != "MESH" or ob is floor:
+            continue
+        ob.is_holdout = ob.get("panel") not in keep
+    floor.visible_camera = False
 
 ANIM = int(os.environ.get("ANIM", "0"))
 if not ANIM:

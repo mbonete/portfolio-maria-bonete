@@ -19,6 +19,7 @@ export const person = {
 
 export const currently = {
   role: "Full Stack Developer at Wandity",
+  company: "Wandity",
   building: "Agent-driven workflows for shipping production apps",
 };
 
