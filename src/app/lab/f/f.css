@@ -256,7 +256,7 @@
 .lf-links a:hover { text-underline-offset: 8px; }
 .lf-links .lf-link-strong { font-weight: 600; text-decoration-thickness: 2px; }
 
-/* ---------- AI, contact, end ---------- */
+/* ---------- AI (straight after the hero), contact, end ---------- */
 
 .lf-ai {
   padding: clamp(96px, 12vw, 176px) var(--gutter);
@@ -276,7 +276,23 @@
 .lf-principles li { padding-top: 18px; border-top: 1px solid color-mix(in oklab, var(--paper) 30%, transparent); }
 .lf-principles h3 { font-size: 1.5rem; line-height: 1.12; letter-spacing: -0.01em; }
 .lf-principles p { margin-top: 12px; font-size: 0.9375rem; color: color-mix(in oklab, var(--paper) 76%, var(--ink)); }
-.lf-aside { margin-top: 56px; color: color-mix(in oklab, var(--paper) 76%, var(--ink)); }
+/* The site itself as the case study: the section's last word, in the display face. */
+.lf-built {
+  max-width: 30ch;
+  margin-top: clamp(64px, 8vw, 112px);
+  font-family: var(--font-f-display), serif;
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  line-height: 1.15;
+}
+.lf-built a {
+  display: inline-block;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+  transition: text-underline-offset 220ms var(--ease);
+}
+.lf-built a:hover { text-underline-offset: 12px; }
+.lf-aside { margin-top: 32px; color: color-mix(in oklab, var(--paper) 76%, var(--ink)); }
 .lf-aside a { color: var(--paper); text-decoration: underline; text-underline-offset: 5px; }
 
 .lf-contact {

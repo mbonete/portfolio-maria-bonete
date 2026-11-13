@@ -7,7 +7,7 @@ import FoldingScreen from "./_components/FoldingScreen";
 export const metadata: Metadata = {
   title: "Maria Bonete: full-stack developer",
   description:
-    "Full-stack developer in Madrid, specialising in React Native, Web3 and AI-driven engineering. Shipped work, case studies and a measured AI practice.",
+    "Full-stack developer in Madrid, specialising in AI-driven engineering, web, React Native and Web3. A measured AI practice, shipped work and case studies.",
 };
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
@@ -152,7 +152,7 @@ export default function LabF() {
               <p className="lf-role">
                 <span className="lf-sr">Full-stack developer in Madrid, now at {currently.company}. </span>
                 {/* Non-breaking hyphen keeps "AI-driven" on one line. */}
-                {person.tagline.replace("Full-stack developer, specialising", "Specialising").replace("AI-driven", "AI\u2011driven")}
+                Specialising in AI{"\u2011"}driven engineering, web, React Native and Web3.
               </p>
               <a className="lf-primary" href="#work">
                 See the work
@@ -162,52 +162,7 @@ export default function LabF() {
         />
       </section>
 
-      <main id="work" aria-labelledby="work-h">
-        <div className="lf-work-head">
-          <h2 id="work-h">Work</h2>
-          <p>A game in development, two products taken apart as case studies, and two smaller builds.</p>
-        </div>
-
-        {bands.map((b) => (
-          <article
-            key={b.id}
-            id={b.id}
-            className="lf-band"
-            data-tone={b.tone}
-            data-cut={b.object.cut || undefined}
-            data-spread={b.object.spread || undefined}
-            style={{ "--band": b.ground } as React.CSSProperties}
-            aria-labelledby={`${b.id}-h`}
-          >
-            <h3 id={`${b.id}-h`} className="lf-band-title">
-              {b.title}
-            </h3>
-            <div className="lf-band-object">
-              <Image
-                src={b.object.src}
-                width={b.object.w}
-                height={b.object.h}
-                alt={b.object.alt}
-                sizes="(max-width: 760px) 92vw, 56vw"
-              />
-            </div>
-            <div className="lf-band-copy">
-              {b.status && <p className="lf-status">{b.status}</p>}
-              <p className="lf-summary">{b.summary}</p>
-              <p className="lf-stack">{b.stack.join(" · ")}</p>
-              {b.links.length > 0 && (
-                <div className="lf-links">
-                  {b.links.map((l) => (
-                    <a key={l.label} href={l.href} className={l.primary ? "lf-link-strong" : undefined} {...(l.external ? ext : {})}>
-                      {l.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          </article>
-        ))}
-
+      <main>
         <section id="ai" className="lf-ai" aria-labelledby="ai-h">
           <h2 id="ai-h">AI-driven engineering</h2>
           <p className="lf-stance">{ai.stance}</p>
@@ -219,9 +174,60 @@ export default function LabF() {
               </li>
             ))}
           </ol>
+          <p className="lf-built">
+            This portfolio was designed and built with agents, the same way.{" "}
+            <a href="/lab/e/built">How this site was built</a>
+          </p>
           <p className="lf-aside">
             The full practice, with the toolkit, is on <a href="/lab/e#ai">the Gold Screen page</a>.
           </p>
+        </section>
+
+        <section id="work" aria-labelledby="work-h">
+          <div className="lf-work-head">
+            <h2 id="work-h">Work</h2>
+            <p>A game in development, two products taken apart as case studies, and two smaller builds.</p>
+          </div>
+
+          {bands.map((b) => (
+            <article
+              key={b.id}
+              id={b.id}
+              className="lf-band"
+              data-tone={b.tone}
+              data-cut={b.object.cut || undefined}
+              data-spread={b.object.spread || undefined}
+              style={{ "--band": b.ground } as React.CSSProperties}
+              aria-labelledby={`${b.id}-h`}
+            >
+              <h3 id={`${b.id}-h`} className="lf-band-title">
+                {b.title}
+              </h3>
+              <div className="lf-band-object">
+                <Image
+                  src={b.object.src}
+                  width={b.object.w}
+                  height={b.object.h}
+                  alt={b.object.alt}
+                  sizes="(max-width: 760px) 92vw, 56vw"
+                />
+              </div>
+              <div className="lf-band-copy">
+                {b.status && <p className="lf-status">{b.status}</p>}
+                <p className="lf-summary">{b.summary}</p>
+                <p className="lf-stack">{b.stack.join(" · ")}</p>
+                {b.links.length > 0 && (
+                  <div className="lf-links">
+                    {b.links.map((l) => (
+                      <a key={l.label} href={l.href} className={l.primary ? "lf-link-strong" : undefined} {...(l.external ? ext : {})}>
+                        {l.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
         </section>
 
         <section id="contact" className="lf-contact" aria-labelledby="contact-h">
@@ -243,9 +249,6 @@ export default function LabF() {
 
       <footer className="lf-end">
         <p>Maria Bonete · Madrid</p>
-        <p>
-          <a href="/lab/e/built">How this site was built</a>
-        </p>
       </footer>
     </div>
   );
