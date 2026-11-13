@@ -119,9 +119,10 @@ export const entries = [
   },
   {
     title: "The Coffee Place",
-    summary: "An editorial-brutalist shop for a fictional coffee roaster: explore the offerings and place an order.",
-    stack: ["Next.js", "JavaScript", "styled-components"],
-    image: { src: "/the-coffee-place.webp", w: 2760, h: 1766 },
+    summary:
+      "A fictional café whose menu is a numbered series of six sugar sachets: tear one open into its page, stamp drinks into the cart and pay to a printed receipt.",
+    stack: ["Next.js", "React", "JavaScript", "styled-components"],
+    image: { src: "/the-coffee-place.webp", w: 2880, h: 1800 },
     live: "https://the-coffee-place.vercel.app/",
     repo: "https://github.com/mbonete/coffee-place",
   },
