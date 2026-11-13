@@ -36,15 +36,21 @@
    mirrors it. */
 .lf-hero {
   --azurite: #6581df;
+  /* One unit sizes the name, the screen and the gaps around them: as large as the window's height
+     allows. */
+  --u: max(3.4rem, min(18.5vw, calc((100svh - 160px) / 3.7), 24rem));
   position: relative;
   isolation: isolate;
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: max(100svh, 640px);
-  background: var(--azurite);
+  /* The ground carries its own grain, the same tile as the one over everything below: the two
+     add up to a stronger grain on the blue than on the screen. */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.088 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), var(--azurite);
   overflow: clip;
 }
-/* One grain over ground and screen alike, so the render's cut edge sits in the same surface. */
+/* A light grain over ground and screen alike, so the render's cut edge sits in the same surface.
+   (On the ink of the name and the text, multiplied, it does not show.) */
 .lf-hero::after {
   content: "";
   position: absolute;
@@ -52,7 +58,7 @@
   z-index: 3;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.32;
+  opacity: 0.16;
   mix-blend-mode: multiply;
 }
 
@@ -74,10 +80,11 @@
 }
 .lf-top a:hover { text-decoration-color: currentColor; }
 
-/* One unit sizes the name and the screen, so the screen crosses the letters at the same place at
-   every width: as large as the window's height allows. */
+/* The name and the screen share --u, so the screen crosses the letters at the same place at every
+   width. */
 .lf-stage {
-  --u: max(3.4rem, min(18.5vw, calc((100svh - 190px) / 3.25), 24rem));
+  /* The name's size: a touch under the unit, so the screen stays the larger form. */
+  --n: calc(var(--u) * 0.95);
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto;
@@ -90,8 +97,9 @@
   /* Between the two plates: in front of the panels folding away, behind the two folding forward. */
   z-index: 1;
   font-family: var(--font-f-display), serif;
-  font-size: var(--u);
-  line-height: 0.9;
+  font-size: var(--n);
+  /* Tight to the capitals: no empty line box above the name. */
+  line-height: 0.75;
   letter-spacing: -0.035em;
   word-spacing: -0.08em;
   white-space: nowrap;
@@ -104,11 +112,11 @@
    Mincho: descent 0.287em, x-height 0.38em). */
 .lf-tag {
   position: absolute;
-  left: calc(var(--u) * 0.03);
-  bottom: calc(var(--u) * 0.71);
+  left: calc(var(--n) * 0.03);
+  bottom: calc(var(--n) * 0.71);
   color: var(--ink);
   font-family: var(--font-f-text), system-ui, sans-serif;
-  font-size: max(0.75rem, calc(var(--u) * 0.052));
+  font-size: max(0.75rem, calc(var(--n) * 0.052));
   line-height: 1.2;
   letter-spacing: 0;
   word-spacing: normal;
@@ -120,20 +128,27 @@
   position: relative;
   z-index: 0;
   display: grid;
-  width: min(calc(var(--u) * 4.5), 96vw);
+  /* Wider than the name, so the object leads and the name rests on it. */
+  width: min(calc(var(--u) * 5.7), 96vw);
   /* Lifts the screen just into the name: its top edge covers the lowest tenth of the letters. */
-  margin-top: calc(var(--u) * -0.15);
+  margin-top: calc(var(--u) * -0.075);
   user-select: none;
   -webkit-user-select: none;
 }
 .lf-object-front { z-index: 2; pointer-events: none; }
 .lf-object > * { grid-area: 1 / 1; display: block; width: 100%; height: auto; }
-/* The still is the open screen at full size; while it folds, the renders play on the canvas. */
-.lf-seq { visibility: hidden; }
-.lf-stage[data-moving] .lf-seq { visibility: visible; }
-.lf-stage[data-moving] .lf-open { visibility: hidden; }
+/* What shows, by the stage's data-state: the shut still, the renders while it moves, or the open
+   still. It arrives shut, except with reduced motion, when it is open from the start. */
+.lf-shut, .lf-open, .lf-seq { visibility: hidden; }
+.lf-stage:is([data-state="arriving"], [data-state="shut"]) .lf-shut,
+.lf-stage[data-state="open"] .lf-open,
+.lf-stage[data-state="moving"] .lf-seq { visibility: visible; }
+@media (prefers-reduced-motion: reduce) {
+  .lf-stage[data-state="arriving"] .lf-shut { visibility: hidden; }
+  .lf-stage[data-state="arriving"] .lf-open { visibility: visible; }
+}
 .lf-stage[data-ready] .lf-object:not(.lf-object-front) { cursor: pointer; }
-.lf-hero:has(.lf-fold button:focus-visible) .lf-object:not(.lf-object-front) {
+.lf-hero:has(.lf-fold:focus-visible) .lf-object:not(.lf-object-front) {
   outline: 2px solid var(--ink);
   outline-offset: 4px;
 }
@@ -143,14 +158,16 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: 32px;
-  /* The screen's floor shadow runs under the foot. */
-  margin-top: calc(var(--u) * -0.12);
+  /* Up beside the screen's feet: the foot runs over its floor shadow. */
+  margin-top: calc(var(--u) * -0.2);
   padding: 0 var(--gutter) 28px;
   position: relative;
   z-index: 2;
 }
-.lf-intro { display: grid; justify-items: start; gap: 16px; }
-.lf-role { max-width: 32ch; font-size: 1.0625rem; line-height: 1.45; }
+/* The last two corners of the frame the nav starts: what she does under "Work", the way in under
+   "Get in touch", on one baseline. */
+.lf-intro { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 32px; }
+.lf-role { font-size: 1.0625rem; line-height: 1.45; }
 .lf-primary {
   display: inline-flex;
   align-items: center;
@@ -163,26 +180,6 @@
   transition: background-color 200ms var(--ease);
 }
 .lf-primary:hover { background: color-mix(in oklab, var(--ink) 80%, var(--azurite)); }
-
-/* A museum label for the screen, and how to fold it. */
-.lf-caption {
-  display: grid;
-  gap: 2px;
-  max-width: 30ch;
-  font-size: 0.8125rem;
-  line-height: 1.4;
-}
-.lf-caption-title { font-weight: 600; }
-.lf-fold {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 14px;
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid color-mix(in oklab, var(--ink) 45%, transparent);
-}
-.lf-fold-cue { font-weight: 600; }
-.lf-stage:not([data-ready]) ~ .lf-foot .lf-fold-cue { visibility: hidden; }
 
 /* ---------- Work: one band per project, the same formula in its own colour ---------- */
 
@@ -318,12 +315,14 @@
 @media (max-width: 760px) {
   .lf-nav { flex-wrap: wrap; gap: 4px 18px; }
   /* Two lines, "Bonete" threaded through the screen. */
-  .lf-stage { --u: 30vw; padding-top: 12px; }
+  .lf-hero { --u: 30vw; }
+  .lf-stage { padding-top: 12px; }
   .lf-name { width: 100%; white-space: normal; line-height: 0.88; }
   .lf-object { margin-top: calc(var(--u) * -0.12); }
   .lf-tag { display: none; }
-  .lf-caption > p:not(.lf-caption-title) { display: none; }
   .lf-foot { flex-direction: column; align-items: stretch; gap: 28px; margin-top: 0; }
+  .lf-intro { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .lf-role { max-width: 32ch; }
   .lf-work-head { grid-template-columns: 1fr; }
   .lf-work-head p { justify-self: start; }
   .lf-band { grid-template-columns: 1fr; grid-template-areas: "title" "object" "copy"; }

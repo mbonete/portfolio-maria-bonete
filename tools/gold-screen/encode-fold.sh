@@ -25,9 +25,12 @@ for f in $frames; do
   enc $D/fold/f-$i.png ${SEQW:-1400} $P/f-$i.webp 80
 done
 last=${${frames[-1]:t:r}#o-}
+# the shut and open frames also ship large, for the page to rest on
 for w in 2360 1770 1180; do
   enc $D/fold/b-$last.png $w $P/open-$w.webp
   enc $D/fold/f-$last.png $w $P/open-front-$w.webp
+  enc $D/fold/b-00.png $w $P/shut-$w.webp
+  enc $D/fold/f-00.png $w $P/shut-front-$w.webp
 done
 magick identify -format "%wx%h\n" $P/open-2360.webp $P/b-00.webp
 du -sh $P

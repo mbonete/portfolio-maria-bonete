@@ -352,6 +352,8 @@ bpy.ops.object.camera_add()
 cam = bpy.context.active_object; scn.camera = cam
 screen_mid = (open_centres[1] + open_centres[2]) / 2
 look = (front(A1o) * 0.85 + front(OPEN) * 0.15).normalized()
+if os.environ.get("FRONTAL") == "1":   # square-on to the whole screen instead of to panel 2
+    look = front(0)
 if VIEW == "desktop":
     cam.data.lens = float(os.environ.get("LENS", "38"))
     cam.location = screen_mid + look * float(os.environ.get("CAMD", "4.4")) + Vector((0, 0, -0.1))
