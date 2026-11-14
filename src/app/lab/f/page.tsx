@@ -154,8 +154,8 @@ const bands: Band[] = [
     title: coffee.title,
     summary: coffee.summary,
     stack: coffee.stack,
-    ground: "#b8d88a",
-    tone: "light",
+    ground: "#7c212f",
+    tone: "dark",
     showcase: (
       <Devices
         url="the-coffee-place.vercel.app"
