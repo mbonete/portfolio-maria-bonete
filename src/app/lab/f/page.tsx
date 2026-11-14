@@ -50,7 +50,7 @@ const bands: Band[] = [
     showcase: (
       <div className="lf-phones">
         <Phone>
-          <LoopVideo src="/lab/f/mw/level2-loop.mp4" poster="/lab/f/mw/level2-loop.webp" label="Level 2: a treasure chest bursts across the board, then the level-complete screen." />
+          <LoopVideo src="/lab/f/mw/pop-loop.mp4" poster="/lab/f/mw/pop-loop.webp" label="Level 2: a big group of purple octopuses pops for 1,500 points and the board falls into place." />
         </Phone>
         <Phone size="lead">
           <LoopVideo src="/lab/f/mw/map-sakura.mp4" poster="/lab/f/mw/map-sakura.webp" label="The Sakura Waters map, its sea moving around the island path of levels." />
