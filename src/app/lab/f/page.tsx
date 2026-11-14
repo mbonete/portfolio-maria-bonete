@@ -4,6 +4,8 @@ import { currently, person } from "@/lab/content";
 import { aiPractices, caseStudies, contactLine, entries, experience, marineWobbles } from "../e/_content";
 import FoldingScreen from "./_components/FoldingScreen";
 import LoopVideo from "./_components/LoopVideo";
+import { BandVideo, CloseVideo } from "./_components/BandVideo";
+import Devices, { type Shot } from "./_components/Devices";
 import Phone from "./_components/Phone";
 
 export const metadata: Metadata = {
@@ -29,36 +31,8 @@ type Band = {
   // The engineering, for the projects that have it: a spec list and the decisions that prove it.
   proof?: { facts: { k: string; v: string }[]; highlights: { title: string; body: string }[] };
   links: { label: string; href: string; primary?: boolean; external?: boolean }[];
+  video?: boolean; // the band has a demo that plays over its screens
 };
-
-type Shot = { src: string; w: number; h: number; alt: string };
-
-// A browser window with the address it was taken from: the live site, or the local build.
-function Browser({ url, shot }: { url: string; shot: Shot }) {
-  return (
-    <div className="lf-browser">
-      <div className="lf-browser-bar" aria-hidden>
-        <span className="lf-browser-dots" />
-        <span className="lf-browser-url">{url}</span>
-      </div>
-      <Image src={shot.src} width={shot.w} height={shot.h} alt={shot.alt} sizes="(max-width: 760px) 92vw, 52vw" />
-    </div>
-  );
-}
-
-// The site at desktop width, with the same page on a phone standing in front of its corner.
-function Devices({ url, desktop, phone }: { url: string; desktop: Shot; phone?: Shot }) {
-  return (
-    <div className="lf-devices" data-phone={phone ? "" : undefined}>
-      <Browser url={url} shot={desktop} />
-      {phone && (
-        <Phone>
-          <Image src={phone.src} width={phone.w} height={phone.h} alt={phone.alt} sizes="(max-width: 760px) 26vw, 13vw" />
-        </Phone>
-      )}
-    </div>
-  );
-}
 
 const phoneShot = (name: string, alt: string): Shot => ({ src: `/lab/f/screens/${name}-phone.webp`, w: 585, h: 1170, alt });
 
@@ -89,7 +63,6 @@ const bands: Band[] = [
     proof: { facts: marineWobbles.facts, highlights: marineWobbles.highlights },
     links: [
       { label: "Read the case study", href: "/lab/f/work/marine-wobbles", primary: true },
-      { label: "Watch the trailer", href: `https://www.youtube.com/watch?v=${marineWobbles.trailerId}`, external: true },
     ],
   },
   {
@@ -101,6 +74,7 @@ const bands: Band[] = [
     tone: "dark",
     showcase: (
       <Devices
+        video={{ id: quoteAndNod.videoId, title: "Quote & Nod demo", label: "Play the demo, 24 seconds" }}
         url="localhost:3000"
         desktop={{
           src: "/lab/f/screens/qn-desktop.webp",
@@ -113,8 +87,8 @@ const bands: Band[] = [
     ),
     links: [
       { label: "Read the case study", href: "/lab/e/work/quote-and-nod", primary: true },
-      { label: "Watch the demo", href: `https://www.youtube.com/watch?v=${quoteAndNod.videoId}`, external: true },
     ],
+    video: true,
   },
   {
     id: "homely",
@@ -125,15 +99,16 @@ const bands: Band[] = [
     tone: "dark",
     showcase: (
       <Devices
+        video={{ id: homely.videoId, title: "Homely demo", label: "Play the demo, 31 seconds" }}
         url="localhost:3000"
         desktop={{ src: "/lab/f/screens/homely-desktop.webp", w: 1262, h: 662, alt: "Homely's listings page: a search and sort panel beside cards for five homes." }}
       />
     ),
     links: [
       { label: "Read the case study", href: "/lab/e/work/homely", primary: true },
-      { label: "Watch the demo", href: `https://www.youtube.com/watch?v=${homely.videoId}`, external: true },
       ...(homely.repo ? [{ label: "Code", href: homely.repo, external: true }] : []),
     ],
+    video: true,
   },
   {
     id: "guess-the-bpm",
@@ -265,60 +240,64 @@ export default function LabF() {
             <p>An Android game in testing on Google Play, two web apps with full case studies, and two smaller projects.</p>
           </div>
 
-          {bands.map((b) => (
-            <article
-              key={b.id}
-              id={b.id}
-              className="lf-band"
-              data-tone={b.tone}
-              data-proof={b.proof ? "" : undefined}
-              style={{ "--band": b.ground } as React.CSSProperties}
-              aria-labelledby={`${b.id}-h`}
-            >
-              <h3 id={`${b.id}-h`} className="lf-band-title">
-                {b.title}
-              </h3>
-              <div className="lf-band-object">
-                {b.showcase}
-              </div>
-              <div className="lf-band-copy">
-                {b.status && <p className="lf-status">{b.status}</p>}
-                <p className="lf-summary">{b.summary}</p>
+          {bands.map((b) => {
+            const band = (
+              <article
+                key={b.id}
+                id={b.id}
+                className="lf-band"
+                data-tone={b.tone}
+                data-proof={b.proof ? "" : undefined}
+                style={{ "--band": b.ground } as React.CSSProperties}
+                aria-labelledby={`${b.id}-h`}
+              >
+                <h3 id={`${b.id}-h`} className="lf-band-title">
+                  {b.title}
+                </h3>
+                <div className="lf-band-object">
+                  {b.showcase}
+                </div>
+                <div className="lf-band-copy">
+                  {b.status && <p className="lf-status">{b.status}</p>}
+                  <p className="lf-summary">{b.summary}</p>
+                  {b.proof && (
+                    <dl className="lf-facts">
+                      {b.proof.facts.map((f) => (
+                        <div key={f.k}>
+                          <dt>{f.k}</dt>
+                          <dd>{f.v}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                  <p className="lf-stack">{b.stack.join(" · ")}</p>
+                  {b.links.length > 0 && (
+                    <div className="lf-links">
+                      {b.links.map((l) => (
+                        <a key={l.label} href={l.href} className={l.primary ? "lf-link-strong" : undefined} {...(l.external ? ext : {})}>
+                          {l.label}
+                        </a>
+                      ))}
+                      {b.video && <CloseVideo />}
+                    </div>
+                  )}
+                </div>
                 {b.proof && (
-                  <dl className="lf-facts">
-                    {b.proof.facts.map((f) => (
-                      <div key={f.k}>
-                        <dt>{f.k}</dt>
-                        <dd>{f.v}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                )}
-                <p className="lf-stack">{b.stack.join(" · ")}</p>
-                {b.links.length > 0 && (
-                  <div className="lf-links">
-                    {b.links.map((l) => (
-                      <a key={l.label} href={l.href} className={l.primary ? "lf-link-strong" : undefined} {...(l.external ? ext : {})}>
-                        {l.label}
-                      </a>
-                    ))}
+                  <div className="lf-proof">
+                    <ul className="lf-highlights">
+                      {b.proof.highlights.map((h) => (
+                        <li key={h.title}>
+                          <h4>{h.title}</h4>
+                          <p>{h.body}</p>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
-              </div>
-              {b.proof && (
-                <div className="lf-proof">
-                  <ul className="lf-highlights">
-                    {b.proof.highlights.map((h) => (
-                      <li key={h.title}>
-                        <h4>{h.title}</h4>
-                        <p>{h.body}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </article>
-          ))}
+              </article>
+            );
+            return b.video ? <BandVideo key={b.id}>{band}</BandVideo> : band;
+          })}
         </section>
 
         <section id="experience" className="lf-exp" aria-labelledby="exp-h">

@@ -1,0 +1,54 @@
+"use client";
+
+import Image from "next/image";
+import { PosterPlay, useBandVideo } from "./BandVideo";
+import Phone from "./Phone";
+
+export type Shot = { src: string; w: number; h: number; alt: string };
+
+// The site at desktop width in a browser window, with the same product on a phone standing in front
+// of its corner. With a video, the window's view is fixed at 16:9 so the demo can play in exactly the
+// screenshot's place: the phone steps out of the way and nothing around it moves. Nothing from
+// YouTube loads before the play button on the screenshot is pressed.
+export default function Devices({
+  url,
+  desktop,
+  phone,
+  video,
+}: {
+  url: string;
+  desktop: Shot;
+  phone?: Shot;
+  video?: { id: string; title: string; label: string };
+}) {
+  const band = useBandVideo();
+  const playing = Boolean(video && band?.playing);
+
+  return (
+    <div className="lf-devices" data-phone={phone ? "" : undefined} data-playing={playing ? "" : undefined}>
+      <div className="lf-browser">
+        <div className="lf-browser-bar" aria-hidden>
+          <span className="lf-browser-dots" />
+          <span className="lf-browser-url">{url}</span>
+        </div>
+        <div className="lf-browser-view" data-video={video ? "" : undefined}>
+          <Image src={desktop.src} width={desktop.w} height={desktop.h} alt={desktop.alt} sizes="(max-width: 760px) 92vw, 52vw" />
+          {video && playing && (
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&controls=0&playsinline=1&iv_load_policy=3`}
+              title={video.title}
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+            />
+          )}
+          {video && <PosterPlay label={video.label} />}
+        </div>
+      </div>
+      {phone && (
+        <Phone>
+          <Image src={phone.src} width={phone.w} height={phone.h} alt={phone.alt} sizes="(max-width: 760px) 26vw, 13vw" />
+        </Phone>
+      )}
+    </div>
+  );
+}
