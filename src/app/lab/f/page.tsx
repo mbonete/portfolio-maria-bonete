@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { currently, person } from "@/lab/content";
-import { ai, caseStudies, contactLine, entries, marineWobbles } from "../e/_content";
+import { ai, caseStudies, contactLine, entries, experience, marineWobbles } from "../e/_content";
 import FoldingScreen from "./_components/FoldingScreen";
+import LoopVideo from "./_components/LoopVideo";
+import Phone from "./_components/Phone";
 
 export const metadata: Metadata = {
   title: "Maria Bonete: full-stack developer",
@@ -23,12 +25,45 @@ type Band = {
   stack: string[];
   ground: string;
   tone: "light" | "dark"; // the ink on the ground: dark ink on a light ground, or the reverse
-  object: { src: string; w: number; h: number; alt: string; cut?: boolean; spread?: boolean };
+  showcase: React.ReactNode;
+  // The engineering, for the projects that have it: a spec list and the decisions that prove it.
+  proof?: { facts: { k: string; v: string }[]; highlights: { title: string; body: string }[] };
   links: { label: string; href: string; primary?: boolean; external?: boolean }[];
 };
 
-// Every project gets the same treatment: one flat colour taken from its own palette, one object, its
-// name set large, and the same few facts. The subjects differ; the formula holds them together.
+type Shot = { src: string; w: number; h: number; alt: string };
+
+// A browser window with the address it was taken from: the live site, or the local build.
+function Browser({ url, shot }: { url: string; shot: Shot }) {
+  return (
+    <div className="lf-browser">
+      <div className="lf-browser-bar" aria-hidden>
+        <span className="lf-browser-dots" />
+        <span className="lf-browser-url">{url}</span>
+      </div>
+      <Image src={shot.src} width={shot.w} height={shot.h} alt={shot.alt} sizes="(max-width: 760px) 92vw, 52vw" />
+    </div>
+  );
+}
+
+// The site at desktop width, with the same page on a phone standing in front of its corner.
+function Devices({ url, desktop, phone }: { url: string; desktop: Shot; phone?: Shot }) {
+  return (
+    <div className="lf-devices" data-phone={phone ? "" : undefined}>
+      <Browser url={url} shot={desktop} />
+      {phone && (
+        <Phone>
+          <Image src={phone.src} width={phone.w} height={phone.h} alt={phone.alt} sizes="(max-width: 760px) 26vw, 13vw" />
+        </Phone>
+      )}
+    </div>
+  );
+}
+
+const phoneShot = (name: string, alt: string): Shot => ({ src: `/lab/f/screens/${name}-phone.webp`, w: 585, h: 1170, alt });
+
+// Every project gets the same treatment: one flat colour taken from its own palette, the real
+// product on it, its name set large, and the same few facts.
 const bands: Band[] = [
   {
     id: "marine-wobbles",
@@ -38,14 +73,24 @@ const bands: Band[] = [
     stack: marineWobbles.stack,
     ground: "#63bdea",
     tone: "light",
-    object: {
-      src: "/lab/d/mw-nautilus.webp",
-      w: 882,
-      h: 903,
-      alt: "A glossy, inflated purple nautilus shell from the game's art.",
-      cut: true,
-    },
-    links: [],
+    showcase: (
+      <div className="lf-phones">
+        <Phone>
+          <Image src="/lab/f/mw/board.webp" width={560} height={1120} alt="Level 2: a group of purple octopuses popping for 1,500 points on the six-by-six board." sizes="(max-width: 760px) 30vw, 14vw" />
+        </Phone>
+        <Phone size="lead">
+          <LoopVideo src="/lab/f/mw/map-sakura.mp4" poster="/lab/f/mw/map-sakura.webp" label="The Sakura Waters map, its sea moving around the island path of levels." />
+        </Phone>
+        <Phone>
+          <Image src="/lab/f/mw/urchins.webp" width={560} height={1120} alt="Level 66: urchins and patches to clear, with 55 moves left." sizes="(max-width: 760px) 30vw, 14vw" />
+        </Phone>
+      </div>
+    ),
+    proof: { facts: marineWobbles.facts, highlights: marineWobbles.highlights },
+    links: [
+      { label: "Read the case study", href: "/lab/f/work/marine-wobbles", primary: true },
+      { label: "Watch the trailer", href: `https://www.youtube.com/watch?v=${marineWobbles.trailerId}`, external: true },
+    ],
   },
   {
     id: "dwelltrace",
@@ -54,7 +99,7 @@ const bands: Band[] = [
     stack: dwelltrace.stack.slice(0, 5),
     ground: "#b4492c",
     tone: "dark",
-    object: dwelltrace.image,
+    showcase: <Devices url="localhost:3000" desktop={dwelltrace.image} />,
     links: [
       { label: "Read the case study", href: "/lab/e/work/dwelltrace", primary: true },
       { label: "Watch the demo", href: `https://www.youtube.com/watch?v=${dwelltrace.videoId}`, external: true },
@@ -67,7 +112,12 @@ const bands: Band[] = [
     stack: homely.stack.slice(0, 5),
     ground: "#1f6b4c",
     tone: "dark",
-    object: homely.image,
+    showcase: (
+      <Devices
+        url="localhost:3000"
+        desktop={{ src: "/lab/f/screens/homely-desktop.webp", w: 1262, h: 662, alt: "Homely's listings page: a search and sort panel beside cards for five homes." }}
+      />
+    ),
     links: [
       { label: "Read the case study", href: "/lab/e/work/homely", primary: true },
       { label: "Watch the demo", href: `https://www.youtube.com/watch?v=${homely.videoId}`, external: true },
@@ -81,7 +131,19 @@ const bands: Band[] = [
     stack: bpm.stack,
     ground: "#2b3ae0",
     tone: "dark",
-    object: { ...bpm.image, alt: "Three phone screens of Guess The BPM: a song playing, a guess, and the result.", cut: true },
+    showcase: (
+      <div className="lf-phones">
+        <Phone size="lead">
+          <Image
+            src="/lab/f/screens/bpm-phone.webp"
+            width={585}
+            height={1170}
+            alt="Guess The BPM on a phone: The Beatles' Come Together above two panels, your BPM and the hidden actual BPM, and a round tap button."
+            sizes="(max-width: 760px) 50vw, 20vw"
+          />
+        </Phone>
+      </div>
+    ),
     links: [
       { label: "Open the live site", href: bpm.live, primary: true, external: true },
       { label: "Code", href: bpm.repo, external: true },
@@ -94,14 +156,18 @@ const bands: Band[] = [
     stack: coffee.stack,
     ground: "#b8d88a",
     tone: "light",
-    object: {
-      src: "/the-coffee-place-sachets.webp",
-      w: 1800,
-      h: 1265,
-      alt: "The six sugar sachets of The Coffee Place scattered on its pistachio table, each printed in its own ink: espresso, americano, cappuccino, iced latte, caramel macchiato and filter coffee.",
-      cut: true,
-      spread: true,
-    },
+    showcase: (
+      <Devices
+        url="the-coffee-place.vercel.app"
+        desktop={{
+          src: "/lab/f/screens/coffee-desktop.webp",
+          w: 1600,
+          h: 1000,
+          alt: "The Coffee Place: \u201cSix staples. Collect the series.\u201d beside six sugar sachets, each printed in its own ink with a price and an add stamp.",
+        }}
+        phone={phoneShot("coffee", "The same page on a phone.")}
+      />
+    ),
     links: [
       { label: "Open the live site", href: coffee.live, primary: true, external: true },
       { label: "Code", href: coffee.repo, external: true },
@@ -117,6 +183,7 @@ export default function LabF() {
           <nav aria-label="Primary" className="lf-nav">
             <a href="#work">Work</a>
             <a href="#ai">AI practice</a>
+            <a href="#experience">Experience</a>
             <a href={person.links.cv} {...ext}>
               CV <span className="lf-sr">(PDF)</span>
             </a>
@@ -186,7 +253,7 @@ export default function LabF() {
         <section id="work" aria-labelledby="work-h">
           <div className="lf-work-head">
             <h2 id="work-h">Work</h2>
-            <p>A game in development, two products taken apart as case studies, and two smaller builds.</p>
+            <p>A game in testing on Google Play, two products taken apart as case studies, and two smaller builds.</p>
           </div>
 
           {bands.map((b) => (
@@ -195,8 +262,7 @@ export default function LabF() {
               id={b.id}
               className="lf-band"
               data-tone={b.tone}
-              data-cut={b.object.cut || undefined}
-              data-spread={b.object.spread || undefined}
+              data-proof={b.proof ? "" : undefined}
               style={{ "--band": b.ground } as React.CSSProperties}
               aria-labelledby={`${b.id}-h`}
             >
@@ -204,17 +270,21 @@ export default function LabF() {
                 {b.title}
               </h3>
               <div className="lf-band-object">
-                <Image
-                  src={b.object.src}
-                  width={b.object.w}
-                  height={b.object.h}
-                  alt={b.object.alt}
-                  sizes="(max-width: 760px) 92vw, 56vw"
-                />
+                {b.showcase}
               </div>
               <div className="lf-band-copy">
                 {b.status && <p className="lf-status">{b.status}</p>}
                 <p className="lf-summary">{b.summary}</p>
+                {b.proof && (
+                  <dl className="lf-facts">
+                    {b.proof.facts.map((f) => (
+                      <div key={f.k}>
+                        <dt>{f.k}</dt>
+                        <dd>{f.v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
                 <p className="lf-stack">{b.stack.join(" · ")}</p>
                 {b.links.length > 0 && (
                   <div className="lf-links">
@@ -226,8 +296,43 @@ export default function LabF() {
                   </div>
                 )}
               </div>
+              {b.proof && (
+                <div className="lf-proof">
+                  <ul className="lf-highlights">
+                    {b.proof.highlights.map((h) => (
+                      <li key={h.title}>
+                        <h4>{h.title}</h4>
+                        <p>{h.body}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </article>
           ))}
+        </section>
+
+        <section id="experience" className="lf-exp" aria-labelledby="exp-h">
+          <h2 id="exp-h">Experience</h2>
+          <ol className="lf-exp-list">
+            {experience.map((x) => (
+              <li key={x.id}>
+                <p className="lf-exp-dates">{x.dates}</p>
+                <div className="lf-exp-who">
+                  <h3>{x.company}</h3>
+                  <p>{x.role}</p>
+                </div>
+                <div className="lf-exp-what">
+                  <ul>
+                    {x.points.map((p) => (
+                      <li key={p}>{p}</li>
+                    ))}
+                  </ul>
+                  <p className="lf-exp-stack">{x.stack}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </section>
 
         <section id="contact" className="lf-contact" aria-labelledby="contact-h">

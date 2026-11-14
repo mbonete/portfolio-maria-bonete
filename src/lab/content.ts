@@ -40,9 +40,9 @@ export const projects: Project[] = [
     title: "Dwelltrace",
     kind: "case-study",
     summary:
-      "A lightweight maintenance quote approval portal for small property managers — vendor quotes, owner approvals, and job tracking in one workflow.",
+      "A lightweight maintenance quote approval portal for small property managers: vendor quotes, owner approvals and job tracking in one workflow.",
     tags: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Drizzle"],
-    href: "https://github.com/mbonete/dwelltrace",
+    href: "https://www.youtube.com/watch?v=VIHxOCpGPLg",
     image: "/dwelltrace-poster.webp",
     videoId: "VIHxOCpGPLg",
   },
@@ -62,8 +62,8 @@ export const projects: Project[] = [
     title: "Guess The BPM",
     kind: "entry",
     summary:
-      "A web-based game where users guess the beats per minute of a song. YouTube API integration with i18n support.",
-    tags: ["React", "Tailwind", "i18n"],
+      "Tap along to a song for fifteen seconds and guess its tempo; within one beat per minute counts. YouTube playback, English and Spanish.",
+    tags: ["React", "TypeScript", "Vite", "Tailwind", "i18n"],
     href: "https://guessthebpm.netlify.app",
     image: "/guessthebpm.webp",
   },
@@ -72,7 +72,7 @@ export const projects: Project[] = [
     title: "The Coffee Place",
     kind: "entry",
     summary:
-      "Showcases the artistry of a fictional coffee shop, letting users explore offerings and place orders.",
+      "A fictional café whose menu is a numbered series of six sugar sachets: tear one open into its page, stamp drinks into the cart and pay to a printed receipt.",
     tags: ["Next.js", "JavaScript", "Styled Components"],
     href: "https://the-coffee-place.vercel.app/",
     image: "/the-coffee-place.webp",

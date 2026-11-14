@@ -40,6 +40,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <a href={`https://www.youtube.com/watch?v=${c.videoId}`} {...ext} className="le-link-strong">
               Watch the demo
             </a>
+            {c.live && (
+              <a href={c.live} {...ext}>
+                Visit {new URL(c.live).hostname}
+              </a>
+            )}
             {c.repo && (
               <a href={c.repo} {...ext}>
                 Code on GitHub

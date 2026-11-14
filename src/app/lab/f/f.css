@@ -220,23 +220,112 @@
   z-index: 1;
   margin-top: clamp(16px, 2vw, 32px);
 }
-.lf-band-object img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
+/* The real product on the band's ground: phones with store screens and a loop from the game, or
+   the site in a browser with the same page on a phone in front of it. */
+.lf-phone {
+  padding: 2.4%;
+  border-radius: clamp(18px, 2.4vw, 34px);
+  background: #0f1116;
+  box-shadow: 0 40px 60px -28px rgb(0 0 0 / 0.45), 0 12px 24px -12px rgb(0 0 0 / 0.3), inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+.lf-phone-screen {
+  aspect-ratio: 1 / 2;
+  overflow: hidden;
+  border-radius: clamp(13px, 1.8vw, 26px);
+  background: #000;
+}
+.lf-phone-screen > * { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+.lf-phones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(10px, 1.6vw, 24px);
+  padding: 4% 0 6%;
+}
+.lf-phones .lf-phone { flex: 0 0 29%; }
+.lf-phones .lf-phone:first-child { transform: translateY(7%); }
+.lf-phones .lf-phone:last-child { transform: translateY(13%); }
+.lf-phones .lf-phone[data-size="lead"] { flex-basis: 34%; position: relative; z-index: 1; }
+/* One phone alone stands larger and level. */
+.lf-phones .lf-phone:only-child { flex-basis: 42%; transform: none; }
+
+.lf-devices { position: relative; }
+/* Room under the window's right corner for the phone to stand in. */
+.lf-devices[data-phone] { padding: 0 9% 12% 0; }
+.lf-devices .lf-phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 22%;
+  padding: 1.1%;
+  border-radius: clamp(14px, 1.8vw, 26px);
+}
+.lf-devices .lf-phone-screen { border-radius: clamp(10px, 1.3vw, 20px); }
+.lf-browser {
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fbfaf7;
   box-shadow: 0 40px 70px -30px rgb(0 0 0 / 0.5), 0 10px 24px -12px rgb(0 0 0 / 0.35);
 }
-/* Cut-out objects stand on the ground with a soft shadow instead of sitting in a plate. */
-.lf-band[data-cut] .lf-band-object { justify-self: center; width: min(100%, 520px); }
-.lf-band[data-cut] .lf-band-object img {
-  border-radius: 0;
-  box-shadow: none;
-  filter: drop-shadow(0 36px 32px rgb(0 0 0 / 0.22));
+.lf-browser-bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: clamp(26px, 2.4vw, 36px);
+  padding: 0 12px;
+  background: #ece8df;
+  border-bottom: 1px solid rgb(0 0 0 / 0.08);
 }
-/* A spread of several objects, cut out with their own shadows: it takes the column and adds none. */
-.lf-band[data-spread] .lf-band-object { width: 100%; }
-.lf-band[data-spread] .lf-band-object img { filter: none; }
+/* Three neutral dots: the window, not any one system's chrome. */
+.lf-browser-dots {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c9c3b6;
+  box-shadow: 14px 0 #c9c3b6, 28px 0 #c9c3b6;
+}
+.lf-browser-url {
+  padding: 2px 14px;
+  border-radius: 6px;
+  background: #fbfaf7;
+  color: #4a463f;
+  font-size: clamp(0.625rem, 0.8vw, 0.75rem);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.lf-browser img { display: block; width: 100%; height: auto; }
+
+/* The engineering: a spec list in the copy, then a row of the decisions that prove it. */
+.lf-band[data-proof] { grid-template-areas: "title title" "copy object" "proof proof"; }
+.lf-proof { grid-area: proof; margin-top: clamp(56px, 7vw, 104px); }
+.lf-facts { margin: 6px 0 4px; }
+.lf-facts > div {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 16px;
+  padding: 10px 0;
+  font-size: 0.9375rem;
+  border-top: 1px solid color-mix(in oklab, var(--fg) 30%, transparent);
+}
+.lf-facts dt { font-weight: 600; }
+.lf-facts dd { margin: 0; }
+.lf-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 32px clamp(24px, 3vw, 48px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lf-highlights li { padding-top: 14px; border-top: 2px solid var(--fg); }
+.lf-highlights h4 {
+  font-family: var(--font-f-display), serif;
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+  line-height: 1.12;
+}
+.lf-highlights p { margin-top: 10px; font-size: 0.9375rem; line-height: 1.5; }
+
 .lf-band-copy { grid-area: copy; align-self: end; display: grid; gap: 14px; max-width: 40ch; padding-top: 32px; }
 .lf-status { font-weight: 600; }
 .lf-summary { font-size: 1.125rem; line-height: 1.5; }
@@ -295,6 +384,26 @@
 .lf-aside { margin-top: 32px; color: color-mix(in oklab, var(--paper) 76%, var(--ink)); }
 .lf-aside a { color: var(--paper); text-decoration: underline; text-underline-offset: 5px; }
 
+/* Where the work happened: one row per role, the dates in the margin. */
+.lf-exp { padding: clamp(96px, 12vw, 176px) var(--gutter); }
+.lf-exp h2 { font-size: clamp(3rem, 8vw, 7.5rem); line-height: 0.92; letter-spacing: -0.02em; }
+.lf-exp-list { margin: clamp(48px, 6vw, 88px) 0 0; padding: 0; list-style: none; }
+.lf-exp-list > li {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 4fr) minmax(0, 7fr);
+  gap: 12px clamp(24px, 4vw, 72px);
+  padding: clamp(24px, 3vw, 40px) 0;
+  border-top: 1px solid color-mix(in oklab, var(--ink) 25%, transparent);
+}
+.lf-exp-list > li:last-child { border-bottom: 1px solid color-mix(in oklab, var(--ink) 25%, transparent); }
+.lf-exp-dates { padding-top: 0.45em; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.lf-exp-who h3 { font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.05; }
+.lf-exp-who p { margin-top: 6px; }
+.lf-exp-what ul { display: grid; gap: 8px; margin: 0; padding: 0 0 0 1.1em; }
+.lf-exp-what li { padding-left: 2px; }
+.lf-exp-what li::marker { content: "\2013  "; }
+.lf-exp-stack { margin-top: 14px; font-size: 0.875rem; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
+
 .lf-contact {
   display: grid;
   gap: 24px;
@@ -326,7 +435,140 @@
 }
 .lf-end a { text-decoration: underline; text-underline-offset: 4px; }
 
+/* ---------- Case study: Marine Wobbles ---------- */
+
+/* The band's ground carries over from the front page, then the page settles on paper for reading. */
+.lf-cs-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px var(--gutter) 0;
+  background: #63bdea;
+  font-size: 0.875rem;
+}
+.lf-cs-top a { padding-block: 6px; text-decoration: underline; text-underline-offset: 6px; }
+.lf-cs-head { padding: clamp(40px, 6vw, 88px) var(--gutter) clamp(56px, 7vw, 104px); background: var(--band); }
+.lf-cs-head h1 { margin-top: 10px; font-size: clamp(3.6rem, 13vw, 13rem); line-height: 0.88; letter-spacing: -0.025em; }
+.lf-cs-lede { max-width: 52ch; margin-top: clamp(24px, 3vw, 40px); font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.45; }
+.lf-cs-links { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 28px; margin-top: 20px; }
+.lf-cs-links a { text-decoration: underline; text-underline-offset: 5px; font-weight: 600; }
+
+.lf-trailer {
+  margin-top: clamp(40px, 5vw, 72px);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #0f1116;
+  box-shadow: 0 40px 70px -30px rgb(0 0 0 / 0.5), 0 10px 24px -12px rgb(0 0 0 / 0.35);
+}
+.lf-trailer iframe { display: block; width: 100%; height: 100%; border: 0; }
+.lf-trailer button { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.lf-trailer img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.lf-trailer-play {
+  position: absolute;
+  left: clamp(16px, 2.4vw, 32px);
+  bottom: clamp(16px, 2.4vw, 32px);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 2px;
+  background: var(--ink);
+  color: #f3eee3;
+  font: 500 1rem var(--font-f-text), system-ui, sans-serif;
+  transition: background-color 200ms var(--ease);
+}
+.lf-trailer-play::before { content: ""; border-block: 7px solid transparent; border-left: 11px solid currentColor; }
+.lf-trailer-time { opacity: 0.7; font-variant-numeric: tabular-nums; }
+.lf-trailer button:hover .lf-trailer-play { background: color-mix(in oklab, var(--ink) 80%, #63bdea); }
+
+.lf-cs-numbers {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 32px clamp(16px, 2.4vw, 40px);
+  margin: 0;
+  padding: clamp(48px, 6vw, 88px) var(--gutter);
+  background: var(--ink);
+  color: var(--paper);
+}
+.lf-cs-numbers div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 8px; }
+.lf-cs-numbers dd { margin: 0; font-family: var(--font-f-display), serif; font-size: clamp(2.5rem, 5vw, 4.75rem); line-height: 0.9; }
+.lf-cs-numbers dt { max-width: 18ch; font-size: 0.875rem; color: color-mix(in oklab, var(--paper) 78%, var(--ink)); }
+
+.lf-cs-sec {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: clamp(24px, 4vw, 72px);
+  padding: clamp(56px, 7vw, 104px) var(--gutter);
+  border-top: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+}
+.lf-cs-sec:first-of-type { border-top: 0; }
+/* The heading stays beside its section while the reading runs on. */
+.lf-cs-sec h2 {
+  align-self: start;
+  position: sticky;
+  top: 24px;
+  max-width: 14ch;
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+}
+.lf-cs-body { display: grid; gap: 18px; max-width: 62ch; font-size: 1.0625rem; }
+.lf-cs-body a { text-decoration: underline; text-underline-offset: 4px; }
+.lf-cs-wide { grid-column: 1 / -1; width: min(100%, 940px); justify-self: center; margin-top: clamp(32px, 4vw, 56px); }
+
+.lf-cs-chapters, .lf-cs-steps { counter-reset: n; margin: 4px 0; padding: 0; list-style: none; }
+.lf-cs-chapters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+.lf-cs-chapters li, .lf-cs-steps li {
+  counter-increment: n;
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  align-items: baseline;
+  padding: 9px 0;
+  border-top: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+}
+.lf-cs-chapters li::before, .lf-cs-steps li::before {
+  content: counter(n);
+  font-family: var(--font-f-display), serif;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.lf-cs-points { display: grid; gap: 12px; margin: 4px 0; padding: 0 0 0 1.1em; }
+.lf-cs-points li::marker { content: "\2013  "; }
+.lf-cs-points strong { font-weight: 600; }
+
+.lf-cs-table { width: 100%; max-width: 420px; margin: 8px 0; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.lf-cs-table caption { padding-bottom: 10px; text-align: left; font-size: 0.875rem; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
+.lf-cs-table :is(th, td) { padding: 9px 0; text-align: left; border-top: 1px solid color-mix(in oklab, var(--ink) 18%, transparent); }
+.lf-cs-table thead th { font-size: 0.875rem; font-weight: 600; border-top: 0; }
+.lf-cs-table tbody th { font-weight: 400; }
+.lf-cs-table :is(th, td):not(:first-child) { text-align: right; }
+.lf-cs-stack { font-size: 1rem; }
+
+.lf-cs-end {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px 40px;
+  padding: clamp(72px, 9vw, 136px) var(--gutter);
+  background: var(--ground);
+}
+.lf-cs-end a {
+  font-family: var(--font-f-display), serif;
+  font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+  transition: text-underline-offset 220ms var(--ease);
+}
+.lf-cs-end a:hover { text-underline-offset: 12px; }
+
 /* ---------- Phones and narrow windows ---------- */
+
+@media (max-width: 1100px) and (min-width: 761px) {
+  .lf-cs-numbers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 
 @media (max-width: 760px) {
   .lf-nav { flex-wrap: wrap; gap: 4px 18px; }
@@ -342,7 +584,16 @@
   .lf-work-head { grid-template-columns: 1fr; }
   .lf-work-head p { justify-self: start; }
   .lf-band { grid-template-columns: 1fr; grid-template-areas: "title" "object" "copy"; }
+  .lf-band[data-proof] { grid-template-areas: "title" "object" "copy" "proof"; }
+
   .lf-band-object { margin-top: 24px; }
+  .lf-exp-list > li { grid-template-columns: 1fr; }
+  .lf-exp-dates { order: 1; padding-top: 0; }
+  .lf-exp-what { order: 2; }
+  .lf-cs-numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lf-cs-sec { grid-template-columns: 1fr; row-gap: 20px; }
+  .lf-cs-sec h2 { position: static; }
+  .lf-cs-chapters { grid-template-columns: 1fr; }
   .lf-band-copy { padding-top: 36px; }
 }
 

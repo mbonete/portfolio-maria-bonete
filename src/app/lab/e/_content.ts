@@ -12,6 +12,7 @@ export type CaseStudy = {
   decisions: { title: string; body: string }[];
   model: string;
   repo?: string; // Left out for private repos: a link only a logged-in owner can open is a dead link.
+  live?: string;
   videoId: string;
 };
 
@@ -96,16 +97,31 @@ export const caseStudies: CaseStudy[] = [
 
 export const marineWobbles = {
   title: "Marine Wobbles",
-  status: "In development for Google Play",
+  status: "In internal testing on Google Play",
   summary:
-    "A tap-to-pop match-3 for Android, built natively in Kotlin and Jetpack Compose. Its difficulty is measured, not guessed: five strategy bots play thousands of seeded games to tune every level.",
+    "A tap-to-pop match-3 for Android, built natively in Kotlin and Jetpack Compose: 80 levels in eight chapters, each built around a new mechanic, and a coin store with real purchases through Google Play.",
   facts: [
-    { k: "Levels", v: "80, in eight chapters that each add one mechanic" },
-    { k: "Painted episodes", v: "27, each with a map, level card and victory scene" },
-    { k: "Tuning", v: "Bot win rates from seeded simulations; only changed levels are re-measured" },
-    { k: "Tests", v: "45 unit-test files over pure game rules" },
+    { k: "Levels", v: "80, in eight chapters, each built around a new mechanic" },
+    { k: "Difficulty", v: "7 strategy bots; about 2.2 million seeded games per balance run" },
+    { k: "Tests", v: "455 unit tests, and 264 recorded games replayed state for state" },
+    { k: "Art", v: "27 illustrated episodes, generated from my prompts" },
   ],
-  stack: ["Kotlin", "Jetpack Compose", "kotlinx-serialization", "JUnit"],
+  highlights: [
+    {
+      title: "Difficulty is measured, not guessed",
+      body: "Seven strategy bots play the game's own rule code, 2,000 to 5,000 seeded games per bot per level. Every tier has a contract (a win-rate band, a pace window, a skill gap over random play) that tests hold each level to, and an auto-tuner proposes the fixes.",
+    },
+    {
+      title: "A port that replays exactly",
+      body: "The rules came from my TypeScript prototype, with a bit-identical random generator. 264 recorded games replay state for state, and the prototype's win-rate table comes out exactly, not within noise.",
+    },
+    {
+      title: "Purchases that can't be lost or doubled",
+      body: "Coin packs through Play Billing: granted only once a purchase completes, saved, then consumed; idempotent by token; unfinished purchases re-checked on every return. Tested with approved, declined, cancelled and slow payments.",
+    },
+  ],
+  stack: ["Kotlin", "Jetpack Compose", "Coroutines + StateFlow", "Play Billing", "kotlinx-serialization", "JUnit"],
+  trailerId: "agdXKgTLqxc",
 };
 
 export const entries = [
@@ -138,7 +154,7 @@ export const paletteSections = [
 ];
 
 export const paletteWork = [
-  { id: "marine-wobbles", label: "Marine Wobbles", hint: "In development", keywords: "kotlin android game", href: "#marine-wobbles" },
+  { id: "marine-wobbles", label: "Marine Wobbles", hint: "In testing", keywords: "kotlin android game", href: "#marine-wobbles" },
   ...caseStudies.map((c) => ({
     id: c.slug,
     label: c.title,

@@ -21,7 +21,7 @@ export const areas: Area[] = [
       {
         title: "Dwelltrace",
         fact: "Quote approvals for property managers. Next.js, Supabase, Drizzle.",
-        href: "https://github.com/mbonete/dwelltrace",
+        href: "https://www.youtube.com/watch?v=VIHxOCpGPLg",
       },
       {
         title: "Homely",
