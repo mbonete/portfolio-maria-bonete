@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
-const dwelltrace = caseStudies.find((c) => c.slug === "dwelltrace")!;
+const quoteAndNod = caseStudies.find((c) => c.slug === "quote-and-nod")!;
 const homely = caseStudies.find((c) => c.slug === "homely")!;
 const [bpm, coffee] = entries;
 
@@ -93,16 +93,27 @@ const bands: Band[] = [
     ],
   },
   {
-    id: "dwelltrace",
-    title: dwelltrace.title,
-    summary: dwelltrace.summary,
-    stack: dwelltrace.stack.slice(0, 5),
+    id: "quote-and-nod",
+    title: quoteAndNod.title,
+    summary: quoteAndNod.summary,
+    stack: quoteAndNod.stack.slice(0, 5),
     ground: "#b4492c",
     tone: "dark",
-    showcase: <Devices url="localhost:3000" desktop={dwelltrace.image} />,
+    showcase: (
+      <Devices
+        url="localhost:3000"
+        desktop={{
+          src: "/lab/f/screens/qn-desktop.webp",
+          w: 1600,
+          h: 1000,
+          alt: "The manager's job page: a water heater replacement with two vendor quotes, one recommended, waiting for the owner, Alice Chen.",
+        }}
+        phone={phoneShot("qn", "The owner's approval page on a phone: the same job and its two quotes.")}
+      />
+    ),
     links: [
-      { label: "Read the case study", href: "/lab/e/work/dwelltrace", primary: true },
-      { label: "Watch the demo", href: `https://www.youtube.com/watch?v=${dwelltrace.videoId}`, external: true },
+      { label: "Read the case study", href: "/lab/e/work/quote-and-nod", primary: true },
+      { label: "Watch the demo", href: `https://www.youtube.com/watch?v=${quoteAndNod.videoId}`, external: true },
     ],
   },
   {

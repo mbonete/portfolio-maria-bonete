@@ -2,7 +2,7 @@
 // measured results described generically; nothing here is invented.
 
 export type CaseStudy = {
-  slug: "dwelltrace" | "homely";
+  slug: "quote-and-nod" | "homely";
   title: string;
   summary: string;
   problem: string;
@@ -18,13 +18,13 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "dwelltrace",
-    title: "Dwelltrace",
+    slug: "quote-and-nod",
+    title: "Quote & Nod",
     summary:
-      "A portal for small property managers: collect vendor quotes for a repair, get the owner's approval, and track the job until it's closed.",
+      "A maintenance quote approval portal for property managers. The owner gets every vendor quote in one link and answers from their phone, and the decision stays on the job's record.",
     problem:
-      "Dwelltrace covers one thing: a maintenance job, its vendor quotes, the owner's decision and the paper trail behind it. Rent collection, leases and tenant screening are left out on purpose.",
-    image: { src: "/dwelltrace-poster.webp", w: 800, h: 450, alt: "Dwelltrace dashboard with maintenance jobs grouped into four buckets." },
+      "Quote & Nod covers one thing: a maintenance job, its vendor quotes, the owner's decision and the paper trail behind it. Rent collection, leases and tenant screening are left out on purpose.",
+    image: { src: "/quote-and-nod-poster.webp", w: 800, h: 450, alt: "Quote & Nod: a water heater job with two vendor quotes, and the owner's approval page on a phone." },
     stack: ["Next.js (App Router)", "TypeScript", "Supabase (Postgres, Auth, Storage)", "Drizzle ORM", "React Hook Form + Zod", "Radix primitives", "Tailwind", "Resend"],
     built: [
       "Email and password auth with session refresh and route protection.",
@@ -58,7 +58,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     model:
       "Users, owner contacts, properties, maintenance jobs, quotes (amounts in cents), attachments, comments and a typed event stream with JSON metadata. UUID keys, timestamps with time zones, and a unique index on the owner's access token.",
-    videoId: "VIHxOCpGPLg",
+    videoId: "Qil40vL6FCY",
   },
   {
     slug: "homely",

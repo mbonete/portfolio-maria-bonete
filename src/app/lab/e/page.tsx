@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 // Each area carries one checkable fact and links to its proof, so the first viewport is evidence, not
 // a list of labels. Where the fact has no room, the link still gets the visitor there.
 const areas = [
-  { name: "Full-stack", fact: "Next.js, Supabase and Drizzle, shipped to production", href: "#dwelltrace" },
+  { name: "Full-stack", fact: "Next.js, Supabase and Drizzle, shipped to production", href: "#quote-and-nod" },
   { name: "Mobile", fact: "React Native with Expo, and native Kotlin", href: "#marine-wobbles" },
   { name: "Web3", fact: "Front-end architect on a trading platform", href: "#bidz-labs" },
   { name: "AI-driven engineering", fact: "Agent workflows, measured and verified", href: "#ai" },

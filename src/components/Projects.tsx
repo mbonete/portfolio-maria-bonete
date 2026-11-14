@@ -13,13 +13,13 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "Dwelltrace",
+    title: "Quote & Nod",
     description:
-      "A portal for small property managers: collect vendor quotes for a repair, get the owner's approval, and track the job until it's closed.",
+      "A maintenance quote approval portal for property managers. The owner gets every vendor quote in one link and answers from their phone, and the decision stays on the job's record.",
     tags: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Drizzle"],
-    href: "https://www.youtube.com/watch?v=VIHxOCpGPLg",
-    videoId: "VIHxOCpGPLg",
-    poster: "/dwelltrace-poster.webp",
+    href: "https://www.youtube.com/watch?v=Qil40vL6FCY",
+    videoId: "Qil40vL6FCY",
+    poster: "/quote-and-nod-poster.webp",
   },
   {
     title: "Homely",
