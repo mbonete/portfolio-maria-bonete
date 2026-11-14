@@ -60,10 +60,9 @@ export default function About() {
           accordance with best practices.
         </p>
         <p>
-          As an effective communicator, I bring native Spanish and advanced
-          English (CAE/C1) skills, along with significant experience in remote
-          roles. My background also includes work on crypto and Web3 projects,
-          and I’m currently seeking dynamic web development roles.
+          Spanish is my first language and my English is C1 (Cambridge CAE).
+          I’ve worked remotely in several roles, and I’ve also built for crypto
+          and Web3 projects.
         </p>
       </div>
       <div className="grid sm:grid-cols-2 gap-8">

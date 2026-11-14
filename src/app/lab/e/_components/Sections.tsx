@@ -98,17 +98,12 @@ export default function Sections() {
         <div className="le-sec-head">
           <h2 id="ai-h">AI-driven engineering</h2>
         </div>
-        <p className="le-stance">{ai.stance}</p>
-
-        <h3 className="le-sub">Principles, each with a result I measured</h3>
+        <h3 className="le-sub">Principles</h3>
         <ol className="le-principles">
           {ai.principles.map((p) => (
             <li key={p.title}>
               <h4>{p.title}</h4>
               <p>{p.body}</p>
-              <p className="le-result">
-                <span>Measured</span> {p.result}
-              </p>
             </li>
           ))}
         </ol>

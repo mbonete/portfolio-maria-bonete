@@ -16,7 +16,7 @@ The personal portfolio of Maria Bonete, a developer based in Madrid, Spain, with
 
 ## Positioning
 
-A developer who ships across four areas with equal weight: full-stack web, mobile (React Native and native Android), Web3, and AI-driven engineering. AI knowledge must be clear from the very first viewport, presented as a peer of the other three, not an add-on. Her AI angle is rigour, not enthusiasm: she runs agents with measured experiments, independent verification, and real results, and treats agent output as a claim to verify.
+A developer who ships across four areas with equal weight: full-stack web, mobile (React Native and native Android), Web3, and AI-driven engineering. AI knowledge must be clear from the very first viewport, presented as a peer of the other three, not an add-on. Her AI angle is command of the tools: she gets better results and productivity from agents, and keeps her practice current as new models and tools are released. Shown through what she does, not stated as a claim.
 
 ## Operating Context
 
@@ -25,7 +25,7 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 ## Capabilities and Constraints
 
 - Next.js 16 (App Router), React 19, Tailwind 4; deployed as a static-friendly site.
-- Sections: Hero, Projects, AI (stance, principles with measured results, toolkit), Experience, About, Contact, plus a "How this site was built" page.
+- Sections: Hero, Projects, AI (five practices), Experience, About, Contact, plus a "How this site was built" page.
 - Features in scope: ⌘K command palette, case-study pages with view transitions, a "now" strip (latest public GitHub push, Madrid time, a hand-edited "currently" line), WebGL where it earns its place.
 - Mobile: LCP under 2.5s on a mid-range phone; heavy effects degrade on small screens and under reduced motion.
 - Free fonts only.
@@ -46,14 +46,14 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 - Marine Wobbles: native Android tap-to-pop match-3 (Kotlin, Jetpack Compose), in development with Google Play release planned. 80 levels, 27 painted episodes, difficulty tuned by simulating thousands of seeded games with five strategy bots. Repo: github.com/mbonete/marine-wobbles. Present as in development; no download, rating or release-date claims.
 - Roles: Wandity (Full Stack Developer, Sept 2024–present), Bidz Labs (Front-end Architect, Web3), Aventu (freelance), CaneLab Ltd. (front-end).
 - CV at public/cv.pdf; GitHub github.com/mbonete; LinkedIn in/maria-bonete.
-- AI practice: five principles each backed by a measured result, and an eight-technique toolkit (grilling, bounded autonomous runs, multi-agent workflows, adversarial review, cross-provider review, custom skills and rules, agent security, browser-in-the-loop checks).
+- AI practice: five practices in the order of a piece of work, each stating the problem it prevents and what she does: grilling to a shared understanding, goals that end on evidence (/goal), model and effort chosen per task, parallel agents with clear ownership, and review by a different agent. No experiment results or test figures (the owner rejected them); an example only where it can be checked.
 - Absent and never to be fabricated: testimonials, client logos, usage metrics, store ratings or downloads.
 - Known asset defect: public/homely-poster.webp has a browser status bar baked in; needs a fresh capture.
 
 ## Product Principles
 
 1. Ten seconds to "shortlist": role, four pillars and a way to act are legible in the first viewport on a phone.
-2. Proof over claims: every assertion links to shipped work, a role, or a measured result.
+2. Proof over claims: every assertion is backed by shipped work, a role, or a concrete practice.
 3. The site itself is evidence of craft and of her AI workflow.
 4. Honest status: unfinished work is labelled as such.
 

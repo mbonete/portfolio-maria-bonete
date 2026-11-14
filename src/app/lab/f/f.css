@@ -375,7 +375,6 @@
   color: var(--paper);
 }
 .lf-ai h2 { font-size: clamp(3rem, 8vw, 7.5rem); line-height: 1.02; letter-spacing: -0.02em; max-width: 12ch; }
-.lf-stance { max-width: 44ch; margin-top: clamp(32px, 4vw, 56px); font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.4; }
 .lf-principles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
@@ -403,8 +402,6 @@
   transition: text-underline-offset 220ms var(--ease);
 }
 .lf-built a:hover { text-underline-offset: 12px; }
-.lf-aside { margin-top: 32px; color: color-mix(in oklab, var(--paper) 76%, var(--ink)); }
-.lf-aside a { color: var(--paper); text-decoration: underline; text-underline-offset: 5px; }
 
 /* Where the work happened: one row per role, the dates in the margin. */
 .lf-exp { padding: clamp(96px, 12vw, 176px) var(--gutter); }

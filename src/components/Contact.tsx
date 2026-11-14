@@ -42,8 +42,7 @@ export default function Contact() {
         Contact
       </h2>
       <p className="text-neutral-400 mb-8">
-        Want to get in touch? Reach out through any of the options below. I’d
-        love to hear from you.
+        The quickest way to reach me is a message on LinkedIn.
       </p>
       <div className="grid sm:grid-cols-3 gap-4">
         {channels.map((c) => {

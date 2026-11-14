@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { currently, person } from "@/lab/content";
-import { ai, caseStudies, contactLine, entries, experience, marineWobbles } from "../e/_content";
+import { aiPractices, caseStudies, contactLine, entries, experience, marineWobbles } from "../e/_content";
 import FoldingScreen from "./_components/FoldingScreen";
 import LoopVideo from "./_components/LoopVideo";
 import Phone from "./_components/Phone";
@@ -9,7 +9,7 @@ import Phone from "./_components/Phone";
 export const metadata: Metadata = {
   title: "Maria Bonete: full-stack developer",
   description:
-    "Full-stack developer in Madrid, specialising in AI-driven engineering, web, React Native and Web3. A measured AI practice, shipped work and case studies.",
+    "Full-stack developer in Madrid, specialising in AI-driven engineering, web, React Native and Web3. Case studies, shipped projects, and how I work with coding agents.",
 };
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
@@ -232,28 +232,26 @@ export default function LabF() {
       <main>
         <section id="ai" className="lf-ai" aria-labelledby="ai-h">
           <h2 id="ai-h">AI-driven engineering</h2>
-          <p className="lf-stance">{ai.stance}</p>
           <ol className="lf-principles">
-            {ai.principles.map((p) => (
+            {aiPractices.map((p) => (
               <li key={p.title}>
                 <h3>{p.title}</h3>
-                <p>{p.result}</p>
+                <p>
+                  {p.text}
+                  {p.example && <> {p.example}</>}
+                </p>
               </li>
             ))}
           </ol>
           <p className="lf-built">
-            This portfolio was designed and built with agents, the same way.{" "}
             <a href="/lab/e/built">How this site was built</a>
-          </p>
-          <p className="lf-aside">
-            The full practice, with the toolkit, is on <a href="/lab/e#ai">the Gold Screen page</a>.
           </p>
         </section>
 
         <section id="work" aria-labelledby="work-h">
           <div className="lf-work-head">
             <h2 id="work-h">Work</h2>
-            <p>A game in testing on Google Play, two products taken apart as case studies, and two smaller builds.</p>
+            <p>An Android game in testing on Google Play, two web apps with full case studies, and two smaller projects.</p>
           </div>
 
           {bands.map((b) => (

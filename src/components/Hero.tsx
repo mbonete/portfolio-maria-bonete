@@ -15,7 +15,7 @@ export default function Hero() {
           .
           <br />
           <span className="text-neutral-500">
-            I build fast, accessible web and mobile apps.
+            I build web and mobile apps, mostly in React and React Native.
           </span>
         </h1>
         <div className="mt-8 flex gap-4">

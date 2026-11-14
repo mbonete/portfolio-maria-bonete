@@ -21,9 +21,9 @@ export const caseStudies: CaseStudy[] = [
     slug: "dwelltrace",
     title: "Dwelltrace",
     summary:
-      "A lightweight maintenance quote approval portal for small property managers: vendor quotes, owner approvals and job tracking in one workflow.",
+      "A portal for small property managers: collect vendor quotes for a repair, get the owner's approval, and track the job until it's closed.",
     problem:
-      "Maintenance approvals, without the mess. Dwelltrace keeps a job, its vendor quotes, the owner's decision and the paper trail in one workflow, and deliberately stops there: no rent collection, no leases, no tenant screening.",
+      "Dwelltrace covers one thing: a maintenance job, its vendor quotes, the owner's decision and the paper trail behind it. Rent collection, leases and tenant screening are left out on purpose.",
     image: { src: "/dwelltrace-poster.webp", w: 800, h: 450, alt: "Dwelltrace dashboard with maintenance jobs grouped into four buckets." },
     stack: ["Next.js (App Router)", "TypeScript", "Supabase (Postgres, Auth, Storage)", "Drizzle ORM", "React Hook Form + Zod", "Radix primitives", "Tailwind", "Resend"],
     built: [
@@ -64,9 +64,9 @@ export const caseStudies: CaseStudy[] = [
     slug: "homely",
     title: "Homely",
     summary:
-      "A full-stack real estate listings app with authentication, image uploads and a SQLite-backed CRUD flow.",
+      "A full-stack real estate listings app with accounts, photo uploads and a SQLite database.",
     problem:
-      "A listings app built around the App Router's server model: browse homes, open a listing, and sign in to publish and manage your own ads with photos.",
+      "Browse homes, open a listing, and sign in to post and manage your own ads with photos. It's built around the App Router's server model.",
     image: { src: "/lab/d/homely.webp", w: 1280, h: 686, alt: "Homely listings page with property cards." },
     stack: ["Next.js (App Router)", "Server Components + Server Actions", "SQLite (better-sqlite3)", "Drizzle ORM", "Auth.js", "Zod", "Tailwind", "shadcn/ui"],
     built: [
@@ -99,25 +99,25 @@ export const marineWobbles = {
   title: "Marine Wobbles",
   status: "In internal testing on Google Play",
   summary:
-    "A tap-to-pop match-3 for Android, built natively in Kotlin and Jetpack Compose: 80 levels in eight chapters, each built around a new mechanic, and a coin store with real purchases through Google Play.",
+    "A tap-to-pop match-3 for Android, written natively in Kotlin and Jetpack Compose, with a coin store that takes real payments through Google Play.",
   facts: [
-    { k: "Levels", v: "80, in eight chapters, each built around a new mechanic" },
+    { k: "Levels", v: "80, in eight chapters; each chapter adds a new mechanic" },
     { k: "Difficulty", v: "7 strategy bots; about 2.2 million seeded games per balance run" },
     { k: "Tests", v: "455 unit tests, and 264 recorded games replayed state for state" },
     { k: "Art", v: "27 illustrated episodes, generated from my prompts" },
   ],
   highlights: [
     {
-      title: "Difficulty is measured, not guessed",
-      body: "Seven strategy bots play the game's own rule code, 2,000 to 5,000 seeded games per bot per level. Every tier has a contract (a win-rate band, a pace window, a skill gap over random play) that tests hold each level to, and an auto-tuner proposes the fixes.",
+      title: "Bots measure every level",
+      body: "The strategy bots run the game's real rule code, 2,000 to 5,000 seeded games each per level. Each difficulty tier sets limits: a win-rate band, when in the move budget a win should land, and how far skilled play must beat random play. Tests hold every level to its tier, and an auto-tuner proposes fixes.",
     },
     {
       title: "A port that replays exactly",
-      body: "The rules came from my TypeScript prototype, with a bit-identical random generator. 264 recorded games replay state for state, and the prototype's win-rate table comes out exactly, not within noise.",
+      body: "The rules are a port of my TypeScript prototype, random generator included, bit for bit. Games recorded in the prototype replay identically in Kotlin, and the prototype's win-rate table comes out identical.",
     },
     {
       title: "Purchases that can't be lost or doubled",
-      body: "Coin packs through Play Billing: granted only once a purchase completes, saved, then consumed; idempotent by token; unfinished purchases re-checked on every return. Tested with approved, declined, cancelled and slow payments.",
+      body: "Coins are granted once a purchase completes and saved before the purchase is consumed. The purchase token is the key, so nothing is granted twice, and unfinished purchases are re-checked whenever the game comes back. Tested with approved, declined, cancelled and slow payments.",
     },
   ],
   stack: ["Kotlin", "Jetpack Compose", "Coroutines + StateFlow", "Play Billing", "kotlinx-serialization", "JUnit"],
@@ -168,34 +168,52 @@ export const paletteWork = [
 
 export const contactLine = "The quickest way to reach me is a message on LinkedIn.";
 
+// How I work with coding agents, in the order of a piece of work; an example only where it can be checked.
+export const aiPractices: { title: string; text: string; example?: string }[] = [
+  {
+    title: "Grilling to a shared understanding",
+    text: "Before an agent writes any code, I have it grill me on the task until we understand it the same way. That's where the gaps come out: the case I hadn't mentioned, the assumption it would otherwise have made without asking.",
+    example: "This portfolio was planned that way.",
+  },
+  {
+    title: "Goals that end on evidence",
+    text: "With /goal, an agent keeps working until a separate model decides the goal is met, and that model only sees the conversation. So a good goal describes the finished state, names the commands that prove it, says what must not change, and sets a limit, such as 20 turns.",
+  },
+  {
+    title: "The right model and effort for each task",
+    text: "The strongest model at maximum effort is slower and costs more, and on routine work it rarely does better. Knowing which tasks need it is part of the job, and I revisit that choice whenever a new model comes out.",
+  },
+  {
+    title: "Running agents in parallel",
+    text: "Several agents working at once can get far more done in a day, as long as their tasks are independent and each has its own copy of the code. The real limit is review: once finished work starts waiting on me, another agent stops helping.",
+  },
+  {
+    title: "A different agent reviews the code",
+    text: "Models tend to judge their own output too kindly, so the agent that wrote the code never reviews it. The review comes from a fresh session, and I check its findings before acting on them.",
+  },
+];
+
 export const ai = {
-  stance:
-    "Agents make me faster only when I can show what they did. I give them outcomes and limits, measure what each result costs, and treat their output as a claim until real inputs and a second reviewer agree.",
   principles: [
     {
-      title: "A test is unproven until I've seen it fail.",
+      title: "I watch a new test fail before I trust it.",
       body: "I plant the defect a new test guards and confirm the unchanged test catches it.",
-      result: "A planted logic bug passed every unit and browser test because no fixture covered it. The test that caught it became a reusable agent skill; in one autonomous run, 17 injected defects were each caught.",
     },
     {
       title: "The agent that writes the code doesn't verify it.",
       body: "Review comes from a fresh session, ideally another model family, and the reviewer gets checked too.",
-      result: "A cross-provider reviewer found a real race condition; 5 of its 6 design concerns were accepted. It also once reviewed the wrong folder, which is why reviewers get reviewed.",
     },
     {
-      title: "Outcomes, not step lists.",
+      title: "I describe the outcome and leave the steps to the agent.",
       body: "Agents get the goal, constraints and acceptance checks, not a script.",
-      result: "Controlled A/B: both briefs scored 6/6; the step-list run was about 8× slower on large inputs.",
     },
     {
-      title: "Green checks are proxies.",
+      title: "Work is done when it handles real input.",
       body: "Work is accepted after it meets real inputs and my own judgment, because taste is still my job.",
-      result: "An autonomous run passed every written check in 7 minutes; real input rejected it. A failing real-data check came first, then a fresh agent fixed the cause for under a quarter of the first run's cost.",
     },
     {
-      title: "Effort is a budget I measure.",
+      title: "I measure what extra effort buys.",
       body: "Effort, parallelism and process are tuned per accepted result, not maxed out.",
-      result: "Same model, low against high effort on held-out tests: both 9/9. High effort cost 2.2× and took 2.9× longer, buying readability, not correctness.",
     },
   ],
   toolkit: [
@@ -251,7 +269,7 @@ export const experience = [
     role: "Front-end Developer",
     dates: "Aug 2022 – Dec 2023",
     points: [
-      "Built interfaces for a consultancy making tailor-made products for startups and small businesses, from Figma designs to components, with REST integrations.",
+      "Built interfaces for a consultancy making custom products for startups and small businesses, from Figma designs to components, with REST integrations.",
     ],
     stack: "React · Next.js · TypeScript · styled-components · Figma",
   },

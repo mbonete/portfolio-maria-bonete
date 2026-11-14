@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Maria Bonete — Frontend Developer",
-  description: "Portfolio of Maria Bonete, a frontend developer building fast, accessible web experiences.",
+  title: "Maria Bonete — Full-Stack Developer",
+  description: "Maria Bonete, a full-stack developer in Madrid building web, mobile and Web3 apps with React and React Native.",
 };
 
 export default function RootLayout({

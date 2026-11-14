@@ -12,7 +12,7 @@ const roles: Role[] = [
     title: "Full Stack Developer",
     period: "Sept 2024 — Present",
     summary:
-      "Leading architecture and development for web and mobile e-commerce solutions. Built a greenfield full-stack Next.js web app on a monorepo with SQLite + Drizzle, and an offline-first React Native Expo app for internal sales teams with sync, SQLite storage, and image caching. Also shipped a React Native + tRPC events/social app on Cloudflare Workers (Hono, D1).",
+      "Leading architecture and development for an e-commerce platform's web and mobile apps. Built a new full-stack Next.js app in a monorepo with SQLite and Drizzle, and an offline-first React Native (Expo) app for the internal sales teams, with sync, SQLite storage and image caching. Also shipped an events and social app: React Native with a tRPC backend on Cloudflare Workers (Hono, D1).",
     stack: [
       "Next.js",
       "React Native (Expo)",
@@ -31,7 +31,7 @@ const roles: Role[] = [
     title: "Front-end Architect",
     period: "Mar 2024 — Sept 2024",
     summary:
-      "Independently designed and built the front-end for a Web3 fintech trading and betting platform. Integrated with Ethereum smart contracts, built a hook-based SDK, handled real-time multi-token trading data over WebSockets, and supported both Web3 (SIWE) and Web2 (OAuth) auth.",
+      "Designed and built the front end of a Web3 trading and betting platform on my own: Ethereum smart contracts behind a hook-based SDK I wrote, real-time multi-token trading data over WebSockets, and sign-in with Ethereum (SIWE) or OAuth.",
     stack: [
       "React",
       "TypeScript",
@@ -47,7 +47,7 @@ const roles: Role[] = [
     title: "Freelance Front-end Developer",
     period: "Sept 2023 — Mar 2024",
     summary:
-      "Delivered two fixed-price features for a story-creator app: a diagram-based story builder and an audio editor. Translated Figma designs into components and integrated REST APIs.",
+      "Delivered two fixed-price features for a story-creation app: a diagram-based story builder and an audio editor. Turned Figma designs into components and integrated REST APIs.",
     stack: ["React", "TypeScript", "React Flow", "Redux Toolkit", "RTK Query"],
   },
   {
@@ -55,7 +55,7 @@ const roles: Role[] = [
     title: "Front-end Developer",
     period: "Aug 2022 — Dec 2023",
     summary:
-      "UI development for a consultancy building tailor-made solutions for startups and SMEs. Designed in Figma and translated into CSS and components; integrated REST APIs.",
+      "Built interfaces for a consultancy that made custom products for startups and small businesses: designed screens in Figma, built them as components and integrated REST APIs.",
     stack: ["React", "Next.js", "TypeScript", "Styled Components", "Figma"],
   },
 ];

@@ -15,7 +15,7 @@ const projects: Project[] = [
   {
     title: "Dwelltrace",
     description:
-      "A lightweight maintenance quote approval portal for small property managers: vendor quotes, owner approvals and job tracking in one workflow.",
+      "A portal for small property managers: collect vendor quotes for a repair, get the owner's approval, and track the job until it's closed.",
     tags: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Drizzle"],
     href: "https://www.youtube.com/watch?v=VIHxOCpGPLg",
     videoId: "VIHxOCpGPLg",
@@ -24,7 +24,7 @@ const projects: Project[] = [
   {
     title: "Homely",
     description:
-      "A full-stack real estate listings app with authentication, image uploads, and a SQLite-backed CRUD flow.",
+      "A full-stack real estate listings app with accounts, photo uploads and a SQLite database.",
     tags: ["Next.js", "Tailwind", "shadcn/ui", "Drizzle", "Auth.js"],
     href: "https://github.com/mbonete/homely",
     videoId: "Ygp6AJwHytE",

@@ -9,7 +9,7 @@ import Trailer from "../../_components/Trailer";
 export const metadata: Metadata = {
   title: "Marine Wobbles: case study",
   description:
-    "A native Android match-3 in Kotlin and Jetpack Compose: difficulty measured by strategy bots over millions of seeded games, an exact cross-language port, and Play Billing that can't lose or double a purchase.",
+    "A native Android match-3 in Kotlin and Jetpack Compose: difficulty measured by strategy bots over millions of seeded games, rules ported exactly from a TypeScript prototype, and Play Billing that can't lose or double a purchase.",
 };
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
@@ -59,9 +59,9 @@ export default function MarineWobblesCaseStudy() {
           <p className="lf-status">{mw.status}</p>
           <h1 id="cs-h">{mw.title}</h1>
           <p className="lf-cs-lede">
-            A tap-to-pop match-3 for Android, built natively in Kotlin and Jetpack Compose. The interesting part is underneath:
-            its difficulty is measured by bots that play the game&apos;s own rules, its rules are a port proven exact against
-            the prototype, and its purchases can&apos;t be lost or granted twice.
+            A tap-to-pop match-3 for Android, written natively in Kotlin and Jetpack Compose. This case study covers the
+            engineering: bots that measure how hard each level is, rules ported exactly from my prototype, and purchases that
+            can&apos;t be lost or granted twice.
           </p>
           <Trailer id={mw.trailerId} title="Marine Wobbles trailer" poster="/lab/f/mw/trailer-poster.webp" />
           <p className="lf-cs-links">
@@ -130,19 +130,19 @@ export default function MarineWobblesCaseStudy() {
                 run counter the prototype needed.
               </li>
               <li>
-                <strong>Nothing more than it needs.</strong>{" "}No navigation library and no dependency injection: screens are
-                state, and the one swappable service, the shop, is an interface chosen by build type.
+                <strong>Few dependencies.</strong>{" "}No navigation library and no dependency injection: screens are state,
+                and the only swappable service, the shop, is an interface chosen by build type.
               </li>
             </ul>
           </div>
         </section>
 
         <section className="lf-cs-sec" aria-labelledby="difficulty">
-          <h2 id="difficulty">Difficulty is measured, not guessed</h2>
+          <h2 id="difficulty">Measuring difficulty with bots</h2>
           <div className="lf-cs-body">
             <p>
-              Seven strategy bots ({bots.join(", ")}) play the shipped rule functions themselves, not a copy, so the bots and
-              the game can&apos;t drift apart. Each level is played 2,000 to 5,000 times per bot from fixed seeds, and a bot
+              Seven strategy bots ({bots.join(", ")}) call the same rule functions the game ships, so the two can&apos;t
+              drift apart. Each level is played 2,000 to 5,000 times per bot from fixed seeds, and a bot
               chosen per goal type stands in for a typical player.
             </p>
             <p>
@@ -174,9 +174,9 @@ export default function MarineWobblesCaseStudy() {
             <p>
               A full run is about 2.2 million seeded games and takes some thirteen minutes, so results are cached by content:
               each measurement is keyed by a hash of the rule sources it ran and the level&apos;s own inputs, and the cache is
-              committed, so a change only pays for the levels it touches. Getting there turned up a real build bug: tests
+              committed, so a change only pays for the levels it touches. Building this exposed a bug in the build: tests
               that read the level file directly were invisible to Gradle&apos;s up-to-date check and reported stale passes,
-              fixed by declaring the file as a task input.
+              until I declared the file as a task input.
             </p>
           </div>
         </section>
@@ -185,8 +185,8 @@ export default function MarineWobblesCaseStudy() {
           <h2 id="port">A port that replays exactly</h2>
           <div className="lf-cs-body">
             <p>
-              The game started as my React Native prototype, written in TypeScript. The Kotlin rules are a port of it, and
-              exactness was the bar:
+              The game started as my React Native prototype, written in TypeScript. The Kotlin rules are a port of it, held to
+              identical results:
             </p>
             <ul className="lf-cs-points">
               <li>
@@ -197,8 +197,8 @@ export default function MarineWobblesCaseStudy() {
                 264 whole games recorded from the prototype (44 levels, three play styles, two seeds) replay state for state.
               </li>
               <li>
-                The prototype&apos;s 220-cell win-rate table comes out exactly, not within noise. Holding to that caught a
-                speculative &ldquo;what if&rdquo; move that was quietly advancing the real deck.
+                The prototype&apos;s 220-cell win-rate table comes out identical. Insisting on that caught a speculative
+                &ldquo;what if&rdquo; move that was quietly advancing the real deck.
               </li>
             </ul>
           </div>
@@ -207,7 +207,7 @@ export default function MarineWobblesCaseStudy() {
         <section className="lf-cs-sec" aria-labelledby="billing">
           <h2 id="billing">Purchases that can&apos;t be lost or doubled</h2>
           <div className="lf-cs-body">
-            <p>Coin packs are consumable purchases through Google Play Billing. The order of operations is the design:</p>
+            <p>Coin packs are consumable purchases through Google Play Billing, handled in this order:</p>
             <ol className="lf-cs-steps">
               <li>Grant coins only once a purchase reports as completed.</li>
               <li>Save the new balance.</li>
@@ -218,8 +218,8 @@ export default function MarineWobblesCaseStudy() {
             <p>
               A fake shop that can be told to succeed, wait, fail, cancel or be unreachable let the whole flow be built and
               tried on a phone before the store account existed. On the internal test track it was verified with test cards:
-              approved, declined, cancelled and slow payments, each granted exactly once. Purchases are checked on the device,
-              not on a server: a trade-off I chose for a game with no accounts.
+              approved, declined, cancelled and slow payments, each granted exactly once. Purchases are verified on the device
+              rather than on a server, a trade-off I chose because the game has no accounts.
             </p>
           </div>
         </section>
