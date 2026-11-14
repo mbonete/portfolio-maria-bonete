@@ -133,14 +133,14 @@ const bands: Band[] = [
     tone: "dark",
     showcase: (
       <div className="lf-phones">
+        <Phone>
+          <Image src="/lab/f/screens/bpm-tapping.webp" width={585} height={1170} alt="Tapping along: eleven beats in, the live reading says 128 BPM while the actual tempo stays hidden." sizes="(max-width: 760px) 30vw, 14vw" />
+        </Phone>
         <Phone size="lead">
-          <Image
-            src="/lab/f/screens/bpm-phone.webp"
-            width={585}
-            height={1170}
-            alt="Guess The BPM on a phone: The Beatles' Come Together above two panels, your BPM and the hidden actual BPM, and a round tap button."
-            sizes="(max-width: 760px) 50vw, 20vw"
-          />
+          <Image src="/lab/f/screens/bpm-phone.webp" width={585} height={1170} alt="A new round: The Beatles' Come Together, both BPM panels still empty." sizes="(max-width: 760px) 34vw, 17vw" />
+        </Phone>
+        <Phone>
+          <Image src="/lab/f/screens/bpm-result.webp" width={585} height={1170} alt="Submitted: 124 BPM guessed against an actual 124, Nailed it!" sizes="(max-width: 760px) 30vw, 14vw" />
         </Phone>
       </div>
     ),

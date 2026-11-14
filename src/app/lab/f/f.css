@@ -222,17 +222,44 @@
 }
 /* The real product on the band's ground: phones with store screens and a loop from the game, or
    the site in a browser with the same page on a phone in front of it. */
+/* The handset is a render of a generic phone (public/lab/f/phone-frame.webp, 75 by 140 units) whose
+   screen is cut out: the screenshot sits under it at the cut-out's insets, 66 by 132 units, radius 7.6. */
 .lf-phone {
-  padding: 2.4%;
-  border-radius: clamp(18px, 2.4vw, 34px);
-  background: #0f1116;
-  box-shadow: 0 40px 60px -28px rgb(0 0 0 / 0.45), 0 12px 24px -12px rgb(0 0 0 / 0.3), inset 0 0 0 1px rgb(255 255 255 / 0.08);
+  position: relative;
+  aspect-ratio: 75 / 140;
+}
+/* The shadow is cast by the body's outline (70.8 by 136.8, radius 9.9), cheaper than a filter. */
+.lf-phone::before {
+  content: "";
+  position: absolute;
+  inset: 1.14% 2.8%;
+  border-radius: 14% / 7.2%;
+  box-shadow: 0 28px 40px -14px rgb(0 0 0 / 0.42), 0 8px 14px -6px rgb(0 0 0 / 0.28);
+}
+.lf-phone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/lab/f/phone-frame.webp") center / 100% 100% no-repeat;
+  pointer-events: none;
 }
 .lf-phone-screen {
-  aspect-ratio: 1 / 2;
+  position: absolute;
+  left: 6%;
+  top: 2.857%;
+  width: 88%;
+  height: 94.286%;
   overflow: hidden;
-  border-radius: clamp(13px, 1.8vw, 26px);
+  border-radius: 11.5% / 5.76%;
   background: #000;
+}
+/* A faint sheen across the glass. */
+.lf-phone-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(118deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0) 34%);
+  pointer-events: none;
 }
 .lf-phone-screen > * { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 
@@ -247,8 +274,6 @@
 .lf-phones .lf-phone:first-child { transform: translateY(7%); }
 .lf-phones .lf-phone:last-child { transform: translateY(13%); }
 .lf-phones .lf-phone[data-size="lead"] { flex-basis: 34%; position: relative; z-index: 1; }
-/* One phone alone stands larger and level. */
-.lf-phones .lf-phone:only-child { flex-basis: 42%; transform: none; }
 
 .lf-devices { position: relative; }
 /* Room under the window's right corner for the phone to stand in. */
@@ -258,10 +283,7 @@
   right: 0;
   bottom: 0;
   width: 22%;
-  padding: 1.1%;
-  border-radius: clamp(14px, 1.8vw, 26px);
 }
-.lf-devices .lf-phone-screen { border-radius: clamp(10px, 1.3vw, 20px); }
 .lf-browser {
   overflow: hidden;
   border-radius: 10px;
