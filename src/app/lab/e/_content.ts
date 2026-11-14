@@ -11,6 +11,7 @@ export type CaseStudy = {
   built: string[];
   decisions: { title: string; body: string }[];
   model: string;
+  highlights: { title: string; body: string }[]; // the short version, for the work band
   repo?: string; // Left out for private repos: a link only a logged-in owner can open is a dead link.
   live?: string;
   videoId: string;
@@ -58,6 +59,20 @@ export const caseStudies: CaseStudy[] = [
     ],
     model:
       "Users, owner contacts, properties, maintenance jobs, quotes (amounts in cents), attachments, comments and a typed event stream with JSON metadata. UUID keys, timestamps with time zones, and a unique index on the owner's access token.",
+    highlights: [
+      {
+        title: "Owners approve without an account",
+        body: "The owner opens a link with a random token that expires after 30 days, and sending it again replaces the old one. Internal notes never reach the owner's page.",
+      },
+      {
+        title: "Every action checks ownership",
+        body: "Each server action verifies the session and that the job belongs to the signed-in manager, instead of relying on route protection.",
+      },
+      {
+        title: "Locked down by default",
+        body: "Row Level Security is on for every table with no policies, so the public API exposes nothing. Files sit in private storage behind short-lived links.",
+      },
+    ],
     videoId: "Qil40vL6FCY",
   },
   {
@@ -90,6 +105,20 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     model: "Users, ads and ad images ordered by position, with images removed when their ad is deleted. Schema changes ship as SQL migrations.",
+    highlights: [
+      {
+        title: "Data stays on the server",
+        body: "Pages read from SQLite in Server Components, and every write is a Server Action, with its pending and error states handled in the form.",
+      },
+      {
+        title: "Ownership on every write",
+        body: "Editing or deleting an ad first checks that it belongs to the signed-in user. Inputs are validated with Zod, and uploads get random names.",
+      },
+      {
+        title: "Photos in order",
+        body: "Each ad holds several photos in a set order. They're deleted with the ad, and schema changes ship as SQL migrations.",
+      },
+    ],
     repo: "https://github.com/mbonete/homely",
     videoId: "Ygp6AJwHytE",
   },
@@ -127,7 +156,17 @@ export const marineWobbles = {
 export const entries = [
   {
     title: "Guess The BPM",
-    summary: "Tap along to a song for fifteen seconds and guess its tempo; within one beat per minute counts. YouTube playback, English and Spanish.",
+    summary: "Tap along to a song and guess its tempo; within one beat per minute counts. YouTube playback, English and Spanish.",
+    highlights: [
+      {
+        title: "Tempo from your taps",
+        body: "Your BPM is the number of beats between your first and last tap, divided by the time between them. A guess within one BPM of the real tempo counts.",
+      },
+      {
+        title: "Twelve songs, two languages",
+        body: "Each round plays a YouTube video with a known tempo, and the interface switches between English and Spanish with i18next.",
+      },
+    ],
     stack: ["React", "TypeScript", "Vite", "Tailwind", "i18next"],
     image: { src: "/guessthebpm.webp", w: 800, h: 520 },
     live: "https://guessthebpm.netlify.app",
@@ -137,6 +176,20 @@ export const entries = [
     title: "The Coffee Place",
     summary:
       "A fictional café whose menu is a numbered series of six sugar sachets: tear one open into its page, stamp drinks into the cart and pay to a printed receipt.",
+    highlights: [
+      {
+        title: "The sachet opens into its page",
+        body: "React's View Transitions turn the sachet into the product page, its torn seam peels away, and the zigzag paper edges are CSS masks.",
+      },
+      {
+        title: "A cart that survives a reload",
+        body: "The cart lives in a small store read with useSyncExternalStore, saved to localStorage and kept in sync across tabs. Saved data is checked on load.",
+      },
+      {
+        title: "Screen readers and reduced motion",
+        body: "Cart changes are announced to screen readers, and when reduced motion is on, the animations and page transitions are switched off.",
+      },
+    ],
     stack: ["Next.js", "React", "JavaScript", "styled-components"],
     image: { src: "/the-coffee-place.webp", w: 2880, h: 1800 },
     live: "https://the-coffee-place.vercel.app/",

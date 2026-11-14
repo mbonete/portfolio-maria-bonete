@@ -29,7 +29,7 @@ type Band = {
   tone: "light" | "dark"; // the ink on the ground: dark ink on a light ground, or the reverse
   showcase: React.ReactNode;
   // The engineering, for the projects that have it: a spec list and the decisions that prove it.
-  proof?: { facts: { k: string; v: string }[]; highlights: { title: string; body: string }[] };
+  proof?: { facts?: { k: string; v: string }[]; highlights: { title: string; body: string }[] };
   links: { label: string; href: string; primary?: boolean; external?: boolean }[];
   video?: boolean; // the band has a demo that plays over its screens
 };
@@ -50,13 +50,13 @@ const bands: Band[] = [
     showcase: (
       <div className="lf-phones">
         <Phone>
-          <Image src="/lab/f/mw/board.webp" width={560} height={1120} alt="Level 2: a group of purple octopuses popping for 1,500 points on the six-by-six board." sizes="(max-width: 760px) 30vw, 14vw" />
+          <LoopVideo src="/lab/f/mw/level2-loop.mp4" poster="/lab/f/mw/level2-loop.webp" label="Level 2: a treasure chest bursts across the board, then the level-complete screen." />
         </Phone>
         <Phone size="lead">
           <LoopVideo src="/lab/f/mw/map-sakura.mp4" poster="/lab/f/mw/map-sakura.webp" label="The Sakura Waters map, its sea moving around the island path of levels." />
         </Phone>
         <Phone>
-          <Image src="/lab/f/mw/urchins.webp" width={560} height={1120} alt="Level 66: urchins and patches to clear, with 55 moves left." sizes="(max-width: 760px) 30vw, 14vw" />
+          <LoopVideo src="/lab/f/mw/level66-loop.mp4" poster="/lab/f/mw/level66-loop.webp" label="Level 66: groups popping as the urchin and patch goals fill up." />
         </Phone>
       </div>
     ),
@@ -70,6 +70,7 @@ const bands: Band[] = [
     title: quoteAndNod.title,
     summary: quoteAndNod.summary,
     stack: quoteAndNod.stack.slice(0, 5),
+    proof: { highlights: quoteAndNod.highlights },
     ground: "#b4492c",
     tone: "dark",
     showcase: (
@@ -95,6 +96,7 @@ const bands: Band[] = [
     title: homely.title,
     summary: homely.summary,
     stack: homely.stack.slice(0, 5),
+    proof: { highlights: homely.highlights },
     ground: "#1f6b4c",
     tone: "dark",
     showcase: (
@@ -115,6 +117,7 @@ const bands: Band[] = [
     title: bpm.title,
     summary: bpm.summary,
     stack: bpm.stack,
+    proof: { highlights: bpm.highlights },
     ground: "#2b3ae0",
     tone: "dark",
     showcase: (
@@ -123,7 +126,7 @@ const bands: Band[] = [
           <Image src="/lab/f/screens/bpm-tapping.webp" width={585} height={1170} alt="Tapping along: eleven beats in, the live reading says 128 BPM while the actual tempo stays hidden." sizes="(max-width: 760px) 30vw, 14vw" />
         </Phone>
         <Phone size="lead">
-          <Image src="/lab/f/screens/bpm-phone.webp" width={585} height={1170} alt="A new round: The Beatles' Come Together, both BPM panels still empty." sizes="(max-width: 760px) 34vw, 17vw" />
+          <LoopVideo src="/lab/f/screens/bpm-loop.mp4" poster="/lab/f/screens/bpm-loop.webp" label="A round with The Beatles' Come Together: ten taps, a live reading of 83 BPM, and Nailed it! against the actual 83." />
         </Phone>
         <Phone>
           <Image src="/lab/f/screens/bpm-result.webp" width={585} height={1170} alt="Submitted: 124 BPM guessed against an actual 124, Nailed it!" sizes="(max-width: 760px) 30vw, 14vw" />
@@ -140,6 +143,7 @@ const bands: Band[] = [
     title: coffee.title,
     summary: coffee.summary,
     stack: coffee.stack,
+    proof: { highlights: coffee.highlights },
     ground: "#7c212f",
     tone: "dark",
     showcase: (
@@ -151,7 +155,11 @@ const bands: Band[] = [
           h: 1000,
           alt: "The Coffee Place: \u201cSix staples. Collect the series.\u201d beside six sugar sachets, each printed in its own ink with a price and an add stamp.",
         }}
-        phone={phoneShot("coffee", "The same page on a phone.")}
+        phone={{
+          loop: "/lab/f/screens/coffee-loop.mp4",
+          poster: "/lab/f/screens/coffee-loop.webp",
+          label: "The Coffee Place on a phone: two drinks stamped into the cart, then the Espresso sachet opens into its page.",
+        }}
       />
     ),
     links: [
@@ -260,7 +268,7 @@ export default function LabF() {
                 <div className="lf-band-copy">
                   {b.status && <p className="lf-status">{b.status}</p>}
                   <p className="lf-summary">{b.summary}</p>
-                  {b.proof && (
+                  {b.proof?.facts && (
                     <dl className="lf-facts">
                       {b.proof.facts.map((f) => (
                         <div key={f.k}>

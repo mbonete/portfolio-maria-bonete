@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { PosterPlay, useBandVideo } from "./BandVideo";
+import LoopVideo from "./LoopVideo";
 import Phone from "./Phone";
 
 export type Shot = { src: string; w: number; h: number; alt: string };
@@ -18,7 +19,7 @@ export default function Devices({
 }: {
   url: string;
   desktop: Shot;
-  phone?: Shot;
+  phone?: Shot | { loop: string; poster: string; label: string };
   video?: { id: string; title: string; label: string };
 }) {
   const band = useBandVideo();
@@ -46,7 +47,11 @@ export default function Devices({
       </div>
       {phone && (
         <Phone>
-          <Image src={phone.src} width={phone.w} height={phone.h} alt={phone.alt} sizes="(max-width: 760px) 26vw, 13vw" />
+          {"loop" in phone ? (
+            <LoopVideo src={phone.loop} poster={phone.poster} label={phone.label} />
+          ) : (
+            <Image src={phone.src} width={phone.w} height={phone.h} alt={phone.alt} sizes="(max-width: 760px) 26vw, 13vw" />
+          )}
         </Phone>
       )}
     </div>

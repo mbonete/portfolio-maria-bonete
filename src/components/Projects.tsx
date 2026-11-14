@@ -33,7 +33,7 @@ const projects: Project[] = [
   {
     title: "Guess The BPM",
     description:
-      "Tap along to a song for fifteen seconds and guess its tempo; within one beat per minute counts. YouTube playback, English and Spanish.",
+      "Tap along to a song and guess its tempo; within one beat per minute counts. YouTube playback, English and Spanish.",
     tags: ["React", "TypeScript", "Vite", "Tailwind", "i18n"],
     href: "https://guessthebpm.netlify.app",
     preview: "/guessthebpm.webp",
