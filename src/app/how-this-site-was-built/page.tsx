@@ -1,0 +1,95 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { person } from "@/content";
+
+export const metadata: Metadata = {
+  title: "How this site was built",
+  description: "The portfolio as a worked example of building with coding agents: decisions, prototypes, a rendered hero, real product screens and checks.",
+};
+
+const ext = { target: "_blank", rel: "noreferrer" } as const;
+
+// Every step here is on the record: the decision log in docs/revamp, the code, and the commits.
+const steps = [
+  {
+    id: "grilling",
+    title: "Decided in grilling rounds",
+    body: "An agent interviewed me in rounds, recommending an answer to every question, and I made the calls. Audience first: recruiters and hiring managers who give a portfolio ten seconds, often on a phone. Then the constraints: free fonts only, and it must not look like another AI-generated site.",
+  },
+  {
+    id: "banned",
+    title: "A banned list before any pixels",
+    body: "Gradient text, purple-to-cyan, glow blobs, dot grids, glassmorphism, Inter or Geist as the voice, pill buttons, a centred column of identical sections, “Hi, I'm” heroes, an icon by every label, and a badge above the name.",
+  },
+  {
+    id: "prototypes",
+    title: "Six prototypes, judged at real size",
+    body: "Each direction was built as an unlinked page with real content and checked on a laptop and a phone. The sixth, one crafted object on one flat colour per project, became this site; the other five were deleted.",
+  },
+  {
+    id: "hero",
+    title: "A hero rendered in Blender",
+    body: "The folding screen is a sequence of Blender renders from shut to open, so a click plays it folding one way or the other. The panels folding toward you stand in front of the letters of my name and the others behind. The profile shadow on the open screen comes from a silhouette I chose; that one image is AI-generated.",
+  },
+  {
+    id: "screens",
+    title: "Real products on every project",
+    body: "Each project shows its actual product. The short loops in the phones were recorded from the live sites by a script that plays them in a phone-sized browser, or cut from my game's trailer, and the phone itself is a frame I rendered rather than a downloaded mockup. Demo videos play in place and load nothing from YouTube until you press play.",
+  },
+  {
+    id: "copy",
+    title: "Copy held to written rules",
+    body: "The text follows writing rules kept in the repository: no contrast for effect, no slogans or marketing words, and every fact traceable to the code or my CV. Agents writing copy for this site load those rules first.",
+  },
+  {
+    id: "checks",
+    title: "Checked like any other change",
+    body: "Every change was looked at in a real browser at desktop and phone sizes, with lint and type checks, and layout shift was measured on the page.",
+  },
+];
+
+export default function BuiltPage() {
+  return (
+    <div className="lf lf-cs-page flex-1" style={{ "--band": "#6581df" } as React.CSSProperties}>
+      <header className="lf-cs-top">
+        <Link href="/#ai">Back to the site</Link>
+      </header>
+
+      <main>
+        <section className="lf-cs-head" aria-labelledby="cs-h">
+          <h1 id="cs-h">How this site was built</h1>
+          <p className="lf-cs-lede">
+            This site is a small case study in how I work with coding agents: decisions made in grilling rounds, prototypes
+            judged on real screens, and nothing accepted until it was checked.
+          </p>
+        </section>
+
+        {steps.map((s) => (
+          <section key={s.id} className="lf-cs-sec" aria-labelledby={s.id}>
+            <h2 id={s.id}>{s.title}</h2>
+            <div className="lf-cs-body">
+              <p>{s.body}</p>
+            </div>
+          </section>
+        ))}
+
+        <section className="lf-cs-sec" aria-labelledby="left-out">
+          <h2 id="left-out">Left out on purpose</h2>
+          <div className="lf-cs-body">
+            <p>
+              A chatbot that answers questions about me. It would be a cliché, it could make things up in front of a
+              recruiter, and it would need a paid key and abuse protection.
+            </p>
+          </div>
+        </section>
+
+        <nav className="lf-cs-end" aria-label="More">
+          <Link href="/#work">See the work</Link>
+          <a href={person.links.linkedin} {...ext}>
+            Talk to me on LinkedIn
+          </a>
+        </nav>
+      </main>
+    </div>
+  );
+}

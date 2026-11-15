@@ -1,28 +1,349 @@
-import dynamic from "next/dynamic";
-import Hero from "@/components/Hero";
-import Nav from "@/components/Nav";
-import BackgroundFx from "@/components/BackgroundFx";
+import Image from "next/image";
+import Link from "next/link";
+import { aiPractices, caseStudies, contactLine, currently, entries, experience, marineWobbles, person } from "@/content";
+import FoldingScreen from "./_components/FoldingScreen";
+import LoopVideo from "./_components/LoopVideo";
+import { BandVideo, CloseVideo } from "./_components/BandVideo";
+import Devices from "./_components/Devices";
+import Phone from "./_components/Phone";
 
-const About = dynamic(() => import("@/components/About"));
-const Experience = dynamic(() => import("@/components/Experience"));
-const Projects = dynamic(() => import("@/components/Projects"));
-const Contact = dynamic(() => import("@/components/Contact"));
 
-export default function Home() {
+const ext = { target: "_blank", rel: "noreferrer" } as const;
+const quoteAndNod = caseStudies.find((c) => c.slug === "quote-and-nod")!;
+const homely = caseStudies.find((c) => c.slug === "homely")!;
+const [bpm, coffee] = entries;
+
+type Band = {
+  id: string;
+  title: string;
+  status?: string;
+  summary: string;
+  stack: string[];
+  ground: string;
+  tone: "light" | "dark"; // the ink on the ground: dark ink on a light ground, or the reverse
+  showcase: React.ReactNode;
+  // The engineering, for the projects that have it: a spec list and the decisions that prove it.
+  proof?: { facts?: { k: string; v: string }[]; highlights: { title: string; body: string }[] };
+  links: { label: string; href: string; primary?: boolean; external?: boolean }[];
+  video?: boolean; // the band has a demo that plays over its screens
+};
+
+// Every project gets the same treatment: one flat colour taken from its own palette, the real
+// product on it, its name set large, and the same few facts.
+const bands: Band[] = [
+  {
+    id: "marine-wobbles",
+    title: marineWobbles.title,
+    status: marineWobbles.status,
+    summary: marineWobbles.summary,
+    stack: marineWobbles.stack,
+    ground: "#63bdea",
+    tone: "light",
+    showcase: (
+      <div className="lf-phones">
+        <Phone>
+          <LoopVideo src="/marine-wobbles/pop-loop.mp4" poster="/marine-wobbles/pop-loop.webp" label="Level 2: a big group of purple octopuses pops for 1,500 points and the board falls into place." />
+        </Phone>
+        <Phone size="lead">
+          <LoopVideo src="/marine-wobbles/map-sakura.mp4" poster="/marine-wobbles/map-sakura.webp" label="The Sakura Waters map, its sea moving around the island path of levels." />
+        </Phone>
+        <Phone>
+          <LoopVideo src="/marine-wobbles/level66-loop.mp4" poster="/marine-wobbles/level66-loop.webp" label="Level 66: groups popping as the urchin and patch goals fill up." />
+        </Phone>
+      </div>
+    ),
+    proof: { facts: marineWobbles.facts, highlights: marineWobbles.highlights },
+    links: [
+      { label: "Read the case study", href: "/work/marine-wobbles", primary: true },
+    ],
+  },
+  {
+    id: "quote-and-nod",
+    title: quoteAndNod.title,
+    summary: quoteAndNod.summary,
+    stack: quoteAndNod.stack.slice(0, 5),
+    proof: { highlights: quoteAndNod.highlights },
+    ground: quoteAndNod.band.ground,
+    tone: quoteAndNod.band.tone,
+    showcase: (
+      <Devices
+        video={{ id: quoteAndNod.videoId, title: "Quote & Nod demo", label: `Play the demo, ${quoteAndNod.videoLength} seconds` }}
+        url="localhost:3000"
+        desktop={quoteAndNod.band.desktop}
+        phone={quoteAndNod.band.phone}
+      />
+    ),
+    links: [
+      { label: "Read the case study", href: "/work/quote-and-nod", primary: true },
+    ],
+    video: true,
+  },
+  {
+    id: "homely",
+    title: homely.title,
+    summary: homely.summary,
+    stack: homely.stack.slice(0, 5),
+    proof: { highlights: homely.highlights },
+    ground: homely.band.ground,
+    tone: homely.band.tone,
+    showcase: (
+      <Devices
+        video={{ id: homely.videoId, title: "Homely demo", label: `Play the demo, ${homely.videoLength} seconds` }}
+        url="localhost:3000"
+        desktop={homely.band.desktop}
+      />
+    ),
+    links: [
+      { label: "Read the case study", href: "/work/homely", primary: true },
+      ...(homely.repo ? [{ label: "Code", href: homely.repo, external: true }] : []),
+    ],
+    video: true,
+  },
+  {
+    id: "guess-the-bpm",
+    title: bpm.title,
+    summary: bpm.summary,
+    stack: bpm.stack,
+    proof: { highlights: bpm.highlights },
+    ground: "#2b3ae0",
+    tone: "dark",
+    showcase: (
+      <div className="lf-phones">
+        <Phone>
+          <Image src="/screens/bpm-tapping.webp" width={585} height={1170} alt="Tapping along: eleven beats in, the live reading says 128 BPM while the actual tempo stays hidden." sizes="(max-width: 760px) 30vw, 14vw" />
+        </Phone>
+        <Phone size="lead">
+          <LoopVideo src="/screens/bpm-loop.mp4" poster="/screens/bpm-loop.webp" label="A round with The Beatles' Come Together: ten taps, a live reading of 83 BPM, and Nailed it! against the actual 83." />
+        </Phone>
+        <Phone>
+          <Image src="/screens/bpm-result.webp" width={585} height={1170} alt="Submitted: 124 BPM guessed against an actual 124, Nailed it!" sizes="(max-width: 760px) 30vw, 14vw" />
+        </Phone>
+      </div>
+    ),
+    links: [
+      { label: "Open the live site", href: bpm.live, primary: true, external: true },
+      { label: "Code", href: bpm.repo, external: true },
+    ],
+  },
+  {
+    id: "the-coffee-place",
+    title: coffee.title,
+    summary: coffee.summary,
+    stack: coffee.stack,
+    proof: { highlights: coffee.highlights },
+    ground: "#7c212f",
+    tone: "dark",
+    showcase: (
+      <Devices
+        url="the-coffee-place.vercel.app"
+        desktop={{
+          src: "/screens/coffee-desktop.webp",
+          w: 1600,
+          h: 1000,
+          alt: "The Coffee Place: \u201cSix staples. Collect the series.\u201d beside six sugar sachets, each printed in its own ink with a price and an add stamp.",
+        }}
+        phone={{
+          loop: "/screens/coffee-loop.mp4",
+          poster: "/screens/coffee-loop.webp",
+          label: "The Coffee Place on a phone: two drinks stamped into the cart, then the Espresso sachet opens into its page.",
+        }}
+      />
+    ),
+    links: [
+      { label: "Open the live site", href: coffee.live, primary: true, external: true },
+      { label: "Code", href: coffee.repo, external: true },
+    ],
+  },
+];
+
+export default function LabF() {
   return (
-    <>
-      <BackgroundFx />
-      <Nav />
-      <main className="mx-auto max-w-5xl px-6">
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Contact />
+    <div className="lf flex-1">
+      <section className="lf-hero" aria-labelledby="lf-name">
+        <header className="lf-top">
+          <nav aria-label="Primary" className="lf-nav">
+            <a href="#work">Work</a>
+            <a href="#ai">AI practice</a>
+            <a href="#experience">Experience</a>
+            <a href={person.links.cv} {...ext}>
+              CV <span className="lf-sr">(PDF)</span>
+            </a>
+            <a href={person.links.github} {...ext}>GitHub</a>
+          </nav>
+          <a className="lf-top-contact" href="#contact">
+            Get in touch
+          </a>
+        </header>
+
+        <FoldingScreen
+          name={
+            <>
+              <h1 id="lf-name" className="lf-name">
+                Maria Bonete
+              </h1>
+              {/* The same name again, invisible, so two facts can sit in the space above its small
+                  letters, wherever the letters fall. */}
+              <p className="lf-name lf-name-ghost" aria-hidden>
+                M
+                <span className="lf-tuck">
+                  aria<span className="lf-tag">Full-stack<br />developer</span>
+                </span>{" "}
+                B
+                <span className="lf-tuck">
+                  onete<span className="lf-tag">Madrid, now<br />at {currently.company}</span>
+                </span>
+              </p>
+            </>
+          }
+          intro={
+            <div className="lf-intro">
+              <p className="lf-role">
+                <span className="lf-sr">Full-stack developer in Madrid, now at {currently.company}. </span>
+                {/* Non-breaking hyphen keeps "AI-driven" on one line. */}
+                Specialising in AI{"\u2011"}driven engineering, web, React Native and Web3.
+              </p>
+              <a className="lf-primary" href="#work">
+                See the work
+              </a>
+            </div>
+          }
+        />
+      </section>
+
+      <main>
+        <section id="ai" className="lf-ai" aria-labelledby="ai-h">
+          <h2 id="ai-h">AI-driven engineering</h2>
+          <ol className="lf-principles">
+            {aiPractices.map((p) => (
+              <li key={p.title}>
+                <h3>{p.title}</h3>
+                <p>
+                  {p.text}
+                  {p.example && <> {p.example}</>}
+                </p>
+              </li>
+            ))}
+          </ol>
+          <p className="lf-built">
+            <Link href="/how-this-site-was-built">How this site was built</Link>
+          </p>
+        </section>
+
+        <section id="work" aria-labelledby="work-h">
+          <div className="lf-work-head">
+            <h2 id="work-h">Work</h2>
+            <p>An Android game in testing on Google Play, two web apps with full case studies, and two smaller projects.</p>
+          </div>
+
+          {bands.map((b) => {
+            const band = (
+              <article
+                key={b.id}
+                id={b.id}
+                className="lf-band"
+                data-tone={b.tone}
+                data-proof={b.proof ? "" : undefined}
+                style={{ "--band": b.ground } as React.CSSProperties}
+                aria-labelledby={`${b.id}-h`}
+              >
+                <h3 id={`${b.id}-h`} className="lf-band-title">
+                  {b.title}
+                </h3>
+                <div className="lf-band-object">
+                  {b.showcase}
+                </div>
+                <div className="lf-band-copy">
+                  {b.status && <p className="lf-status">{b.status}</p>}
+                  <p className="lf-summary">{b.summary}</p>
+                  {b.proof?.facts && (
+                    <dl className="lf-facts">
+                      {b.proof.facts.map((f) => (
+                        <div key={f.k}>
+                          <dt>{f.k}</dt>
+                          <dd>{f.v}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                  <p className="lf-stack">{b.stack.join(" · ")}</p>
+                  {b.links.length > 0 && (
+                    <div className="lf-links">
+                      {b.links.map((l) =>
+                        l.external ? (
+                          <a key={l.label} href={l.href} className={l.primary ? "lf-link-strong" : undefined} {...ext}>
+                            {l.label}
+                          </a>
+                        ) : (
+                          <Link key={l.label} href={l.href} className={l.primary ? "lf-link-strong" : undefined}>
+                            {l.label}
+                          </Link>
+                        ),
+                      )}
+                      {b.video && <CloseVideo />}
+                    </div>
+                  )}
+                </div>
+                {b.proof && (
+                  <div className="lf-proof">
+                    <ul className="lf-highlights">
+                      {b.proof.highlights.map((h) => (
+                        <li key={h.title}>
+                          <h4>{h.title}</h4>
+                          <p>{h.body}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </article>
+            );
+            return b.video ? <BandVideo key={b.id}>{band}</BandVideo> : band;
+          })}
+        </section>
+
+        <section id="experience" className="lf-exp" aria-labelledby="exp-h">
+          <h2 id="exp-h">Experience</h2>
+          <ol className="lf-exp-list">
+            {experience.map((x) => (
+              <li key={x.id}>
+                <p className="lf-exp-dates">{x.dates}</p>
+                <div className="lf-exp-who">
+                  <h3>{x.company}</h3>
+                  <p>{x.role}</p>
+                </div>
+                <div className="lf-exp-what">
+                  <ul>
+                    {x.points.map((p) => (
+                      <li key={p}>{p}</li>
+                    ))}
+                  </ul>
+                  <p className="lf-exp-stack">{x.stack}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="contact" className="lf-contact" aria-labelledby="contact-h">
+          <h2 id="contact-h">Contact</h2>
+          <p>{contactLine}</p>
+          <ul>
+            <li>
+              <a href={person.links.linkedin} {...ext}>LinkedIn</a>
+            </li>
+            <li>
+              <a href={person.links.github} {...ext}>GitHub</a>
+            </li>
+            <li>
+              <a href={person.links.cv} {...ext}>CV (PDF)</a>
+            </li>
+          </ul>
+        </section>
       </main>
-      <footer className="mx-auto max-w-5xl px-6 py-10 text-sm text-neutral-400">
-        © {new Date().getFullYear()} Maria Bonete. Made with love from Spain.
+
+      <footer className="lf-end">
+        <p>Maria Bonete · Madrid</p>
       </footer>
-    </>
+    </div>
   );
 }

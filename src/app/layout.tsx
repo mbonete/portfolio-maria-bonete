@@ -1,35 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Hina_Mincho, Instrument_Sans } from "next/font/google";
 import "./globals.css";
+import "./site.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Hina Mincho for the big names, Instrument Sans for everything else.
+const display = Hina_Mincho({
+  variable: "--font-f-display",
+  weight: "400",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const text = Instrument_Sans({
+  variable: "--font-f-text",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Maria Bonete — Full-Stack Developer",
-  description: "Maria Bonete, a full-stack developer in Madrid building web, mobile and Web3 apps with React and React Native.",
+  title: { default: "Maria Bonete: full-stack developer", template: "%s · Maria Bonete" },
+  description:
+    "Full-stack developer in Madrid, specialising in AI-driven engineering, web, React Native and Web3. Case studies, shipped projects, and how I work with coding agents.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        {children}
-      </body>
+    <html lang="en" className={`${display.variable} ${text.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

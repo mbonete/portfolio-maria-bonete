@@ -3,6 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
+// The hero's object at tab size: a four-panel folding screen, a gold zigzag on the azurite ground.
 export default function Icon() {
   return new ImageResponse(
     (
@@ -13,25 +14,19 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #7c5cff 0%, #22d3ee 100%)",
-          borderRadius: "50%",
-          color: "navy",
+          background: "#6581df",
+          borderRadius: 7,
         }}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="m18 16 4-4-4-4" />
-          <path d="m6 8-4 4 4 4" />
-          <path d="m14.5 4-5 16" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <polyline
+            points="3,7 9,4 15,7 21,4 21,19 15,22 9,19 3,22 3,7"
+            fill="#d9b45a"
+            stroke="#8c6a1f"
+            strokeWidth="1"
+            strokeLinejoin="round"
+          />
+          <path d="M9 4v15M15 7v15" stroke="#8c6a1f" strokeWidth="1" />
         </svg>
       </div>
     ),

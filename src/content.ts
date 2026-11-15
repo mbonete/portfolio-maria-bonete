@@ -1,0 +1,314 @@
+// The site's content. Every line comes from the project repos, the CV or PRODUCT.md; nothing here is
+// invented. Copy follows the writing rules in CLAUDE.md.
+
+export const person = {
+  name: "Maria Bonete",
+  links: {
+    github: "https://github.com/mbonete",
+    linkedin: "https://www.linkedin.com/in/maria-bonete",
+    cv: "/cv.pdf",
+  },
+};
+
+export const currently = { company: "Wandity" };
+
+export type CaseStudy = {
+  slug: "quote-and-nod" | "homely";
+  title: string;
+  summary: string;
+  problem: string;
+  stack: string[];
+  built: string[];
+  decisions: { title: string; body: string }[];
+  model: string;
+  highlights: { title: string; body: string }[]; // the short version, for the work band
+  repo?: string; // Left out for private repos: a link only a logged-in owner can open is a dead link.
+  live?: string;
+  videoId: string;
+  videoLength: number; // seconds, for the play button's spoken label
+  // Its colour on the site and the screens it shows: the desktop in a browser, and a phone in front.
+  band: {
+    ground: string;
+    tone: "light" | "dark";
+    desktop: { src: string; w: number; h: number; alt: string };
+    phone?: { src: string; w: number; h: number; alt: string };
+  };
+};
+
+export const caseStudies: CaseStudy[] = [
+  {
+    slug: "quote-and-nod",
+    title: "Quote & Nod",
+    summary:
+      "A maintenance quote approval portal for property managers. The owner gets every vendor quote in one link and answers from their phone, and the decision stays on the job's record.",
+    problem:
+      "Quote & Nod covers one thing: a maintenance job, its vendor quotes, the owner's decision and the paper trail behind it. Rent collection, leases and tenant screening are left out on purpose.",
+    stack: ["Next.js (App Router)", "TypeScript", "Supabase (Postgres, Auth, Storage)", "Drizzle ORM", "React Hook Form + Zod", "Radix primitives", "Tailwind", "Resend"],
+    built: [
+      "Email and password auth with session refresh and route protection.",
+      "Properties, with the owner's contact created or updated alongside.",
+      "Jobs that move through eight statuses, from new to closed, with urgency, scheduling and completion.",
+      "Quotes per job, with one marked as recommended for the owner.",
+      "Attachments in private storage, served through short-lived signed links.",
+      "Comments that can be internal or visible to the owner.",
+      "A typed activity timeline for every job.",
+      "A tokenized owner portal to approve, reject or ask a question.",
+      "Emails for approval requests, confirmations, rejections and completion.",
+      "A dashboard sorted into four buckets, and a seed script for demos.",
+    ],
+    decisions: [
+      {
+        title: "Owners don't need an account",
+        body: "Owners approve through a link carrying a random 24-byte token with a 30-day expiry; sending it again rotates it. The trade-off against magic links is documented, with an upgrade path to an emailed one-time code.",
+      },
+      {
+        title: "Authorization lives in every action",
+        body: "Each server action verifies the session itself and re-checks that the row belongs to the manager, because route protection is not trusted to authorize.",
+      },
+      {
+        title: "Locked down by default",
+        body: "Row Level Security is on for every table with no policies, so the public API exposes nothing. Storage is private, uploads are capped at 10 MB, and every input is validated on the server.",
+      },
+      {
+        title: "Runs locally end to end",
+        body: "Without an email key the mailer logs instead of sending, and environment variables are validated at start-up, so the whole approval flow works on a laptop.",
+      },
+    ],
+    model:
+      "Users, owner contacts, properties, maintenance jobs, quotes (amounts in cents), attachments, comments and a typed event stream with JSON metadata. UUID keys, timestamps with time zones, and a unique index on the owner's access token.",
+    highlights: [
+      {
+        title: "Owners approve without an account",
+        body: "The owner opens a link with a random token that expires after 30 days, and sending it again replaces the old one. Internal notes never reach the owner's page.",
+      },
+      {
+        title: "Every action checks ownership",
+        body: "Each server action verifies the session and that the job belongs to the signed-in manager, instead of relying on route protection.",
+      },
+      {
+        title: "Locked down by default",
+        body: "Row Level Security is on for every table with no policies, so the public API exposes nothing. Files sit in private storage behind short-lived links.",
+      },
+    ],
+    videoId: "Qil40vL6FCY",
+    videoLength: 24,
+    band: {
+      ground: "#b4492c",
+      tone: "dark",
+      desktop: {
+        src: "/screens/qn-desktop.webp",
+        w: 1600,
+        h: 1000,
+        alt: "The manager's job page: a water heater replacement with two vendor quotes, one recommended, waiting for the owner, Alice Chen.",
+      },
+      phone: {
+        src: "/screens/qn-phone.webp",
+        w: 585,
+        h: 1170,
+        alt: "The owner's approval page on a phone: the same job and its two quotes.",
+      },
+    },
+  },
+  {
+    slug: "homely",
+    title: "Homely",
+    summary:
+      "A full-stack real estate listings app with accounts, photo uploads and a SQLite database.",
+    problem:
+      "Browse homes, open a listing, and sign in to post and manage your own ads with photos. It's built around the App Router's server model.",
+    stack: ["Next.js (App Router)", "Server Components + Server Actions", "SQLite (better-sqlite3)", "Drizzle ORM", "Auth.js", "Zod", "Tailwind", "shadcn/ui"],
+    built: [
+      "Landing page, listings index and listing detail.",
+      "Create and edit flows for ads, with multiple ordered images.",
+      "Sign-up and login with hashed passwords and an httpOnly session cookie.",
+      "A profile page listing the user's own ads.",
+    ],
+    decisions: [
+      {
+        title: "Server-first data flow",
+        body: "Pages read straight from the database in Server Components, with no client-side fetching. Every write is a Server Action with pending and error states handled in the form.",
+      },
+      {
+        title: "Ownership on every write",
+        body: "Editing or deleting an ad checks that it belongs to the signed-in user; inputs are validated with Zod and uploads get random UUID names.",
+      },
+      {
+        title: "Protected routes",
+        body: "Creating ads, editing them and user pages sit behind an auth proxy.",
+      },
+    ],
+    model: "Users, ads and ad images ordered by position, with images removed when their ad is deleted. Schema changes ship as SQL migrations.",
+    highlights: [
+      {
+        title: "Data stays on the server",
+        body: "Pages read from SQLite in Server Components, and every write is a Server Action, with its pending and error states handled in the form.",
+      },
+      {
+        title: "Ownership on every write",
+        body: "Editing or deleting an ad first checks that it belongs to the signed-in user. Inputs are validated with Zod, and uploads get random names.",
+      },
+      {
+        title: "Photos in order",
+        body: "Each ad holds several photos in a set order. They're deleted with the ad, and schema changes ship as SQL migrations.",
+      },
+    ],
+    repo: "https://github.com/mbonete/homely",
+    videoId: "Ygp6AJwHytE",
+    videoLength: 31,
+    band: {
+      ground: "#1f6b4c",
+      tone: "dark",
+      desktop: {
+        src: "/screens/homely-desktop.webp",
+        w: 1262,
+        h: 662,
+        alt: "Homely's listings page: a search and sort panel beside cards for five homes.",
+      },
+    },
+  },
+];
+
+export const marineWobbles = {
+  title: "Marine Wobbles",
+  status: "In internal testing on Google Play",
+  summary:
+    "A tap-to-pop match-3 for Android, written natively in Kotlin and Jetpack Compose, with a coin store that takes real payments through Google Play.",
+  facts: [
+    { k: "Levels", v: "80, in eight chapters; each chapter adds a new mechanic" },
+    { k: "Difficulty", v: "7 strategy bots; about 2.2 million seeded games per balance run" },
+    { k: "Tests", v: "455 unit tests, and 264 recorded games replayed state for state" },
+    { k: "Art", v: "27 illustrated episodes, generated from my prompts" },
+  ],
+  highlights: [
+    {
+      title: "Bots measure every level",
+      body: "The strategy bots run the game's real rule code, 2,000 to 5,000 seeded games each per level. Each difficulty tier sets limits: a win-rate band, when in the move budget a win should land, and how far skilled play must beat random play. Tests hold every level to its tier, and an auto-tuner proposes fixes.",
+    },
+    {
+      title: "A port that replays exactly",
+      body: "The rules are a port of my TypeScript prototype, random generator included, bit for bit. Games recorded in the prototype replay identically in Kotlin, and the prototype's win-rate table comes out identical.",
+    },
+    {
+      title: "Purchases that can't be lost or doubled",
+      body: "Coins are granted once a purchase completes and saved before the purchase is consumed. The purchase token is the key, so nothing is granted twice, and unfinished purchases are re-checked whenever the game comes back. Tested with approved, declined, cancelled and slow payments.",
+    },
+  ],
+  stack: ["Kotlin", "Jetpack Compose", "Coroutines + StateFlow", "Play Billing", "kotlinx-serialization", "JUnit"],
+  trailerId: "agdXKgTLqxc",
+};
+
+export const entries = [
+  {
+    title: "Guess The BPM",
+    summary: "Tap along to a song and guess its tempo; within one beat per minute counts. YouTube playback, English and Spanish.",
+    highlights: [
+      {
+        title: "Tempo from your taps",
+        body: "Your BPM is the number of beats between your first and last tap, divided by the time between them. A guess within one BPM of the real tempo counts.",
+      },
+      {
+        title: "Twelve songs, two languages",
+        body: "Each round plays a YouTube video with a known tempo, and the interface switches between English and Spanish with i18next.",
+      },
+    ],
+    stack: ["React", "TypeScript", "Vite", "Tailwind", "i18next"],
+    live: "https://guessthebpm.netlify.app",
+    repo: "https://github.com/mbonete/guess-the-bpm",
+  },
+  {
+    title: "The Coffee Place",
+    summary:
+      "A fictional café whose menu is a numbered series of six sugar sachets: tear one open into its page, stamp drinks into the cart and pay to a printed receipt.",
+    highlights: [
+      {
+        title: "The sachet opens into its page",
+        body: "React's View Transitions turn the sachet into the product page, its torn seam peels away, and the zigzag paper edges are CSS masks.",
+      },
+      {
+        title: "A cart that survives a reload",
+        body: "The cart lives in a small store read with useSyncExternalStore, saved to localStorage and kept in sync across tabs. Saved data is checked on load.",
+      },
+      {
+        title: "Screen readers and reduced motion",
+        body: "Cart changes are announced to screen readers, and when reduced motion is on, the animations and page transitions are switched off.",
+      },
+    ],
+    stack: ["Next.js", "React", "JavaScript", "styled-components"],
+    live: "https://the-coffee-place.vercel.app/",
+    repo: "https://github.com/mbonete/coffee-place",
+  },
+];
+
+export const contactLine = "The quickest way to reach me is a message on LinkedIn.";
+
+// How I work with coding agents, in the order of a piece of work; an example only where it can be checked.
+export const aiPractices: { title: string; text: string; example?: string }[] = [
+  {
+    title: "Grilling to a shared understanding",
+    text: "Before an agent writes any code, I have it grill me on the task until we understand it the same way. That's where the gaps come out: the case I hadn't mentioned, the assumption it would otherwise have made without asking.",
+    example: "This portfolio was planned that way.",
+  },
+  {
+    title: "Goals that end on evidence",
+    text: "With /goal, an agent keeps working until a separate model decides the goal is met, and that model only sees the conversation. So a good goal describes the finished state, names the commands that prove it, says what must not change, and sets a limit, such as 20 turns.",
+  },
+  {
+    title: "The right model and effort for each task",
+    text: "The strongest model at maximum effort is slower and costs more, and on routine work it rarely does better. Knowing which tasks need it is part of the job, and I revisit that choice whenever a new model comes out.",
+  },
+  {
+    title: "Running agents in parallel",
+    text: "Several agents working at once can get far more done in a day, as long as their tasks are independent and each has its own copy of the code. The real limit is review: once finished work starts waiting on me, another agent stops helping.",
+  },
+  {
+    title: "A different agent reviews the code",
+    text: "Models tend to judge their own output too kindly, so the agent that wrote the code never reviews it. The review comes from a fresh session, and I check its findings before acting on them.",
+  },
+];
+
+export const experience = [
+  {
+    id: "wandity",
+    company: "Wandity",
+    role: "Full Stack Developer",
+    dates: "Sept 2024 – now",
+    points: [
+      "Led architecture, design and front end for an e-commerce platform's web and mobile apps, including a greenfield Next.js app on a monorepo with shared packages, SQLite and Drizzle.",
+      "Built an offline-first React Native (Expo) app for sales teams: orders created offline and synced later, SQLite storage, image caching, tuned for large catalogues on low-end devices.",
+      "Owned the UI of a startup's events app: React Native with a tRPC backend on Cloudflare Workers (Hono, D1), schema and migrations, and dev, staging and production deploys.",
+    ],
+    stack: "Next.js · React Native · TypeScript · tRPC · Drizzle · SQLite · React Query · Zod · Sentry",
+  },
+  {
+    id: "bidz-labs",
+    company: "Bidz Labs",
+    role: "Front-end Architect, Web3",
+    dates: "Mar – Sept 2024",
+    points: [
+      "Designed and built the front end of a Web3 trading and betting app with social features, including wallet flows.",
+      "Integrated Ethereum smart contracts behind a hook-based SDK; real-time multi-token data over WebSockets; sign-in with Ethereum and OAuth.",
+      "Built trade creation, infinite feeds and trade modals, and wrote the internal architecture documentation.",
+    ],
+    stack: "React · TypeScript · Redux Toolkit · React Query · Wagmi · RainbowKit · WebSockets",
+  },
+  {
+    id: "aventu",
+    company: "Aventu",
+    role: "Front-end Developer, freelance",
+    dates: "Sept 2023 – Mar 2024",
+    points: [
+      "Delivered two fixed-price features for a story-creation app and was hired back for the second: a diagram-based story builder and an audio editor.",
+    ],
+    stack: "React · TypeScript · React Flow · Redux Toolkit · RTK Query",
+  },
+  {
+    id: "canelab",
+    company: "CaneLab Ltd.",
+    role: "Front-end Developer",
+    dates: "Aug 2022 – Dec 2023",
+    points: [
+      "Built interfaces for a consultancy making custom products for startups and small businesses, from Figma designs to components, with REST integrations.",
+    ],
+    stack: "React · Next.js · TypeScript · styled-components · Figma",
+  },
+];

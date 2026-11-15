@@ -25,8 +25,8 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 ## Capabilities and Constraints
 
 - Next.js 16 (App Router), React 19, Tailwind 4; deployed as a static-friendly site.
-- Sections: Hero, Projects, AI (five practices), Experience, About, Contact, plus a "How this site was built" page.
-- Features in scope: ⌘K command palette, case-study pages with view transitions, a "now" strip (latest public GitHub push, Madrid time, a hand-edited "currently" line), WebGL where it earns its place.
+- Routes: `/` (hero, AI-driven engineering, work, experience, contact), `/work/marine-wobbles`, `/work/quote-and-nod`, `/work/homely`, `/how-this-site-was-built`. All static.
+- The site: a Blender-rendered gold folding screen on an azurite ground as the hero (folds shut at a click); one flat colour per project with its real product in a rendered phone frame and/or browser window; short silent loops in the phones; YouTube demos that play in place (privacy-enhanced, loaded on click).
 - Mobile: LCP under 2.5s on a mid-range phone; heavy effects degrade on small screens and under reduced motion.
 - Free fonts only.
 
@@ -35,20 +35,20 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 - Design reference, not content: her taste is Bosch's *The Garden of Earthly Delights* (her desktop wallpaper), Japanese and Chinese art, and Art Nouveau; her own work leans to glossy inflated 3D, flowing lines and purple. Her hobbies (photography, travel, art, books, music) inform the design but are not shown as site content.
 - Do not mention job-seeking. Use only photos of Maria alone or of places.
 
-- Dark only.
-- Real photo of Maria (public/lab/maria.png, cutout at public/lab/maria-cutout.png). Exception chosen by the owner: the Gold Screen hero shadow uses an owner-supplied profile silhouette that is AI-generated (its C2PA marks say so); its provenance record states that.
+- Light: cream paper, ink, and one flat colour per project section.
+- Exception chosen by the owner: the folding screen's profile shadow uses an owner-supplied silhouette that is AI-generated (its C2PA marks say so); the "How this site was built" page states that.
 - Must not look like a generic AI-generated site.
 - Learning material behind the AI section is never credited or presented as formal study; its wording, prices, model opinions and unfinished material stay private, and no private project is named. AI results are described generically.
 
 ## Evidence on Hand
 
-- Projects: Dwelltrace and Homely (full case studies, demo videos on YouTube, poster images in public/), Guess The BPM and The Coffee Place (short entries).
-- Marine Wobbles: native Android tap-to-pop match-3 (Kotlin, Jetpack Compose), in development with Google Play release planned. 80 levels, 27 painted episodes, difficulty tuned by simulating thousands of seeded games with five strategy bots. Repo: github.com/mbonete/marine-wobbles. Present as in development; no download, rating or release-date claims.
+- Projects: Quote & Nod (formerly Dwelltrace; never link dwelltrace.com, an unrelated product) and Homely (full case studies, demo videos on YouTube), Guess The BPM and The Coffee Place (live sites, highlights in their sections).
+- Marine Wobbles: native Android tap-to-pop match-3 (Kotlin, Jetpack Compose), in internal testing on Google Play. 80 levels, 27 illustrated episodes generated from her prompts, difficulty measured by seven strategy bots over seeded games. Its repo is private: never link it. No download, rating, release-date or price claims.
 - Roles: Wandity (Full Stack Developer, Sept 2024–present), Bidz Labs (Front-end Architect, Web3), Aventu (freelance), CaneLab Ltd. (front-end).
 - CV at public/cv.pdf; GitHub github.com/mbonete; LinkedIn in/maria-bonete.
 - AI practice: five practices in the order of a piece of work, each stating the problem it prevents and what she does: grilling to a shared understanding, goals that end on evidence (/goal), model and effort chosen per task, parallel agents with clear ownership, and review by a different agent. No experiment results or test figures (the owner rejected them); an example only where it can be checked.
 - Absent and never to be fabricated: testimonials, client logos, usage metrics, store ratings or downloads.
-- Known asset defect: public/homely-poster.webp has a browser status bar baked in; needs a fresh capture.
+- Known asset gap: Homely's desktop screenshot is a frame from its demo video, cut off at the top; a fresh capture would be better.
 
 ## Product Principles
 
@@ -59,4 +59,4 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 
 ## Accessibility & Inclusion
 
-Respect prefers-reduced-motion; keyboard-operable command palette and navigation; legible contrast on the dark ground.
+Respect prefers-reduced-motion (loops show a still, the screen does not animate); keyboard-operable folding screen, video controls and navigation; legible contrast on every section colour.
