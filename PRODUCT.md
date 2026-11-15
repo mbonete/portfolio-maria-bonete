@@ -25,7 +25,7 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 ## Capabilities and Constraints
 
 - Next.js 16 (App Router), React 19, Tailwind 4; deployed as a static-friendly site.
-- Routes: `/` (hero, AI-driven engineering, work, experience, contact), `/work/marine-wobbles`, `/work/quote-and-nod`, `/work/homely`, `/how-this-site-was-built`. All static.
+- Routes: `/` (hero, "Engineering, now with agents", work, experience, contact), `/work/marine-wobbles`, `/work/quote-and-nod`, `/work/homely`, `/how-this-site-was-built`. All static.
 - The site: a Blender-rendered gold folding screen on an azurite ground as the hero (folds shut at a click); one flat colour per project with its real product in a rendered phone frame and/or browser window; short silent loops in the phones; YouTube demos that play in place (privacy-enhanced, loaded on click).
 - Mobile: LCP under 2.5s on a mid-range phone; heavy effects degrade on small screens and under reduced motion.
 - Free fonts only.

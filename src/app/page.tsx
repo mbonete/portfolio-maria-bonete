@@ -199,8 +199,7 @@ export default function LabF() {
             <div className="lf-intro">
               <p className="lf-role">
                 <span className="lf-sr">Full-stack developer in Madrid, now at {currently.company}. </span>
-                {/* Non-breaking hyphen keeps "AI-driven" on one line. */}
-                Specialising in AI{"\u2011"}driven engineering, web, React Native and Web3.
+                Specialising in web, React Native and Web3, working with coding agents.
               </p>
               <a className="lf-primary" href="#work">
                 See the work
@@ -212,7 +211,7 @@ export default function LabF() {
 
       <main>
         <section id="ai" className="lf-ai" aria-labelledby="ai-h">
-          <h2 id="ai-h">AI-driven engineering</h2>
+          <h2 id="ai-h">Engineering, now with agents</h2>
           <ol className="lf-principles">
             {aiPractices.map((p) => (
               <li key={p.title}>
