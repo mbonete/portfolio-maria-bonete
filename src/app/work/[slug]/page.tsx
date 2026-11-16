@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { caseStudies, person } from "@/content";
-import { BandVideo, CloseVideo } from "@/app/_components/BandVideo";
-import Devices from "@/app/_components/Devices";
+import { caseStudies } from "@/content";
+import CaseEnd from "@/app/_components/CaseEnd";
+import CaseVideo from "@/app/_components/CaseVideo";
 
 // The web case studies (Quote & Nod, Homely), in the same shape as Marine Wobbles': the project's colour
 // with its screens and demo, then the engineering in plain sections.
@@ -36,30 +37,36 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       </header>
 
       <main>
-        <BandVideo>
-          <section className="lf-cs-head" aria-labelledby="cs-h">
-            <h1 id="cs-h">{c.title}</h1>
-            <p className="lf-cs-lede">{c.summary}</p>
-            <div className="lf-cs-showcase">
-              <Devices
-                video={{ id: c.videoId, title: `${c.title} demo`, label: `Play the demo, ${c.videoLength} seconds` }}
-                url="localhost:3000"
-                desktop={c.band.desktop}
-                phone={c.band.phone}
+        <section className="lf-cs-head" aria-labelledby="cs-h">
+          <h1 id="cs-h">{c.title}</h1>
+          <p className="lf-cs-lede">{c.summary}</p>
+          <CaseVideo
+            id={c.videoId}
+            title={`${c.title} demo`}
+            label="Play the demo"
+            seconds={c.videoLength}
+            url="localhost:3000"
+            poster={
+              <Image
+                src={c.band.desktop.src}
+                width={c.band.desktop.w}
+                height={c.band.desktop.h}
+                alt=""
+                sizes="(max-width: 760px) 92vw, 90vw"
+                loading="eager"
+                fetchPriority="high"
               />
-            </div>
-            <p className="lf-cs-links">
-              <CloseVideo />
-              {c.repo ? (
-                <a href={c.repo} {...ext}>
-                  The code on GitHub
-                </a>
-              ) : (
-                <span>The source is private.</span>
-              )}
-            </p>
-          </section>
-        </BandVideo>
+            }
+          >
+            {c.repo ? (
+              <a href={c.repo} {...ext}>
+                The code on GitHub
+              </a>
+            ) : (
+              <span>The source is private.</span>
+            )}
+          </CaseVideo>
+        </section>
 
         <section className="lf-cs-sec" aria-labelledby="does">
           <h2 id="does">What it does</h2>
@@ -106,12 +113,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           </div>
         </section>
 
-        <nav className="lf-cs-end" aria-label="More">
-          <Link href="/#work">Back to all the work</Link>
-          <a href={person.links.linkedin} {...ext}>
-            Talk to me on LinkedIn
-          </a>
-        </nav>
+        <CaseEnd slug={c.slug} />
       </main>
     </div>
   );

@@ -28,6 +28,7 @@
 
 :where(.lf) :is(h1, h2, h3) { font-family: var(--font-f-display), serif; font-weight: 400; text-wrap: balance; margin: 0; }
 :where(.lf) p { margin: 0; text-wrap: pretty; }
+:where(.lf) li { text-wrap: pretty; }
 
 /* ---------- Hero: the folding screen on azurite ---------- */
 
@@ -411,7 +412,7 @@
 .lf-stack { font-size: 0.875rem; color: color-mix(in oklab, var(--fg) 78%, var(--band)); }
 /* Small text on the deep grounds keeps the full light ink to hold 4.5:1. */
 .lf-band[data-tone="dark"] .lf-stack { color: var(--fg); }
-.lf-links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 6px; }
+.lf-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; margin-top: 6px; }
 .lf-links a {
   display: inline-flex;
   align-items: center;
@@ -422,7 +423,20 @@
   transition: text-underline-offset 220ms var(--ease);
 }
 .lf-links a:hover { text-underline-offset: 8px; }
-.lf-links .lf-link-strong { font-weight: 600; text-decoration-thickness: 2px; }
+/* The band's main way in, as a button like the hero's: the band's ink as its ground, the opposite
+   ink as its label (paper on ink, ink on cream). */
+.lf-links .lf-link-strong {
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 2px;
+  background: var(--fg);
+  color: var(--paper);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 200ms var(--ease);
+}
+.lf-links .lf-link-strong:hover { background: color-mix(in oklab, var(--fg) 84%, var(--band)); }
+.lf-band[data-tone="dark"] .lf-links .lf-link-strong { color: var(--ink); }
 /* While a band's video plays, closing it reads as one of the band's links, with a stop mark. */
 .lf-play-toggle {
   display: inline-flex;
@@ -530,12 +544,13 @@
 }
 .lf-end a { text-decoration: underline; text-underline-offset: 4px; }
 
-/* ---------- Case study: Marine Wobbles ---------- */
+/* ---------- Case studies ---------- */
 
 /* The band's ground carries over from the front page, then the page settles on paper for reading. */
 .lf-cs-top {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 24px;
   padding: 22px var(--gutter) 0;
   background: var(--band);
@@ -545,43 +560,66 @@
 .lf-cs-head { padding: clamp(40px, 6vw, 88px) var(--gutter) clamp(56px, 7vw, 104px); background: var(--band); }
 /* The page's colour is set once on the page, so its top bar and head always match; dark grounds get light ink. */
 .lf-cs-page[data-tone="dark"] :is(.lf-cs-top, .lf-cs-head) { --fg: #fbf5e9; color: var(--fg); }
-/* A web case study shows its screens under the lede, with the demo playing in the browser's place. */
-.lf-cs-showcase { max-width: 1180px; margin-top: clamp(40px, 5vw, 72px); }
-.lf-cs-links span { opacity: 0.75; }
 .lf-cs-head h1 { margin-top: 10px; font-size: clamp(3.6rem, 13vw, 13rem); line-height: 0.88; letter-spacing: -0.025em; }
 .lf-cs-lede { max-width: 52ch; margin-top: clamp(24px, 3vw, 40px); font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.45; }
-.lf-cs-links { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 28px; margin-top: 20px; }
+.lf-cs-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: clamp(28px, 3vw, 40px); }
 .lf-cs-links a { text-decoration: underline; text-underline-offset: 5px; font-weight: 600; }
 
-.lf-trailer {
-  margin-top: clamp(40px, 5vw, 72px);
+/* The video's play button leads the head's links, like the bands' buttons on the home page. */
+.lf-cs-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--fg, var(--ink));
+  color: var(--paper);
+  font: 500 1rem var(--font-f-text), system-ui, sans-serif;
+  cursor: pointer;
+  transition: background-color 200ms var(--ease);
+}
+.lf-cs-page[data-tone="dark"] .lf-cs-play { color: var(--ink); }
+.lf-cs-play::before { content: ""; border-block: 6px solid transparent; border-left: 10px solid currentColor; }
+.lf-cs-play-time { opacity: 0.7; font-variant-numeric: tabular-nums; }
+.lf-cs-play:hover { background: color-mix(in oklab, var(--fg, var(--ink)) 84%, var(--band)); }
+
+/* The video at the content's full width. */
+.lf-cs-video {
+  margin-top: clamp(24px, 3vw, 40px);
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 10px;
-  background: #0f1116;
+  background: color-mix(in oklab, var(--band) 80%, var(--ink));
   box-shadow: 0 40px 70px -30px rgb(0 0 0 / 0.5), 0 10px 24px -12px rgb(0 0 0 / 0.35);
 }
-.lf-trailer iframe { display: block; width: 100%; height: 100%; border: 0; }
-.lf-trailer button { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
-.lf-trailer img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.lf-trailer-play {
+.lf-cs-video iframe { display: block; width: 100%; height: 100%; border: 0; }
+.lf-cs-poster { position: relative; display: grid; place-items: center; width: 100%; height: 100%; cursor: pointer; }
+.lf-cs-poster > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* A web project's video sits in its browser window, at the same full width. */
+.lf-cs-window { margin-top: clamp(24px, 3vw, 40px); }
+.lf-cs-window .lf-cs-video { margin: 0; border-radius: 0; box-shadow: none; }
+.lf-cs-window .lf-cs-poster > img { object-position: top; }
+/* The same cream disc as on the home bands' screens. */
+.lf-cs-poster-cue {
   position: absolute;
-  left: clamp(16px, 2.4vw, 32px);
-  bottom: clamp(16px, 2.4vw, 32px);
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  min-height: 48px;
-  padding: 0 22px;
-  border-radius: 2px;
-  background: var(--ink);
-  color: #f3eee3;
-  font: 500 1rem var(--font-f-text), system-ui, sans-serif;
-  transition: background-color 200ms var(--ease);
+  display: grid;
+  place-items: center;
+  width: clamp(56px, 6.4vw, 92px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 18px 40px -14px rgb(0 0 0 / 0.55), 0 4px 10px -4px rgb(0 0 0 / 0.3);
+  transition: transform 260ms var(--ease);
 }
-.lf-trailer-play::before { content: ""; border-block: 7px solid transparent; border-left: 11px solid currentColor; }
-.lf-trailer-time { opacity: 0.7; font-variant-numeric: tabular-nums; }
-.lf-trailer button:hover .lf-trailer-play { background: color-mix(in oklab, var(--ink) 80%, var(--band)); }
+.lf-cs-poster-cue::before {
+  content: "";
+  margin-left: 12%;
+  border-block: clamp(10px, 1vw, 14px) solid transparent;
+  border-left: clamp(16px, 1.6vw, 22px) solid var(--ink);
+}
+.lf-cs-poster:hover .lf-cs-poster-cue { transform: scale(1.06); }
 
 /* A band's video, played where its screens were. */
 .lf-band-video { display: contents; }
@@ -654,7 +692,7 @@
   line-height: 1.04;
   letter-spacing: -0.015em;
 }
-.lf-cs-body { display: grid; gap: 18px; max-width: 62ch; font-size: 1.0625rem; }
+.lf-cs-body { display: grid; gap: 18px; max-width: 34em; font-size: 1.0625rem; }
 .lf-cs-body a { text-decoration: underline; text-underline-offset: 4px; }
 .lf-cs-wide { grid-column: 1 / -1; width: min(100%, 940px); justify-self: center; margin-top: clamp(32px, 4vw, 56px); }
 
@@ -711,6 +749,7 @@
 }
 
 @media (max-width: 760px) {
+  .lf-cs-end { flex-direction: column; align-items: flex-start; }
   .lf-work-head { grid-template-columns: 1fr; row-gap: 32px; }
   .lf-index a { padding: 14px 0; }
   .lf-index-name { font-size: 1.5rem; }
@@ -739,7 +778,7 @@
 }
 
 @media (pointer: coarse) {
-  .lf-top a, .lf-links a, .lf-play-toggle { min-height: 44px; display: inline-flex; align-items: center; }
+  .lf-top a, .lf-links a, .lf-play-toggle, .lf-cs-top a, .lf-cs-links a, .lf-cs-end a { min-height: 44px; display: inline-flex; align-items: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {

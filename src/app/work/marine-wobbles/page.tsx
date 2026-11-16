@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { marineWobbles as mw, person } from "@/content";
+import { marineWobbles as mw } from "@/content";
+import CaseEnd from "@/app/_components/CaseEnd";
+import CaseVideo from "@/app/_components/CaseVideo";
 import LoopVideo from "@/app/_components/LoopVideo";
 import Phone from "@/app/_components/Phone";
-import Trailer from "@/app/_components/Trailer";
 
 export const metadata: Metadata = {
   title: "Marine Wobbles: case study",
   description:
     "A native Android match-3 in Kotlin and Jetpack Compose: difficulty measured by strategy bots over millions of seeded games, rules ported exactly from a TypeScript prototype, and Play Billing that can't lose or double a purchase.",
 };
-
-const ext = { target: "_blank", rel: "noreferrer" } as const;
 
 // Every figure here comes from the game's repository (private) as of November 2026.
 const numbers = [
@@ -63,13 +62,25 @@ export default function MarineWobblesCaseStudy() {
             engineering: bots that measure how hard each level is, rules ported exactly from my prototype, and purchases that
             can&apos;t be lost or granted twice.
           </p>
-          <Trailer id={mw.trailerId} title="Marine Wobbles trailer" poster="/marine-wobbles/trailer-poster.webp" />
-          <p className="lf-cs-links">
-            <a href={`https://www.youtube.com/watch?v=${mw.trailerId}`} {...ext}>
-              Watch it on YouTube
-            </a>
+          <CaseVideo
+            id={mw.trailerId}
+            title="Marine Wobbles trailer"
+            label="Play the trailer"
+            seconds={mw.trailerLength}
+            poster={
+              <Image
+                src="/marine-wobbles/trailer-poster.webp"
+                width={1600}
+                height={900}
+                alt=""
+                sizes="(max-width: 760px) 92vw, 90vw"
+                loading="eager"
+                fetchPriority="high"
+              />
+            }
+          >
             <span>The source is private.</span>
-          </p>
+          </CaseVideo>
         </section>
 
         <dl className="lf-cs-numbers">
@@ -286,12 +297,7 @@ export default function MarineWobblesCaseStudy() {
           </div>
         </section>
 
-        <nav className="lf-cs-end" aria-label="More">
-          <Link href="/#work">Back to all the work</Link>
-          <a href={person.links.linkedin} {...ext}>
-            Talk to me on LinkedIn
-          </a>
-        </nav>
+        <CaseEnd slug="marine-wobbles" />
       </main>
     </div>
   );

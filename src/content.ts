@@ -195,6 +195,7 @@ export const marineWobbles = {
   ],
   stack: ["Kotlin", "Jetpack Compose", "Coroutines + StateFlow", "Play Billing", "kotlinx-serialization", "JUnit"],
   trailerId: "agdXKgTLqxc",
+  trailerLength: 31, // seconds
 };
 
 export const entries = [
