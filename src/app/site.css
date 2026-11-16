@@ -36,7 +36,7 @@
    mirrors it. */
 .lf-hero {
   --hero-ground: #6581df;
-  /* The ground as it reads under its two grains, measured from a render, for the overscroll band
+  /* The ground as it reads under its grain, measured from a render, for the overscroll band
      (OverscrollColour) to match. */
   --edge: #5c76cc;
   --fg: var(--ink);
@@ -48,24 +48,11 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: max(100svh, 640px);
-  /* The ground carries its own grain, the same tile as the one over everything below: the two
-     add up to a stronger grain on the blue than on the screen. */
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.088 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), var(--hero-ground);
+  /* The grain is on the ground only; the screen stays clean. */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.168 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), var(--hero-ground);
   overflow: clip;
   color: var(--fg);
 }
-/* A light grain over ground and screen alike, so the render's cut edge sits in the same surface. */
-.lf-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.16;
-  mix-blend-mode: multiply;
-}
-
 .lf-top {
   display: flex;
   justify-content: space-between;
@@ -178,12 +165,14 @@
   min-height: 44px;
   padding: 0 22px;
   border-radius: 2px;
-  background: var(--ink);
+  /* Ink with a little of the ground in it: a solid block of pure ink reads blacker than the same ink
+     in the name's thin strokes. */
+  background: color-mix(in oklab, var(--ink) 86%, var(--hero-ground));
   color: var(--paper);
   font-weight: 500;
   transition: background-color 200ms var(--ease);
 }
-.lf-primary:hover { background: color-mix(in oklab, var(--ink) 80%, var(--hero-ground)); }
+.lf-primary:hover { background: color-mix(in oklab, var(--ink) 74%, var(--hero-ground)); }
 
 /* ---------- Work: one band per project, the same formula in its own colour ---------- */
 
