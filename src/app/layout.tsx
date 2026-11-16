@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Hina_Mincho, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import "./site.css";
+import OverscrollColour from "./_components/OverscrollColour";
 
 // Hina Mincho for the big names, Instrument Sans for everything else.
 const display = Hina_Mincho({
@@ -24,7 +25,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${display.variable} ${text.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <OverscrollColour />
+        {children}
+      </body>
     </html>
   );
 }

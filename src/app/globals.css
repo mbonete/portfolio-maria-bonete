@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-/* The page behind the site: the same paper as its sections, so overscroll never flashes another colour. */
+/* The page behind the site: paper, until OverscrollColour gives the root the colour of the section at
+   the edge being pulled. */
 body {
   background: #f6f0e3;
   color: #17130f;

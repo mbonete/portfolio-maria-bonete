@@ -210,29 +210,9 @@ export default function LabF() {
       </section>
 
       <main>
-        <section id="ai" className="lf-ai" aria-labelledby="ai-h">
-          <h2 id="ai-h">Engineering, now with agents</h2>
-          <ol className="lf-principles">
-            {aiPractices.map((p) => (
-              <li key={p.title}>
-                <h3>{p.title}</h3>
-                <p>
-                  {p.text}
-                  {p.example && <> {p.example}</>}
-                </p>
-              </li>
-            ))}
-          </ol>
-          <p className="lf-built">
-            <Link href="/how-this-site-was-built">How this site was built</Link>
-          </p>
-        </section>
-
         <section id="work" aria-labelledby="work-h">
-          <div className="lf-work-head">
-            <h2 id="work-h">Work</h2>
-            <p>An Android game in testing on Google Play, two web apps with full case studies, and two smaller projects.</p>
-          </div>
+          {/* Each band names its project in large type, so the section heading is for screen readers. */}
+          <h2 id="work-h" className="lf-sr">Work</h2>
 
           {bands.map((b) => {
             const band = (
@@ -298,6 +278,24 @@ export default function LabF() {
             );
             return b.video ? <BandVideo key={b.id}>{band}</BandVideo> : band;
           })}
+        </section>
+
+        <section id="ai" className="lf-ai" aria-labelledby="ai-h">
+          <h2 id="ai-h">Engineering, now with agents</h2>
+          <ol className="lf-principles">
+            {aiPractices.map((p) => (
+              <li key={p.title}>
+                <h3>{p.title}</h3>
+                <p>
+                  {p.text}
+                  {p.example && <> {p.example}</>}
+                </p>
+              </li>
+            ))}
+          </ol>
+          <p className="lf-built">
+            <Link href="/how-this-site-was-built">How this site was built</Link>
+          </p>
         </section>
 
         <section id="experience" className="lf-exp" aria-labelledby="exp-h">
