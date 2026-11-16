@@ -16,6 +16,7 @@ const [bpm, coffee] = entries;
 type Band = {
   id: string;
   title: string;
+  kind: string; // its line in the Work index: what it is, and the stack that matters most
   status?: string;
   summary: string;
   stack: string[];
@@ -34,6 +35,7 @@ const bands: Band[] = [
   {
     id: "marine-wobbles",
     title: marineWobbles.title,
+    kind: "Android game · Kotlin, Jetpack Compose",
     status: marineWobbles.status,
     summary: marineWobbles.summary,
     stack: marineWobbles.stack,
@@ -60,6 +62,7 @@ const bands: Band[] = [
   {
     id: "quote-and-nod",
     title: quoteAndNod.title,
+    kind: "Web app · Next.js, Supabase",
     summary: quoteAndNod.summary,
     stack: quoteAndNod.stack.slice(0, 5),
     proof: { highlights: quoteAndNod.highlights },
@@ -81,6 +84,7 @@ const bands: Band[] = [
   {
     id: "homely",
     title: homely.title,
+    kind: "Web app · Next.js, SQLite",
     summary: homely.summary,
     stack: homely.stack.slice(0, 5),
     proof: { highlights: homely.highlights },
@@ -102,6 +106,7 @@ const bands: Band[] = [
   {
     id: "guess-the-bpm",
     title: bpm.title,
+    kind: "Web game · React, TypeScript",
     summary: bpm.summary,
     stack: bpm.stack,
     proof: { highlights: bpm.highlights },
@@ -128,6 +133,7 @@ const bands: Band[] = [
   {
     id: "the-coffee-place",
     title: coffee.title,
+    kind: "Website · Next.js",
     summary: coffee.summary,
     stack: coffee.stack,
     proof: { highlights: coffee.highlights },
@@ -211,8 +217,25 @@ export default function LabF() {
 
       <main>
         <section id="work" aria-labelledby="work-h">
-          {/* Each band names its project in large type, so the section heading is for screen readers. */}
-          <h2 id="work-h" className="lf-sr">Work</h2>
+          {/* An index of the projects below, each with its band's colour, so a visitor can go straight to
+              the one that matches the role. */}
+          <div className="lf-work-head">
+            <h2 id="work-h">Work</h2>
+            <ol className="lf-index">
+              {bands.map((b, i) => (
+                <li key={b.id}>
+                  <a href={`#${b.id}`}>
+                    <span className="lf-index-n" aria-hidden>
+                      <span className="lf-index-swatch" style={{ background: b.ground }} />
+                      <span>{String(i + 1).padStart(2, "0")}</span>
+                    </span>
+                    <span className="lf-index-name">{b.title}</span>
+                    <span className="lf-index-kind">{b.kind}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
 
           {bands.map((b) => {
             const band = (
