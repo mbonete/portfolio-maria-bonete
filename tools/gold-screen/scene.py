@@ -167,6 +167,42 @@ sh = mixs(sep.outputs["Green"], sh, mixs(0.45, bsdf((0.98, 0.84, 0.52, 1), 1.0, 
 # paint: matte
 paint = bsdf(artT.outputs["Color"], 0.0, 0.85, NRM, **{"Specular IOR Level": 0.12})
 sh = mixs(artT.outputs["Alpha"], sh, paint)
+# PAPER=1: the same painting on washi instead of gold leaf. Unbleached kozo paper with its cloudy
+# formation and a net of fibres; the mist bands become gold paint (kindei), mostly matte; the dust
+# and cut leaf stay metal, as gold flakes scattered on paper do; the stream loses its coat.
+PAPER = os.environ.get("PAPER") == "1"
+if PAPER:
+    iso = n.new("ShaderNodeMapping"); iso.inputs["Scale"].default_value = (2.5, 1.0, 1.0)   # UV is 4 panels wide, 1 tall
+    l.new(uv.outputs["UV"], iso.inputs["Vector"])
+    form = n.new("ShaderNodeTexNoise"); form.inputs["Scale"].default_value = 70; form.inputs["Detail"].default_value = 8
+    form.inputs["Roughness"].default_value = 0.62; l.new(iso.outputs["Vector"], form.inputs["Vector"])
+    warp = n.new("ShaderNodeTexNoise"); warp.inputs["Scale"].default_value = 40; l.new(iso.outputs["Vector"], warp.inputs["Vector"])
+    wadd = n.new("ShaderNodeVectorMath"); wadd.operation = "MULTIPLY_ADD"; wadd.inputs[1].default_value = (0.012, 0.012, 0.012)
+    l.new(warp.outputs["Color"], wadd.inputs[0]); l.new(iso.outputs["Vector"], wadd.inputs[2])
+    fib = n.new("ShaderNodeTexVoronoi"); fib.feature = "DISTANCE_TO_EDGE"; fib.inputs["Scale"].default_value = float(os.environ.get("FIBS", "55"))
+    l.new(wadd.outputs["Vector"], fib.inputs["Vector"])
+    fline = n.new("ShaderNodeMapRange"); fline.inputs["From Min"].default_value = 0.0; fline.inputs["From Max"].default_value = 0.035
+    fline.inputs["To Min"].default_value = 1.0; fline.inputs["To Max"].default_value = 0.0; fline.interpolation_type = "SMOOTHSTEP"
+    l.new(fib.outputs["Distance"], fline.inputs["Value"])
+    pc = mixc(form.outputs["Fac"], (0.88, 0.82, 0.68, 1), (0.80, 0.73, 0.58, 1))
+    pc = mixc(pat.outputs["Result"], pc, (0.76, 0.67, 0.50, 1))
+    fk = n.new("ShaderNodeMath"); fk.operation = "MULTIPLY"; fk.inputs[1].default_value = 0.5
+    l.new(fline.outputs["Result"], fk.inputs[0])
+    pc = mixc(fk.outputs["Value"], pc, (0.93, 0.89, 0.79, 1))
+    ph = n.new("ShaderNodeMath"); ph.operation = "MULTIPLY_ADD"; ph.inputs[1].default_value = 0.6
+    l.new(fline.outputs["Result"], ph.inputs[0]); l.new(form.outputs["Fac"], ph.inputs[2])
+    pb = n.new("ShaderNodeBump"); pb.inputs["Strength"].default_value = float(os.environ.get("FIBB", "0.12")); pb.inputs["Distance"].default_value = 0.0004
+    l.new(ph.outputs["Value"], pb.inputs["Height"])
+    pr = n.new("ShaderNodeBump"); pr.inputs["Strength"].default_value = float(os.environ.get("RELIEF", "0.6"))
+    pr.inputs["Distance"].default_value = float(os.environ.get("RELD", "0.0012"))
+    l.new(det.outputs["Green"], pr.inputs["Height"]); l.new(pb.outputs["Normal"], pr.inputs["Normal"])
+    PN = pr.outputs["Normal"]
+    sh = bsdf(pc, 0.0, 0.88, PN, **{"Specular IOR Level": 0.3, "Sheen Weight": 0.25})
+    sh = mixs(sep.outputs["Blue"], sh, mixs(0.7, bsdf((0.96, 0.76, 0.42, 1), 1.0, 0.5, PN), diffuse((0.86, 0.68, 0.38, 1), PN)))
+    sh = mixs(det.outputs["Blue"], sh, mixs(0.3, bsdf((1.0, 0.82, 0.48, 1), 1.0, 0.25, PN), diffuse((0.98, 0.82, 0.5, 1), PN)))
+    sh = mixs(sep.outputs["Red"], sh, bsdf(vcol, 0.0, 0.7, PN))
+    sh = mixs(sep.outputs["Green"], sh, mixs(0.5, bsdf((0.98, 0.84, 0.52, 1), 1.0, 0.4, PN), diffuse((0.95, 0.80, 0.50, 1), PN)))
+    sh = mixs(artT.outputs["Alpha"], sh, bsdf(artT.outputs["Color"], 0.0, 0.85, PN, **{"Specular IOR Level": 0.12}))
 l.new(sh, n["Material Output"].inputs["Surface"])
 
 fig, n, l, p = mat("figure")
@@ -297,7 +333,7 @@ figob.data.materials.append(fig)
 # Gold is mostly mirror: inside a real cast shadow it still reflects the candles behind the camera,
 # so the silhouette washes out. Project the same matte from the caster onto the screen face and
 # darken the whole surface there; with the caster close to the panel this sits on the cast shadow.
-SHK = float(os.environ.get("SHK", "0.95")) * SIL
+SHK = float(os.environ.get("SHK", "0.5" if PAPER else "0.95")) * SIL
 if SHK > 0:
     fn_, fl_ = face.node_tree.nodes, face.node_tree.links
     out_ = fn_["Material Output"]
@@ -311,8 +347,8 @@ if SHK > 0:
     fl_.new(proj.outputs["Alpha"], k.inputs[0])
     shade = fn_.new("ShaderNodeBsdfPrincipled")
     shade.inputs["Base Color"].default_value = (0.03, 0.018, 0.008, 1)
-    shade.inputs["Metallic"].default_value = 0.6
-    shade.inputs["Roughness"].default_value = 0.45
+    shade.inputs["Metallic"].default_value = 0.0 if PAPER else 0.6
+    shade.inputs["Roughness"].default_value = 0.9 if PAPER else 0.45
     sm = fn_.new("ShaderNodeMixShader")
     fl_.new(k.outputs["Value"], sm.inputs["Fac"]); fl_.new(last, sm.inputs[1]); fl_.new(shade.outputs["BSDF"], sm.inputs[2])
     fl_.new(sm.outputs["Shader"], out_.inputs["Surface"])
