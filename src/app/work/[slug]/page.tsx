@@ -6,7 +6,7 @@ import { caseStudies } from "@/content";
 import CaseEnd from "@/app/_components/CaseEnd";
 import CaseVideo from "@/app/_components/CaseVideo";
 
-// The web case studies (Quote & Nod, Homely), in the same shape as Marine Wobbles': the project's colour
+// The web case studies (Quote & Nod, Doorplate), in the same shape as Marine Wobbles': the project's colour
 // with its screens and demo, then the engineering in plain sections.
 export function generateStaticParams() {
   return caseStudies.map((c) => ({ slug: c.slug }));

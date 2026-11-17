@@ -13,7 +13,7 @@ export const person = {
 export const currently = { company: "Wandity" };
 
 export type CaseStudy = {
-  slug: "quote-and-nod" | "homely";
+  slug: "quote-and-nod" | "doorplate";
   title: string;
   summary: string;
   problem: string;
@@ -31,7 +31,7 @@ export type CaseStudy = {
     ground: string;
     tone: "light" | "dark";
     desktop: { src: string; w: number; h: number; alt: string };
-    phone?: { src: string; w: number; h: number; alt: string };
+    phone?: { src: string; w: number; h: number; alt: string } | { loop: string; poster: string; label: string };
   };
 };
 
@@ -110,59 +110,73 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
-    slug: "homely",
-    title: "Homely",
+    slug: "doorplate",
+    title: "Doorplate",
     summary:
-      "A full-stack real estate listings app with accounts, photo uploads and a SQLite database.",
+      "Long-term rentals in Spain, listed by the people who own them. Each listing leads with its rent, rooms and floor area, and renters write to the owner from the listing page.",
     problem:
-      "Browse homes, open a listing, and sign in to post and manage your own ads with photos. It's built around the App Router's server model.",
+      "Doorplate covers one kind of rental: flats and houses let long term by their owners, priced in euros and measured in m². Holiday lets, sales and agency listings are left out. It started as Homely, a listings app whose ads had only a title, a description and photos; I renamed it and added the rental facts, search, enquiries and saved flats.",
     stack: ["Next.js (App Router)", "Server Components + Server Actions", "SQLite (better-sqlite3)", "Drizzle ORM", "Auth.js", "Zod", "Tailwind", "shadcn/ui"],
     built: [
-      "Landing page, listings index and listing detail.",
-      "Create and edit flows for ads, with multiple ordered images.",
-      "Sign-up and login with hashed passwords and an httpOnly session cookie.",
-      "A profile page listing the user's own ads.",
+      "Search by city, maximum rent, minimum bedrooms and floor area, sorted by newest, rent or size.",
+      "Listing pages with the rent, bedrooms, bathrooms and floor area above the description, a photo grid and a viewer for every photo.",
+      "An enquiry form (name, email, move-in date, message) that needs no account, and a page per listing where the owner reads the enquiries and replies by email.",
+      "Saved flats for signed-in users, and sharing through the phone's share sheet or a copied link on desktop.",
+      "Create, edit and delete flows for listings with several ordered photos.",
+      "Sign-up and login with bcrypt-hashed passwords and a JWT session cookie; logging in returns you to the page you were on.",
+      "A seed script with eight listings in four cities, Unsplash photos and a demo owner.",
     ],
     decisions: [
       {
-        title: "Server-first data flow",
-        body: "Pages read straight from the database in Server Components, with no client-side fetching. Every write is a Server Action with pending and error states handled in the form.",
+        title: "Searches live in the URL",
+        body: "The filters are a GET form, and the listings page reads them from the search params on the server. A search can be bookmarked or shared, and it works before any JavaScript loads.",
       },
       {
-        title: "Ownership on every write",
-        body: "Editing or deleting an ad checks that it belongs to the signed-in user; inputs are validated with Zod and uploads get random UUID names.",
+        title: "Ownership checked on the server",
+        body: "Editing or deleting a listing checks that it belongs to the signed-in user, the enquiries page sends anyone but the owner back to the listing, and owners can't send an enquiry to their own flat. Zod validates every form on the server, and a form that fails keeps what was typed.",
       },
       {
-        title: "Protected routes",
-        body: "Creating ads, editing them and user pages sit behind an auth proxy.",
+        title: "Uploads outside public/",
+        body: "Next.js only serves files that were in public/ at build time, so photos uploaded to a production build came back as 404s. They now live in data/uploads next to the database, behind a route handler that checks the file name, and still go through next/image.",
+      },
+      {
+        title: "One server with a disk",
+        body: "SQLite and photos on local disk keep the app to one process with no outside services. The cost is hosting: it needs a VPS or a container with a volume, so serverless platforms are out.",
       },
     ],
-    model: "Users, ads and ad images ordered by position, with images removed when their ad is deleted. Schema changes ship as SQL migrations.",
+    model:
+      "Users, listings (rent in whole euros, city, neighbourhood, flat or house, bedrooms, bathrooms and m²), photos ordered by position, enquiries and saved flats. A saved flat is keyed on the user and the listing, so it can only be saved once. Deleting a listing removes its photos, enquiries and saves by cascade. City and rent are indexed, and schema changes ship as SQL migrations.",
     highlights: [
       {
-        title: "Data stays on the server",
-        body: "Pages read from SQLite in Server Components, and every write is a Server Action, with its pending and error states handled in the form.",
+        title: "Searches live in the URL",
+        body: "The filters are a GET form read on the server, so a search can be bookmarked or shared and works before any JavaScript loads.",
       },
       {
-        title: "Ownership on every write",
-        body: "Editing or deleting an ad first checks that it belongs to the signed-in user. Inputs are validated with Zod, and uploads get random names.",
+        title: "Only the owner reads the enquiries",
+        body: "Renters write without an account. The enquiries page sends anyone but the listing's owner back to the listing, and owners can't write to their own flats.",
       },
       {
-        title: "Photos in order",
-        body: "Each ad holds several photos in a set order. They're deleted with the ad, and schema changes ship as SQL migrations.",
+        title: "Uploads stored beside the database",
+        body: "Next.js only serves files that were in public/ at build time, so owner photos are stored next to the database and served by a route handler that checks the file name.",
       },
     ],
-    repo: "https://github.com/mbonete/homely",
-    videoId: "Ygp6AJwHytE",
-    videoLength: 31,
+    repo: "https://github.com/mbonete/doorplate",
+    videoId: "970LQDqIdUQ",
+    videoLength: 30,
     band: {
       ground: "#1f6b4c",
       tone: "dark",
       desktop: {
-        src: "/screens/homely-desktop.webp",
-        w: 1262,
-        h: 662,
-        alt: "Homely's listings page: a search and sort panel beside cards for five homes.",
+        src: "/screens/doorplate-desktop.webp",
+        w: 1600,
+        h: 1000,
+        alt: "A listing for a two-bedroom flat in Ruzafa, Valencia: its photos, €1,150 a month, 2 bedrooms, 1 bathroom, 78 m², and the form to write to the owner, Lucía Ferrer.",
+      },
+      phone: {
+        loop: "/screens/doorplate-loop.mp4",
+        poster: "/screens/doorplate-loop.webp",
+        label:
+          "A renter on a phone: the Ruzafa flat from the Valencia results, then a name and email in the form to Lucía, Send, and the confirmation.",
       },
     },
   },

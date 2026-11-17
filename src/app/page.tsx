@@ -10,7 +10,7 @@ import Phone from "./_components/Phone";
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
 const quoteAndNod = caseStudies.find((c) => c.slug === "quote-and-nod")!;
-const homely = caseStudies.find((c) => c.slug === "homely")!;
+const doorplate = caseStudies.find((c) => c.slug === "doorplate")!;
 const [bpm, coffee] = entries;
 
 type Band = {
@@ -82,24 +82,25 @@ const bands: Band[] = [
     video: true,
   },
   {
-    id: "homely",
-    title: homely.title,
+    id: "doorplate",
+    title: doorplate.title,
     kind: "Web app · Next.js, SQLite",
-    summary: homely.summary,
-    stack: homely.stack.slice(0, 5),
-    proof: { highlights: homely.highlights },
-    ground: homely.band.ground,
-    tone: homely.band.tone,
+    summary: doorplate.summary,
+    stack: doorplate.stack.slice(0, 5),
+    proof: { highlights: doorplate.highlights },
+    ground: doorplate.band.ground,
+    tone: doorplate.band.tone,
     showcase: (
       <Devices
-        video={{ id: homely.videoId, title: "Homely demo", label: `Play the demo, ${homely.videoLength} seconds` }}
+        video={{ id: doorplate.videoId, title: "Doorplate demo", label: `Play the demo, ${doorplate.videoLength} seconds` }}
         url="localhost:3000"
-        desktop={homely.band.desktop}
+        desktop={doorplate.band.desktop}
+        phone={doorplate.band.phone}
       />
     ),
     links: [
-      { label: "Read the case study", href: "/work/homely", primary: true },
-      ...(homely.repo ? [{ label: "Code", href: homely.repo, external: true }] : []),
+      { label: "Read the case study", href: "/work/doorplate", primary: true },
+      ...(doorplate.repo ? [{ label: "Code", href: doorplate.repo, external: true }] : []),
     ],
     video: true,
   },

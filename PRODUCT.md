@@ -25,7 +25,7 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 ## Capabilities and Constraints
 
 - Next.js 16 (App Router), React 19, Tailwind 4; deployed as a static-friendly site.
-- Routes: `/` (hero, "Engineering, now with agents", work, experience, contact), `/work/marine-wobbles`, `/work/quote-and-nod`, `/work/homely`, `/how-this-site-was-built`. All static.
+- Routes: `/` (hero, "Engineering, now with agents", work, experience, contact), `/work/marine-wobbles`, `/work/quote-and-nod`, `/work/doorplate`, `/how-this-site-was-built`. All static.
 - The site: a Blender-rendered gold folding screen on an azurite ground as the hero (folds shut at a click); one flat colour per project with its real product in a rendered phone frame and/or browser window; short silent loops in the phones; YouTube demos that play in place (privacy-enhanced, loaded on click).
 - Mobile: LCP under 2.5s on a mid-range phone; heavy effects degrade on small screens and under reduced motion.
 - Free fonts only.
@@ -42,13 +42,12 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 
 ## Evidence on Hand
 
-- Projects: Quote & Nod (formerly Dwelltrace; never link dwelltrace.com, an unrelated product) and Homely (full case studies, demo videos on YouTube), Guess The BPM and The Coffee Place (live sites, highlights in their sections).
+- Projects: Quote & Nod (formerly Dwelltrace; never link dwelltrace.com, an unrelated product) and Doorplate (formerly Homely) (full case studies, demo videos on YouTube), Guess The BPM and The Coffee Place (live sites, highlights in their sections).
 - Marine Wobbles: native Android tap-to-pop match-3 (Kotlin, Jetpack Compose), in internal testing on Google Play. 80 levels, 27 illustrated episodes generated from her prompts, difficulty measured by seven strategy bots over seeded games. Its repo is private: never link it. No download, rating, release-date or price claims.
 - Roles: Wandity (Full Stack Developer, Sept 2024–present), Bidz Labs (Front-end Architect, Web3), Aventu (freelance), CaneLab Ltd. (front-end).
 - CV at public/cv.pdf; GitHub github.com/mbonete; LinkedIn in/maria-bonete.
 - AI practice: five practices in the order of a piece of work, each stating the problem it prevents and what she does: grilling to a shared understanding, goals that end on evidence (/goal), model and effort chosen per task, parallel agents with clear ownership, and review by a different agent. No experiment results or test figures (the owner rejected them); an example only where it can be checked.
 - Absent and never to be fabricated: testimonials, client logos, usage metrics, store ratings or downloads.
-- Known asset gap: Homely's desktop screenshot is a frame from its demo video, cut off at the top; a fresh capture would be better.
 
 ## Product Principles
 
