@@ -14,13 +14,24 @@ x1 = max(x + w for w, h, x, y in b); y1 = max(y + h for w, h, x, y in b)
 W, H = x1 - x0, y1 - y0; mx, mt, mb = W * 3 // 100, H * 3 // 100, H * 9 // 100
 print(f'{W + 2 * mx}x{H + mt + mb}+{x0 - mx}+{y0 - mt}')")
 echo "crop $box"
+# A frame rendered at double size too (render-fold.sh HI=1) is encoded from that render, cropped to the
+# same box doubled: scaled down, its diagonal edges come out smooth.
+box2=$(python3 -c "import re; w, h, x, y = map(int, re.split('[x+]', '$box')); print(f'{2*w}x{2*h}+{2*x}+{2*y}')")
 # fade the shadow catcher's far floor to nothing at the crop's sides and bottom
 FX="u>=0.98 ? u : max(0,(u-0.1)*1.4) * min(1, min(i, w-1-i)/(0.05*w)) * min(1, (h-1-j)/(0.07*h))"
 enc() { magick $1 -depth 8 -resize ${2}x $D/tmp.png; cwebp -quiet -q ${4:-84} -alpha_q 90 -sharp_yuv -m 6 $D/tmp.png -o $3; }
 for f in $frames; do
-  i=${${f:t:r}#o-}
-  magick $f -crop $box +repage -channel A -fx "$FX" +channel $D/fold/b-$i.png
-  magick $f \( $D/fold/m-$i.png -alpha extract \) -compose CopyOpacity -composite -crop $box +repage $D/fold/f-$i.png
+  i=${${f:t:r}#o-}; src=$f; mat=$D/fold/m-$i.png; b=$box; rim=1.5
+  [[ -f $D/fold/hi-o-$i.png && -f $D/fold/hi-m-$i.png ]] && { src=$D/fold/hi-o-$i.png; mat=$D/fold/hi-m-$i.png; b=$box2; rim=3; }
+  # The fade applies to the floor only: the screen's solid pixels and a rim of anti-aliased edge around
+  # them keep the alpha Blender gave them, so its diagonals do not turn into steps.
+  magick $src -crop $b +repage $D/tmp-c.png
+  magick $D/tmp-c.png -alpha extract $D/tmp-a.png
+  magick $D/tmp-a.png -fx "$FX" $D/tmp-r.png
+  magick $D/tmp-a.png -threshold 97.9% -morphology Dilate Disk:$rim $D/tmp-m.png
+  magick $D/tmp-r.png $D/tmp-a.png $D/tmp-m.png -composite $D/tmp-a.png
+  magick $D/tmp-c.png $D/tmp-a.png -alpha off -compose CopyOpacity -composite $D/fold/b-$i.png
+  magick $src \( $mat -alpha extract \) -compose CopyOpacity -composite -crop $b +repage $D/fold/f-$i.png
   enc $D/fold/b-$i.png ${SEQW:-1400} $P/b-$i.webp 80
   enc $D/fold/f-$i.png ${SEQW:-1400} $P/f-$i.webp 80
 done
@@ -34,4 +45,4 @@ for w in 2360 1770 1180; do
 done
 magick identify -format "%wx%h\n" $P/open-2360.webp $P/b-00.webp
 du -sh $P
-rm -f $D/tmp.png
+rm -f $D/tmp.png $D/tmp-[cram].png
