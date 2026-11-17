@@ -383,6 +383,21 @@ bpy.ops.object.light_add(type="AREA", location=(3.6, 2.2, 2.6))
 rim = bpy.context.active_object; rim.data.size = 2.0; rim.data.energy = 220; rim.data.color = (0.62, 0.5, 1.0)
 aim(rim, (0, 0, 0.8)); rim.visible_camera = False; rim.visible_glossy = False
 
+# Her shadow belongs to the painting: it stops at the gold's edge, never across the mounting band, the
+# lacquer frame or the brass. Every light is split by light linking: it lights the painted faces, where
+# she blocks it, and a linked twin (same light data) lights everything else, where she does not.
+gold = bpy.data.collections.new("painted faces"); rest = bpy.data.collections.new("not painted")
+unblocked = bpy.data.collections.new("all but her")
+for ob in scn.objects:
+    if ob.type == "MESH" and ob is not figob:
+        (gold if face in list(ob.data.materials) else rest).objects.link(ob)
+        unblocked.objects.link(ob)
+for L in [ob for ob in scn.objects if ob.type == "LIGHT"]:
+    twin = L.copy(); scn.collection.objects.link(twin)
+    L.light_linking.receiver_collection = gold
+    twin.light_linking.receiver_collection = rest
+    twin.light_linking.blocker_collection = unblocked
+
 # ---------- camera: square-on to panel 2 so her profile is not skewed ----------
 bpy.ops.object.camera_add()
 cam = bpy.context.active_object; scn.camera = cam

@@ -11,7 +11,7 @@ D=${0:A:h}; cd $D; mkdir -p fold; B=/Applications/Blender.app/Contents/MacOS/Ble
 export FIGX=0.04 SPOT=40 BLEND=0.7 GESSO=0.14 EXPO=-0.45 FILTER=1.0 CUTOUT=1 OPEN=${OPEN:-26}
 export LAMPC=1.0,0.70,0.30 WALLC=1.0,0.74,0.38 KEY=480
 N=${N:-28}; CLOSED=${CLOSED:-80}
-for k in $(seq ${FROM:-0} $((N - 1))); do
+for k in $(seq ${FROM:-0} ${TO:-$((N - 1))}); do
   f=$(python3 -c "import math; c=math.cos(math.radians($CLOSED)); o=math.cos(math.radians($OPEN)); print(math.degrees(math.acos(c + (o - c) * $k / ($N - 1))))")
   sil=$(python3 -c "t=min(max(($k/($N-1)-0.5)/0.5,0),1); print(round(t*t*(3-2*t),4))")
   read worldc wall <<< $(python3 -c "t=$k/($N-1); a,b=(0.62,0.70,0.95),(0.12,0.13,0.18); print(','.join(f'{x+(y-x)*t:.4f}' for x,y in zip(a,b)), round(45+50*t,2))")

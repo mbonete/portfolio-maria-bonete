@@ -1,10 +1,10 @@
 #!/bin/zsh
-# Encodes fold/o-*.png (render-fold.sh) into public/lab/f/fold/: every frame cropped to one box (all
+# Encodes fold/o-*.png (render-fold.sh) into public/fold/: every frame cropped to one box (all
 # frames' visible pixels, shadow included, plus a margin) so they stack exactly. Each frame becomes a
 # back plate (the whole screen) and a front plate (only the panels folding toward the viewer, from
 # its matte); the page sets the name between them. The open frame also ships large for the still.
 set -e
-D=${0:A:h}; P=$D/../../public/lab/f/fold; mkdir -p $P
+D=${0:A:h}; P=$D/../../public/fold; mkdir -p $P
 frames=($D/fold/o-*.png)
 box=$(for f in $frames; do magick $f -alpha extract -threshold 97% -format "%@\n" info:; done | python3 -c "
 import sys, re
