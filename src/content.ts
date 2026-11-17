@@ -102,10 +102,10 @@ export const caseStudies: CaseStudy[] = [
         alt: "The manager's job page: a water heater replacement with two vendor quotes, one recommended, waiting for the owner, Alice Chen.",
       },
       phone: {
-        src: "/screens/qn-phone.webp",
-        w: 585,
-        h: 1170,
-        alt: "The owner's approval page on a phone: the same job and its two quotes.",
+        loop: "/screens/qn-loop.mp4",
+        poster: "/screens/qn-loop.webp",
+        label:
+          "The owner's approval page on a phone: the two quotes, a message to the manager, then Approve and the confirmation.",
       },
     },
   },

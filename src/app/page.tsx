@@ -152,7 +152,7 @@ const bands: Band[] = [
         phone={{
           loop: "/screens/coffee-loop.mp4",
           poster: "/screens/coffee-loop.webp",
-          label: "The Coffee Place on a phone: two drinks stamped into the cart, then the Espresso sachet opens into its page.",
+          label: "The Coffee Place on a phone: four drinks stamped into the cart, the Cappuccino sachet opened into its page, then the order paid and its ticket stamped PAID.",
         }}
       />
     ),
