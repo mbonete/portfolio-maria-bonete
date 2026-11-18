@@ -5,6 +5,8 @@
 .lf {
   --ink: #17130f;
   --paper: #f6f0e3;
+  /* The gold of the screen's fittings, between the leaf's lit and shaded tones in the render. */
+  --gold: #c9a35f;
   /* The contact section's ground. */
   --ground: #a99ddf;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -53,16 +55,21 @@
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.168 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), var(--hero-ground);
   overflow: clip;
   color: var(--fg);
+  /* Above the sections after it, so the top bar, fixed on phones (StickyTop), paints over them. */
+  z-index: 5;
 }
-.lf-top {
+.lf-top { font-size: 0.875rem; }
+.lf-top-bar {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 24px;
   padding: 22px var(--gutter) 0;
-  font-size: 0.875rem;
 }
-.lf-nav { display: flex; gap: clamp(16px, 2.4vw, 32px); }
+.lf-nav { display: flex; flex: 1; gap: clamp(16px, 2.4vw, 32px); }
+/* CV and GitHub follow the sections; the contact link sits at the far right. */
+.lf-top-actions { display: flex; flex: 1; gap: inherit; }
+.lf-top-contact { margin-left: auto; }
 .lf-top a {
   padding-block: 6px;
   text-decoration: underline;
@@ -71,6 +78,7 @@
   transition: text-decoration-color 200ms var(--ease);
 }
 .lf-top a:hover { text-decoration-color: currentColor; }
+.lf-top-contact-narrow { display: none; }
 
 /* The name and the screen share --u, so the screen crosses the letters at the same place at every
    width. */
@@ -767,10 +775,47 @@
   .lf-work-head { grid-template-columns: 1fr; row-gap: 32px; }
   .lf-index a { padding: 14px 0; }
   .lf-index-name { font-size: 1.5rem; }
-  .lf-nav { flex-wrap: wrap; gap: 4px 18px; }
+  /* Each link carries its own side padding, so the space between links is part of its target, and the
+     bar's padding is cut by the same amount, so the text still starts on the gutter. The transparent
+     edge (with the margin cancelling its height) lets the gold line ease out when the bar settles back
+     here. */
+  .lf-top-bar {
+    flex-wrap: wrap;
+    gap: 0;
+    padding-inline: calc(var(--gutter) - 7px);
+    border-bottom: 1px solid transparent;
+    margin-bottom: -1px;
+  }
+  .lf-nav { flex-wrap: wrap; gap: 0; }
+  .lf-top-bar a { padding-inline: 7px; }
+  .lf-top-contact { white-space: nowrap; font-weight: 500; }
+  .lf-top-contact-wide { display: none; }
+  .lf-top-contact-narrow { display: inline; }
   /* Two classes, to win over the touch rule that makes every top link inline-flex. */
   .lf-top .lf-nav-wide { display: none; }
-  .lf-top-contact { white-space: nowrap; }
+  /* Past the hero (StickyTop): fixed at the top, hidden until a scroll up or keyboard focus. Ink with a
+     gold line, like the black lacquer frame and gold fittings of the screen in the hero; it reads
+     over every section, paper and band alike. */
+  .lf-top[data-fixed] .lf-top-bar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10;
+    padding-block: 4px;
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom-color: var(--gold);
+    transform: translateY(-100%);
+    transition: transform 300ms var(--ease);
+  }
+  .lf-top[data-shown] .lf-top-bar,
+  .lf-top[data-fixed] .lf-top-bar:focus-within { transform: none; }
+  /* The focus ring drawn inside the link, so the screen's edge and the bar's edge don't cut it. */
+  .lf-top[data-fixed] .lf-top-bar :focus-visible { outline-offset: -2px; }
+  /* Shown at the very top, it eases into its slot in the hero instead of jumping. */
+  .lf-top[data-settling] .lf-top-bar {
+    transition: padding 220ms var(--ease), background-color 220ms var(--ease), color 220ms var(--ease),
+      border-bottom-color 220ms var(--ease);
+  }
   /* Two lines, "Bonete" threaded through the screen. */
   .lf-hero { --u: 30vw; }
   .lf-stage { padding-top: 12px; }

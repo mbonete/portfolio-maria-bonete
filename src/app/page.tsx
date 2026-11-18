@@ -6,6 +6,7 @@ import LoopVideo from "./_components/LoopVideo";
 import { BandVideo, CloseVideo } from "./_components/BandVideo";
 import Devices from "./_components/Devices";
 import Phone from "./_components/Phone";
+import StickyTop from "./_components/StickyTop";
 
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
@@ -166,21 +167,29 @@ export default function LabF() {
     <div className="lf flex-1">
       <section className="lf-hero" aria-labelledby="lf-name">
         <header className="lf-top">
-          {/* Phones drop Work (the hero's "See the work" goes there) and GitHub (Contact lists it), so
-              the bar fits on one row. */}
-          <nav aria-label="Primary" className="lf-nav">
-            <a href="#work" className="lf-nav-wide">Work</a>
-            <a href="#ai">AI practice</a>
-            <a href="#experience">Experience</a>
-            <a href={person.links.cv} {...ext}>
-              CV <span className="lf-sr">(PDF)</span>
-            </a>
-            <a href={person.links.github} className="lf-nav-wide" {...ext}>GitHub</a>
-          </nav>
-          <a className="lf-top-contact" href="#contact">
-            Get in touch
-          </a>
+          <div className="lf-top-bar">
+            {/* Phones drop GitHub (Contact lists it), so the bar fits on one row. CV, GitHub and the
+                contact link form one group, so when the bar wraps on a phone (a narrow screen or larger
+                text) they move to a second row together. */}
+            <nav aria-label="Primary" className="lf-nav">
+              <a href="#work">Work</a>
+              <a href="#ai">AI practice</a>
+              <a href="#experience">Experience</a>
+              <span className="lf-top-actions">
+                <a href={person.links.cv} {...ext}>
+                  CV <span className="lf-sr">(PDF)</span>
+                </a>
+                <a href={person.links.github} className="lf-nav-wide" {...ext}>GitHub</a>
+                {/* "Contact" on phones, as the section is called, so the bar stays on one row with larger text. */}
+                <a className="lf-top-contact" href="#contact">
+                  <span className="lf-top-contact-wide">Get in touch</span>
+                  <span className="lf-top-contact-narrow">Contact</span>
+                </a>
+              </span>
+            </nav>
+          </div>
         </header>
+        <StickyTop />
 
         <FoldingScreen
           name={
