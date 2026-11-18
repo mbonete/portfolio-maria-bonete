@@ -45,7 +45,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             title={`${c.title} demo`}
             label="Play the demo"
             seconds={c.videoLength}
-            url="localhost:3000"
+            browser
             poster={
               <Image
                 src={c.band.desktop.src}

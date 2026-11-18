@@ -16,6 +16,7 @@ export default function CaseVideo({
   label,
   seconds,
   poster,
+  browser,
   url,
   children,
 }: {
@@ -24,7 +25,8 @@ export default function CaseVideo({
   label: string; // "Play the trailer", "Play the demo"
   seconds: number;
   poster: ReactNode;
-  url?: string; // for a web project: the address in its browser window's bar
+  browser?: boolean; // a web project: the poster sits in a browser window
+  url?: string; // its public address for the window's bar, when it has one
   children?: ReactNode; // the head's other links
 }) {
   const [playing, setPlaying] = useState(false);
@@ -67,11 +69,11 @@ export default function CaseVideo({
         </a>
         {children}
       </p>
-      {url ? (
+      {browser ? (
         <div className="lf-browser lf-cs-window">
           <div className="lf-browser-bar" aria-hidden>
             <span className="lf-browser-dots" />
-            <span className="lf-browser-url">{url}</span>
+            {url && <span className="lf-browser-url">{url}</span>}
           </div>
           {video}
         </div>

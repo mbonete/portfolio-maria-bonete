@@ -10,14 +10,15 @@ export type Shot = { src: string; w: number; h: number; alt: string };
 // The site at desktop width in a browser window, with the same product on a phone standing in front
 // of its corner. With a video, the window's view is fixed at 16:9 so the demo can play in exactly the
 // screenshot's place: the phone steps out of the way and nothing around it moves. Nothing from
-// YouTube loads before the play button on the screenshot is pressed.
+// YouTube loads before the play button on the screenshot is pressed. The bar shows the site's public
+// address, and stays empty for a project that isn't deployed.
 export default function Devices({
   url,
   desktop,
   phone,
   video,
 }: {
-  url: string;
+  url?: string;
   desktop: Shot;
   phone?: Shot | { loop: string; poster: string; label: string };
   video?: { id: string; title: string; label: string };
@@ -30,7 +31,7 @@ export default function Devices({
       <div className="lf-browser">
         <div className="lf-browser-bar" aria-hidden>
           <span className="lf-browser-dots" />
-          <span className="lf-browser-url">{url}</span>
+          {url && <span className="lf-browser-url">{url}</span>}
         </div>
         <div className="lf-browser-view" data-video={video ? "" : undefined}>
           <Image src={desktop.src} width={desktop.w} height={desktop.h} alt={desktop.alt} sizes="(max-width: 760px) 92vw, 52vw" />

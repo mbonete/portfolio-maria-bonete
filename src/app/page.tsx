@@ -71,7 +71,6 @@ const bands: Band[] = [
     showcase: (
       <Devices
         video={{ id: quoteAndNod.videoId, title: "Quote & Nod demo", label: `Play the demo, ${quoteAndNod.videoLength} seconds` }}
-        url="localhost:3000"
         desktop={quoteAndNod.band.desktop}
         phone={quoteAndNod.band.phone}
       />
@@ -93,7 +92,6 @@ const bands: Band[] = [
     showcase: (
       <Devices
         video={{ id: doorplate.videoId, title: "Doorplate demo", label: `Play the demo, ${doorplate.videoLength} seconds` }}
-        url="localhost:3000"
         desktop={doorplate.band.desktop}
         phone={doorplate.band.phone}
       />
