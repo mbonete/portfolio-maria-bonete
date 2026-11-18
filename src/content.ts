@@ -8,6 +8,7 @@ export const person = {
     github: "https://github.com/mbonete",
     linkedin: "https://www.linkedin.com/in/maria-bonete",
     cv: "/cv.pdf",
+    siteRepo: "https://github.com/mbonete/portfolio-maria-bonete", // this site's code, public
   },
 };
 
@@ -253,7 +254,9 @@ export const entries = [
   },
 ];
 
-// How I work with coding agents, in the order of a piece of work; an example only where it can be checked.
+// How I work with coding agents; an example only where it can be checked.
+export const aiIntro = "I work with coding agents in Claude Code and Codex.";
+
 export const aiPractices: { title: string; text: string; example?: string }[] = [
   {
     title: "Grilling to a shared understanding",
@@ -262,7 +265,7 @@ export const aiPractices: { title: string; text: string; example?: string }[] = 
   },
   {
     title: "Goals that end on evidence",
-    text: "With /goal, an agent keeps working until a separate model decides the goal is met, and that model only sees the conversation. So a good goal describes the finished state, names the commands that prove it, says what must not change, and sets a limit, such as 20 turns.",
+    text: "With Claude Code's /goal command, an agent keeps working until a separate model decides the goal is met, and that model only sees the conversation. So a good goal describes the finished state, names the commands that prove it, says what must not change, and sets a limit, such as 20 turns.",
   },
   {
     title: "The right model and effort for each task",

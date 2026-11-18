@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { aiPractices, caseStudies, entries, experience, marineWobbles, person } from "@/content";
+import { aiIntro, aiPractices, caseStudies, entries, experience, marineWobbles, person } from "@/content";
 import FoldingScreen from "./_components/FoldingScreen";
 import LoopVideo from "./_components/LoopVideo";
 import { BandVideo, CloseVideo } from "./_components/BandVideo";
@@ -311,7 +311,10 @@ export default function LabF() {
         </section>
 
         <section id="ai" className="lf-ai" aria-labelledby="ai-h">
-          <h2 id="ai-h">Engineering, now with agents</h2>
+          <div className="lf-ai-head">
+            <h2 id="ai-h">Engineering, now with agents</h2>
+            <p className="lf-ai-intro">{aiIntro}</p>
+          </div>
           <ol className="lf-principles">
             {aiPractices.map((p) => (
               <li key={p.title}>
@@ -325,6 +328,12 @@ export default function LabF() {
           </ol>
           <p className="lf-built">
             <Link href="/how-this-site-was-built">How this site was built</Link>
+          </p>
+          <p className="lf-repo">
+            <a href={person.links.siteRepo} {...ext}>
+              This site&apos;s code on GitHub
+            </a>
+            , with the instructions its agents follow.
           </p>
         </section>
 

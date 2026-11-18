@@ -466,6 +466,15 @@
   color: var(--paper);
 }
 .lf-ai h2 { font-size: clamp(3rem, 8vw, 7.5rem); line-height: 1.02; letter-spacing: -0.02em; max-width: 12ch; }
+/* The heading and the line naming the tools. On wide screens they share the practices' grid: the
+   heading across the first columns, the line in the last one, level with the heading's foot. */
+.lf-ai-head { display: grid; gap: 40px clamp(32px, 4vw, 64px); }
+.lf-ai-intro { max-width: 34ch; font-size: 1.125rem; }
+@media (min-width: 1100px) {
+  .lf-ai-head { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+  .lf-ai-head h2 { grid-column: 1 / -2; }
+  .lf-ai-intro { grid-column: -2 / -1; align-self: end; }
+}
 .lf-principles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
@@ -493,6 +502,9 @@
   transition: text-underline-offset 220ms var(--ease);
 }
 .lf-built a:hover { text-underline-offset: 12px; }
+/* Where the agents' instructions and the commits can be checked. */
+.lf-repo { margin-top: 20px; font-size: 1.125rem; }
+.lf-repo a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 
 /* Where the work happened: one row per role, the dates in the margin. */
 .lf-exp { padding: clamp(96px, 12vw, 176px) var(--gutter); }
