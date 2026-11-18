@@ -8,7 +8,7 @@ web
 
 ## Users
 
-Recruiters and hiring managers filling full-stack, mobile (React Native / native Android), Web3 and AI-engineering roles. They often arrive from LinkedIn on a phone, between other candidates. Their first job is a ten-second decision: shortlist or move on. Their second job, once interested, is to check the proof: shipped work, roles, and how she works.
+Recruiters and hiring managers filling full-stack, mobile (React Native / native Android) and AI-engineering roles. They often arrive from LinkedIn on a phone, between other candidates. Their first job is a ten-second decision: shortlist or move on. Their second job, once interested, is to check the proof: shipped work, roles, and how she works.
 
 ## Product Purpose
 
@@ -16,7 +16,7 @@ The personal portfolio of Maria Bonete, a developer based in Madrid, Spain, with
 
 ## Positioning
 
-A developer who ships across four areas with equal weight: full-stack web, mobile (React Native and native Android), Web3, and AI-driven engineering. AI knowledge must be clear from the very first viewport, presented as a peer of the other three, not an add-on. Her AI angle is command of the tools: she gets better results and productivity from agents, and keeps her practice current as new models and tools are released. Shown through what she does, not stated as a claim.
+A developer who ships across three areas with equal weight: full-stack web, mobile (React Native and native Android), and AI-driven engineering. AI knowledge must be clear from the very first viewport, presented as a peer of the other two, not an add-on. Web3 is out of the positioning until a Web3 project is on the site; the Bidz Labs role keeps it in Experience and the CV (see `docs/web3.md`). Her AI angle is command of the tools: she gets better results and productivity from agents, and keeps her practice current as new models and tools are released. Shown through what she does, not stated as a claim.
 
 ## Operating Context
 
@@ -51,7 +51,7 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 
 ## Product Principles
 
-1. Ten seconds to "shortlist": role, four pillars and a way to act are legible in the first viewport on a phone.
+1. Ten seconds to "shortlist": role, three pillars and a way to act are legible in the first viewport on a phone.
 2. Proof over claims: every assertion is backed by shipped work, a role, or a concrete practice.
 3. The site itself is evidence of craft and of her AI workflow.
 4. Honest status: unfinished work is labelled as such.

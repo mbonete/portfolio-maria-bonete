@@ -160,6 +160,7 @@
    "Get in touch", on one baseline. */
 .lf-intro { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 32px; }
 .lf-role { font-size: 1.0625rem; line-height: 1.45; }
+.lf-role-narrow { display: none; }
 .lf-primary {
   display: inline-flex;
   align-items: center;
@@ -774,6 +775,8 @@
   .lf-foot { flex-direction: column; align-items: stretch; gap: 28px; margin-top: 0; }
   .lf-intro { flex-direction: column; align-items: flex-start; gap: 16px; }
   .lf-role { max-width: 32ch; }
+  .lf-role-wide { display: none; }
+  .lf-role-narrow { display: inline; }
   .lf-band { grid-template-columns: 1fr; grid-template-areas: "title" "object" "copy"; }
   .lf-band[data-proof] { grid-template-areas: "title" "object" "copy" "proof"; }
 

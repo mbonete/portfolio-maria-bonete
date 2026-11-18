@@ -19,7 +19,7 @@ const text = Instrument_Sans({
 export const metadata: Metadata = {
   title: { default: "Maria Bonete: full-stack developer", template: "%s · Maria Bonete" },
   description:
-    "Full-stack developer in Madrid, specialising in web, React Native and Web3, working with coding agents. Case studies, shipped projects, and how I work with coding agents.",
+    "Full-stack developer in Madrid: web and mobile (React Native and native Android). Case studies, shipped projects, and how I work with coding agents.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

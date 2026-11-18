@@ -208,7 +208,11 @@ export default function LabF() {
                 <span className="lf-sr lf-role-who">
                   Full-stack developer<span className="lf-sr"> in Madrid, now at {currently.company}.</span>{" "}
                 </span>
-                Specialising in web, React Native and Web3, working with coding agents.
+                {/* Phones get the shorter list, under the role line they show. */}
+                <span className="lf-role-wide">
+                  Web and mobile (React Native and native Android), working with coding agents.
+                </span>
+                <span className="lf-role-narrow">Web, React Native and native Android, working with coding agents.</span>
               </p>
               <a className="lf-primary" href="#work">
                 See the work
