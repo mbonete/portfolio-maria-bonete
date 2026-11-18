@@ -760,6 +760,17 @@
   .lf-name { width: 100%; white-space: normal; line-height: 0.88; }
   .lf-object { margin-top: calc(var(--u) * -0.12); }
   .lf-tag { display: none; }
+  /* With the tags gone, the role opens the intro instead; the place stays for screen readers. */
+  .lf-role-who {
+    position: static;
+    display: block;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    font-weight: 500;
+  }
   .lf-foot { flex-direction: column; align-items: stretch; gap: 28px; margin-top: 0; }
   .lf-intro { flex-direction: column; align-items: flex-start; gap: 16px; }
   .lf-role { max-width: 32ch; }

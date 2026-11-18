@@ -205,7 +205,9 @@ export default function LabF() {
           intro={
             <div className="lf-intro">
               <p className="lf-role">
-                <span className="lf-sr">Full-stack developer in Madrid, now at {currently.company}. </span>
+                <span className="lf-sr lf-role-who">
+                  Full-stack developer<span className="lf-sr"> in Madrid, now at {currently.company}.</span>{" "}
+                </span>
                 Specialising in web, React Native and Web3, working with coding agents.
               </p>
               <a className="lf-primary" href="#work">
