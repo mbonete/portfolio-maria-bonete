@@ -385,9 +385,7 @@
 .lf-browser-view[data-video] img { height: 100%; object-fit: cover; object-position: top; }
 .lf-browser-view iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-/* The engineering: a spec list in the copy, then a row of the decisions that prove it. */
-.lf-band[data-proof] { grid-template-areas: "title title" "copy object" "proof proof"; }
-.lf-proof { grid-area: proof; margin-top: clamp(56px, 7vw, 104px); }
+/* A short spec list in the copy, for the project that has one. */
 .lf-facts { margin: 6px 0 4px; }
 .lf-facts > div {
   display: grid;
@@ -399,21 +397,6 @@
 }
 .lf-facts dt { font-weight: 600; }
 .lf-facts dd { margin: 0; }
-.lf-highlights {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 32px clamp(24px, 3vw, 48px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.lf-highlights li { padding-top: 14px; border-top: 2px solid var(--fg); }
-.lf-highlights h4 {
-  font-family: var(--font-f-display), serif;
-  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
-  line-height: 1.12;
-}
-.lf-highlights p { margin-top: 10px; font-size: 0.9375rem; line-height: 1.5; }
 
 .lf-band-copy { grid-area: copy; align-self: end; display: grid; gap: 14px; max-width: 40ch; padding-top: 32px; }
 .lf-status { font-weight: 600; }
@@ -839,7 +822,6 @@
   .lf-role-wide { display: none; }
   .lf-role-narrow { display: inline; }
   .lf-band { grid-template-columns: 1fr; grid-template-areas: "title" "object" "copy"; }
-  .lf-band[data-proof] { grid-template-areas: "title" "object" "copy" "proof"; }
 
   .lf-band-object { margin-top: 24px; }
   .lf-exp-list > li { grid-template-columns: 1fr; }

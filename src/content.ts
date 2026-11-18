@@ -21,7 +21,6 @@ export type CaseStudy = {
   built: string[];
   decisions: { title: string; body: string }[];
   model: string;
-  highlights: { title: string; body: string }[]; // the short version, for the work band
   repo?: string; // Left out for private repos: a link only a logged-in owner can open is a dead link.
   live?: string;
   videoId: string;
@@ -76,20 +75,6 @@ export const caseStudies: CaseStudy[] = [
     ],
     model:
       "Users, owner contacts, properties, maintenance jobs, quotes (amounts in cents), attachments, comments and a typed event stream with JSON metadata. UUID keys, timestamps with time zones, and a unique index on the owner's access token.",
-    highlights: [
-      {
-        title: "Owners approve without an account",
-        body: "The owner opens a link with a random token that expires after 30 days, and sending it again replaces the old one. Internal notes never reach the owner's page.",
-      },
-      {
-        title: "Every action checks ownership",
-        body: "Each server action verifies the session and that the job belongs to the signed-in manager, instead of relying on route protection.",
-      },
-      {
-        title: "Locked down by default",
-        body: "Row Level Security is on for every table with no policies, so the public API exposes nothing. Files sit in private storage behind short-lived links.",
-      },
-    ],
     videoId: "Qil40vL6FCY",
     videoLength: 24,
     band: {
@@ -146,20 +131,6 @@ export const caseStudies: CaseStudy[] = [
     ],
     model:
       "Users, listings (rent in whole euros, city, neighbourhood, flat or house, bedrooms, bathrooms and m²), photos ordered by position, enquiries and saved flats. A saved flat is keyed on the user and the listing, so it can only be saved once. Deleting a listing removes its photos, enquiries and saves by cascade. City and rent are indexed, and schema changes ship as SQL migrations.",
-    highlights: [
-      {
-        title: "Searches live in the URL",
-        body: "The filters are a GET form read on the server, so a search can be bookmarked or shared and works before any JavaScript loads.",
-      },
-      {
-        title: "Only the owner reads the enquiries",
-        body: "Renters write without an account. The enquiries page sends anyone but the listing's owner back to the listing, and owners can't write to their own flats.",
-      },
-      {
-        title: "Uploads stored beside the database",
-        body: "Next.js only serves files that were in public/ at build time, so owner photos are stored next to the database and served by a route handler that checks the file name.",
-      },
-    ],
     repo: "https://github.com/mbonete/doorplate",
     videoId: "970LQDqIdUQ",
     videoLength: 30,
@@ -193,20 +164,6 @@ export const marineWobbles = {
     { k: "Tests", v: "455 unit tests, and 264 recorded games replayed state for state" },
     { k: "Art", v: "27 illustrated episodes, generated from my prompts" },
   ],
-  highlights: [
-    {
-      title: "Bots measure every level",
-      body: "The strategy bots run the game's real rule code, 2,000 to 5,000 seeded games each per level. Each difficulty tier sets limits: a win-rate band, when in the move budget a win should land, and how far skilled play must beat random play. Tests hold every level to its tier, and an auto-tuner proposes fixes.",
-    },
-    {
-      title: "A port that replays exactly",
-      body: "The rules are a port of my TypeScript prototype, random generator included, bit for bit. Games recorded in the prototype replay identically in Kotlin, and the prototype's win-rate table comes out identical.",
-    },
-    {
-      title: "Purchases that can't be lost or doubled",
-      body: "Coins are granted once a purchase completes and saved before the purchase is consumed. The purchase token is the key, so nothing is granted twice, and unfinished purchases are re-checked whenever the game comes back. Tested with approved, declined, cancelled and slow payments.",
-    },
-  ],
   stack: ["Kotlin", "Jetpack Compose", "Coroutines + StateFlow", "Play Billing", "kotlinx-serialization", "JUnit"],
   trailerId: "agdXKgTLqxc",
   trailerLength: 31, // seconds
@@ -216,16 +173,6 @@ export const entries = [
   {
     title: "Guess The BPM",
     summary: "Tap along to a song and guess its tempo; within one beat per minute counts. YouTube playback, English and Spanish.",
-    highlights: [
-      {
-        title: "Tempo from your taps",
-        body: "Your BPM is the number of beats between your first and last tap, divided by the time between them. A guess within one BPM of the real tempo counts.",
-      },
-      {
-        title: "Twelve songs, two languages",
-        body: "Each round plays a YouTube video with a known tempo, and the interface switches between English and Spanish with i18next.",
-      },
-    ],
     stack: ["React", "TypeScript", "Vite", "Tailwind", "i18next"],
     live: "https://guessthebpm.netlify.app",
     repo: "https://github.com/mbonete/guess-the-bpm",
@@ -234,20 +181,6 @@ export const entries = [
     title: "The Coffee Place",
     summary:
       "A fictional café whose menu is a numbered series of six sugar sachets: tear one open into its page, stamp drinks into the cart and pay to a printed receipt.",
-    highlights: [
-      {
-        title: "The sachet opens into its page",
-        body: "React's View Transitions turn the sachet into the product page, its torn seam peels away, and the zigzag paper edges are CSS masks.",
-      },
-      {
-        title: "A cart that survives a reload",
-        body: "The cart lives in a small store read with useSyncExternalStore, saved to localStorage and kept in sync across tabs. Saved data is checked on load.",
-      },
-      {
-        title: "Screen readers and reduced motion",
-        body: "Cart changes are announced to screen readers, and when reduced motion is on, the animations and page transitions are switched off.",
-      },
-    ],
     stack: ["Next.js", "React", "JavaScript", "styled-components"],
     live: "https://the-coffee-place.vercel.app/",
     repo: "https://github.com/mbonete/coffee-place",

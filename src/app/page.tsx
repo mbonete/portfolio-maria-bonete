@@ -24,8 +24,7 @@ type Band = {
   ground: string;
   tone: "light" | "dark"; // the ink on the ground: dark ink on a light ground, or the reverse
   showcase: React.ReactNode;
-  // The engineering, for the projects that have it: a spec list and the decisions that prove it.
-  proof?: { facts?: { k: string; v: string }[]; highlights: { title: string; body: string }[] };
+  facts?: { k: string; v: string }[]; // a short spec list, for the project that has one
   links: { label: string; href: string; primary?: boolean; external?: boolean }[];
   video?: boolean; // the band has a demo that plays over its screens
 };
@@ -55,7 +54,7 @@ const bands: Band[] = [
         </Phone>
       </div>
     ),
-    proof: { facts: marineWobbles.facts, highlights: marineWobbles.highlights },
+    facts: marineWobbles.facts,
     links: [
       { label: "Read the case study", href: "/work/marine-wobbles", primary: true },
     ],
@@ -66,7 +65,6 @@ const bands: Band[] = [
     kind: "Web app · Next.js, Supabase",
     summary: quoteAndNod.summary,
     stack: quoteAndNod.stack.slice(0, 5),
-    proof: { highlights: quoteAndNod.highlights },
     ground: quoteAndNod.band.ground,
     tone: quoteAndNod.band.tone,
     showcase: (
@@ -87,7 +85,6 @@ const bands: Band[] = [
     kind: "Web app · Next.js, SQLite",
     summary: doorplate.summary,
     stack: doorplate.stack.slice(0, 5),
-    proof: { highlights: doorplate.highlights },
     ground: doorplate.band.ground,
     tone: doorplate.band.tone,
     showcase: (
@@ -109,7 +106,6 @@ const bands: Band[] = [
     kind: "Web game · React, TypeScript",
     summary: bpm.summary,
     stack: bpm.stack,
-    proof: { highlights: bpm.highlights },
     ground: "#2b3ae0",
     tone: "dark",
     showcase: (
@@ -136,7 +132,6 @@ const bands: Band[] = [
     kind: "Website · Next.js",
     summary: coffee.summary,
     stack: coffee.stack,
-    proof: { highlights: coffee.highlights },
     ground: "#7c212f",
     tone: "dark",
     showcase: (
@@ -260,7 +255,6 @@ export default function LabF() {
                 id={b.id}
                 className="lf-band"
                 data-tone={b.tone}
-                data-proof={b.proof ? "" : undefined}
                 style={{ "--band": b.ground } as React.CSSProperties}
                 aria-labelledby={`${b.id}-h`}
               >
@@ -273,9 +267,9 @@ export default function LabF() {
                 <div className="lf-band-copy">
                   {b.status && <p className="lf-status">{b.status}</p>}
                   <p className="lf-summary">{b.summary}</p>
-                  {b.proof?.facts && (
+                  {b.facts && (
                     <dl className="lf-facts">
-                      {b.proof.facts.map((f) => (
+                      {b.facts.map((f) => (
                         <div key={f.k}>
                           <dt>{f.k}</dt>
                           <dd>{f.v}</dd>
@@ -301,18 +295,6 @@ export default function LabF() {
                     </div>
                   )}
                 </div>
-                {b.proof && (
-                  <div className="lf-proof">
-                    <ul className="lf-highlights">
-                      {b.proof.highlights.map((h) => (
-                        <li key={h.title}>
-                          <h4>{h.title}</h4>
-                          <p>{h.body}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </article>
             );
             return b.video ? <BandVideo key={b.id}>{band}</BandVideo> : band;
