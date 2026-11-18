@@ -3,6 +3,7 @@
 
 export const person = {
   name: "Maria Bonete",
+  email: "mbonetedev@gmail.com", // the one on the CV
   links: {
     github: "https://github.com/mbonete",
     linkedin: "https://www.linkedin.com/in/maria-bonete",
@@ -251,8 +252,6 @@ export const entries = [
     repo: "https://github.com/mbonete/coffee-place",
   },
 ];
-
-export const contactLine = "The quickest way to reach me is a message on LinkedIn.";
 
 // How I work with coding agents, in the order of a piece of work; an example only where it can be checked.
 export const aiPractices: { title: string; text: string; example?: string }[] = [

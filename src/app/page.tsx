@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { aiPractices, caseStudies, contactLine, entries, experience, marineWobbles, person } from "@/content";
+import { aiPractices, caseStudies, entries, experience, marineWobbles, person } from "@/content";
 import FoldingScreen from "./_components/FoldingScreen";
 import LoopVideo from "./_components/LoopVideo";
 import { BandVideo, CloseVideo } from "./_components/BandVideo";
@@ -354,8 +354,11 @@ export default function LabF() {
 
         <section id="contact" className="lf-contact" aria-labelledby="contact-h">
           <h2 id="contact-h">Contact</h2>
-          <p>{contactLine}</p>
           <ul>
+            <li>
+              {/* The address itself, so a laptop without a mail app can still copy it. */}
+              <a href={`mailto:${person.email}`}>{person.email}</a>
+            </li>
             <li>
               <a href={person.links.linkedin} {...ext}>LinkedIn</a>
             </li>

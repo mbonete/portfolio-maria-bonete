@@ -85,6 +85,7 @@ export default function BuiltPage() {
 
         <nav className="lf-cs-end" aria-label="More">
           <Link href="/#work">See the work</Link>
+          <a href={`mailto:${person.email}`}>Email me</a>
           <a href={person.links.linkedin} {...ext}>
             Talk to me on LinkedIn
           </a>

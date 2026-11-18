@@ -9,7 +9,7 @@ const order = [
   ...caseStudies.map((c) => ({ slug: c.slug, title: c.title })),
 ];
 
-// Every case study ends the same way: the next one, the CV and LinkedIn.
+// Every case study ends the same way: the next one, the CV, email and LinkedIn.
 export default function CaseEnd({ slug }: { slug: string }) {
   const next = order[(order.findIndex((c) => c.slug === slug) + 1) % order.length];
   return (
@@ -18,6 +18,7 @@ export default function CaseEnd({ slug }: { slug: string }) {
       <a href={person.links.cv} {...ext}>
         CV (PDF)
       </a>
+      <a href={`mailto:${person.email}`}>Email me</a>
       <a href={person.links.linkedin} {...ext}>
         Talk to me on LinkedIn
       </a>
