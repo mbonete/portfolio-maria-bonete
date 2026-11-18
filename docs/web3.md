@@ -28,7 +28,7 @@ The wording to restore, matching the copy as it stands without Web3:
 - `src/app/page.tsx`, hero on phones (`.lf-role-narrow`):
   "Web, React Native, native Android and Web3, working with coding agents."
 - `src/app/layout.tsx`, meta description:
-  "Full-stack developer in Madrid: web, mobile (React Native and native Android) and Web3. Case studies, shipped projects, and how I work with coding agents."
+  "Full-stack developer working remotely from Madrid: web, mobile (React Native and native Android) and Web3. Case studies, shipped projects, and how I work with coding agents."
 - `PRODUCT.md`:
   - Users: add Web3 to the roles.
   - Positioning: back to four areas ("full-stack web, mobile, Web3, and AI-driven engineering", AI "a peer of the other three"), and drop the sentence pointing here.

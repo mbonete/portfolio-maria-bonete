@@ -10,8 +10,6 @@ export const person = {
   },
 };
 
-export const currently = { company: "Wandity" };
-
 export type CaseStudy = {
   slug: "quote-and-nod" | "doorplate";
   title: string;

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { aiPractices, caseStudies, contactLine, currently, entries, experience, marineWobbles, person } from "@/content";
+import { aiPractices, caseStudies, contactLine, entries, experience, marineWobbles, person } from "@/content";
 import FoldingScreen from "./_components/FoldingScreen";
 import LoopVideo from "./_components/LoopVideo";
 import { BandVideo, CloseVideo } from "./_components/BandVideo";
@@ -197,7 +197,7 @@ export default function LabF() {
                 </span>{" "}
                 B
                 <span className="lf-tuck">
-                  onete<span className="lf-tag">Madrid, now<br />at {currently.company}</span>
+                  onete<span className="lf-tag">Working remotely<br />from Madrid</span>
                 </span>
               </p>
             </>
@@ -206,7 +206,7 @@ export default function LabF() {
             <div className="lf-intro">
               <p className="lf-role">
                 <span className="lf-sr lf-role-who">
-                  Full-stack developer<span className="lf-sr"> in Madrid, now at {currently.company}.</span>{" "}
+                  Full-stack developer<span className="lf-sr">, working remotely from Madrid.</span>{" "}
                 </span>
                 {/* Phones get the shorter list, under the role line they show. */}
                 <span className="lf-role-wide">
@@ -330,6 +330,7 @@ export default function LabF() {
 
         <section id="experience" className="lf-exp" aria-labelledby="exp-h">
           <h2 id="exp-h">Experience</h2>
+          <p className="lf-exp-note">Every role below was remote.</p>
           <ol className="lf-exp-list">
             {experience.map((x) => (
               <li key={x.id}>

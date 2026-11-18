@@ -497,6 +497,7 @@
 /* Where the work happened: one row per role, the dates in the margin. */
 .lf-exp { padding: clamp(96px, 12vw, 176px) var(--gutter); }
 .lf-exp h2 { font-size: clamp(3rem, 8vw, 7.5rem); line-height: 0.92; letter-spacing: -0.02em; }
+.lf-exp-note { margin-top: 16px; font-size: 1.125rem; }
 .lf-exp-list { margin: clamp(48px, 6vw, 88px) 0 0; padding: 0; list-style: none; }
 .lf-exp-list > li {
   display: grid;
