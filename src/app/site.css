@@ -756,6 +756,9 @@
   .lf-index a { padding: 14px 0; }
   .lf-index-name { font-size: 1.5rem; }
   .lf-nav { flex-wrap: wrap; gap: 4px 18px; }
+  /* Two classes, to win over the touch rule that makes every top link inline-flex. */
+  .lf-top .lf-nav-wide { display: none; }
+  .lf-top-contact { white-space: nowrap; }
   /* Two lines, "Bonete" threaded through the screen. */
   .lf-hero { --u: 30vw; }
   .lf-stage { padding-top: 12px; }

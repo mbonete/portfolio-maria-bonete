@@ -168,14 +168,16 @@ export default function LabF() {
     <div className="lf flex-1">
       <section className="lf-hero" aria-labelledby="lf-name">
         <header className="lf-top">
+          {/* Phones drop Work (the hero's "See the work" goes there) and GitHub (Contact lists it), so
+              the bar fits on one row. */}
           <nav aria-label="Primary" className="lf-nav">
-            <a href="#work">Work</a>
+            <a href="#work" className="lf-nav-wide">Work</a>
             <a href="#ai">AI practice</a>
             <a href="#experience">Experience</a>
             <a href={person.links.cv} {...ext}>
               CV <span className="lf-sr">(PDF)</span>
             </a>
-            <a href={person.links.github} {...ext}>GitHub</a>
+            <a href={person.links.github} className="lf-nav-wide" {...ext}>GitHub</a>
           </nav>
           <a className="lf-top-contact" href="#contact">
             Get in touch
