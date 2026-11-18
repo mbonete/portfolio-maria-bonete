@@ -6,11 +6,16 @@ import CaseEnd from "@/app/_components/CaseEnd";
 import CaseVideo from "@/app/_components/CaseVideo";
 import LoopVideo from "@/app/_components/LoopVideo";
 import Phone from "@/app/_components/Phone";
+import { share } from "@/share";
+
+const title = "Marine Wobbles: case study";
+const description =
+  "A native Android match-3 in Kotlin and Jetpack Compose: difficulty measured by strategy bots over millions of seeded games, rules ported exactly from a TypeScript prototype, and Play Billing that can't lose or double a purchase.";
 
 export const metadata: Metadata = {
-  title: "Marine Wobbles: case study",
-  description:
-    "A native Android match-3 in Kotlin and Jetpack Compose: difficulty measured by strategy bots over millions of seeded games, rules ported exactly from a TypeScript prototype, and Play Billing that can't lose or double a purchase.",
+  title,
+  description,
+  ...share({ title, description, path: "/work/marine-wobbles", image: "marine-wobbles" }),
 };
 
 // Every figure here comes from the game's repository (private) as of November 2026.

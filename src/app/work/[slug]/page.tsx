@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { caseStudies } from "@/content";
 import CaseEnd from "@/app/_components/CaseEnd";
 import CaseVideo from "@/app/_components/CaseVideo";
+import { share } from "@/share";
 
 // The web case studies (Quote & Nod, Doorplate), in the same shape as Marine Wobbles': the project's colour
 // with its screens and demo, then the engineering in plain sections.
@@ -15,7 +16,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const c = caseStudies.find((x) => x.slug === slug);
-  return c ? { title: `${c.title}: case study`, description: c.summary } : {};
+  if (!c) return {};
+  const title = `${c.title}: case study`;
+  return { title, description: c.summary, ...share({ title, description: c.summary, path: `/work/${c.slug}`, image: c.slug }) };
 }
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;

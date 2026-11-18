@@ -3,6 +3,7 @@ import { Hina_Mincho, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import "./site.css";
 import OverscrollColour from "./_components/OverscrollColour";
+import { share, siteUrl } from "@/share";
 
 // Hina Mincho for the big names, Instrument Sans for everything else.
 const display = Hina_Mincho({
@@ -16,10 +17,16 @@ const text = Instrument_Sans({
   subsets: ["latin"],
 });
 
+const title = "Maria Bonete: full-stack developer";
+const description =
+  "Full-stack developer working remotely from Madrid: web and mobile (React Native and native Android). Case studies, shipped projects, and how I work with coding agents.";
+
 export const metadata: Metadata = {
-  title: { default: "Maria Bonete: full-stack developer", template: "%s · Maria Bonete" },
-  description:
-    "Full-stack developer working remotely from Madrid: web and mobile (React Native and native Android). Case studies, shipped projects, and how I work with coding agents.",
+  metadataBase: siteUrl,
+  title: { default: title, template: "%s · Maria Bonete" },
+  description,
+  ...share({ title, description, path: "/", image: "site" }),
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

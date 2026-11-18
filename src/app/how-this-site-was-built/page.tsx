@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { person } from "@/content";
+import { share } from "@/share";
+
+const title = "How this site was built";
+const description =
+  "The portfolio as a worked example of building with coding agents: decisions, prototypes, a rendered hero, real product screens and checks.";
 
 export const metadata: Metadata = {
-  title: "How this site was built",
-  description: "The portfolio as a worked example of building with coding agents: decisions, prototypes, a rendered hero, real product screens and checks.",
+  title,
+  description,
+  ...share({ title, description, path: "/how-this-site-was-built", image: "site" }),
 };
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
