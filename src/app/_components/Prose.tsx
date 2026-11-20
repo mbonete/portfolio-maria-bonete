@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Block, Inline } from "@/blog";
+import Figure from "./Figure";
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
 
@@ -21,15 +22,17 @@ function Parts({ parts }: { parts: Inline[] }) {
   });
 }
 
-// An article's paragraphs and lists, with the case studies' list style.
+// An article's paragraphs, lists and figures.
 export default function Prose({ blocks, className }: { blocks: Block[]; className?: string }) {
   return blocks.map((b, i) =>
-    b.kind === "p" ? (
+    b.kind === "figure" ? (
+      <Figure key={i} figure={b} variant="body" />
+    ) : b.kind === "p" ? (
       <p key={i} className={className}>
         <Parts parts={b.parts} />
       </p>
     ) : (
-      <ul key={i} className="lf-cs-points">
+      <ul key={i}>
         {b.items.map((item, j) => (
           <li key={j}>
             <Parts parts={item} />

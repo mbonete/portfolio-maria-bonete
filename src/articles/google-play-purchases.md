@@ -2,6 +2,8 @@
 
 Marine Wobbles, my match-3 for Android, sells coin packs through Google Play Billing. Each purchase is recorded twice, in Google's records and in the game's save file, and the two can drift apart. These are the rules the game follows to keep them matched.
 
+![The game's three coin packs: a handful, a pouch and a chest.](/blog/coin-packs.webp)
+
 ## 1. Grant coins only for paid purchases
 
 Google marks a purchase as PURCHASED or PENDING. Coins are granted only for PURCHASED. While a slow payment such as cash at a shop is pending, the pack shows “Waiting for payment — your coins arrive when Google confirms it.”
@@ -19,6 +21,8 @@ Every purchase has a token. The game keeps every token it has paid out and never
 ## 4. Check for unfinished purchases on every return
 
 Each time the game returns to the foreground, and when the coin screen opens, it asks Google for every unconsumed purchase and finishes each one with rules 1 to 3. That covers a payment that cleared while the game was closed, and a purchase the app closed in the middle of.
+
+![The steps the game takes for each purchase Google reports.](figure:purchase-flow "Rules 1 to 3, in the order the game applies them to each purchase. Each step leads to the next; the note under it says what happens otherwise.")
 
 If Google refuses a new purchase because an earlier paid purchase of that pack was never consumed, the game fetches that purchase and finishes it the same way.
 

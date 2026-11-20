@@ -2,6 +2,8 @@
 
 Marine Wobbles, my match-3 for Android, has 80 levels in eight chapters, and each chapter adds a new mechanic. These are the rules that decide which levels are easy and which are hard, and the research each rule follows.
 
+![Bar chart of the tier of each of Marine Wobbles' 80 levels, from tutorial to peak. The bars rise and fall in a sawtooth that climbs across the eight chapters, and the levels that teach a new mechanic sit low.](figure:level-tiers "The tier of each of the 80 levels, in eight chapters of ten. A dot marks a level that teaches a new mechanic.")
+
 ## 1. Let the average climb, with dips
 
 The levels follow a rising sawtooth: the average difficulty climbs slowly, single levels go up and down, and every hard peak is followed by an easy level. Difficulty that rises as the player gets better is the core of flow theory ([Csikszentmihalyi](https://doi.org/10.1007/978-94-017-9088-8_16)).
@@ -29,6 +31,8 @@ The easy level after a peak is common design practice. The closest study, by [Gu
 ## 5. Get new players to competence first
 
 A first-time player doesn't know how to play yet, so the first chapter is about getting them there. The first open shows a short film of groups being tapped and one sentence with the rule, and level 1 points at a real group on the board. Every level opens on its goal in one line, each lesson teaches one mechanic in one short line, and the early boards are dealt in clumps so the groups are big. That help fades out over the first two chapters. Levels 1 to 10 hold nothing hard, and levels 11 to 30 no peak.
+
+![Level 2: a group of purple octopuses popping for 1,500 points.](/marine-wobbles/board.webp "Level 2: a big group of octopuses pops for 1,500 points.")
 
 [Self-determination theory](https://doi.org/10.1007/s11031-006-9051-8) links a player's sense of competence to how much they enjoy a game.
 

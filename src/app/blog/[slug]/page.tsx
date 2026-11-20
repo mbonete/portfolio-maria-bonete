@@ -3,10 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatDate, getArticle, slugs } from "@/blog";
 import { person } from "@/content";
+import Figure from "@/app/_components/Figure";
 import Prose from "@/app/_components/Prose";
 import { share } from "@/share";
 
-// An article in the case studies' shape: its project's colour at the head, then one section per rule.
+// An article: its project's colour at the head with the title, intro and a picture, then the rules in
+// one reading column with a list of them alongside, to jump between.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -29,33 +31,53 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   return (
     <div
-      className="lf lf-cs-page lf-post flex-1"
+      className="lf lf-cs-page lf-a flex-1"
       data-tone={a.project.tone}
       style={{ "--band": a.project.ground } as React.CSSProperties}
     >
       <header className="lf-cs-top">
-        <Link href="/#blog">Back to the site</Link>
+        <Link href="/">Back to the site</Link>
         <Link href="/blog">Blog</Link>
       </header>
 
       <main>
         <article>
-          <header className="lf-cs-head">
-            <p className="lf-post-meta">
-              <time dateTime={a.date}>{formatDate(a.date)}</time> · {a.project.name}
-            </p>
-            <h1>{a.title}</h1>
-            <Prose blocks={a.intro} className="lf-cs-lede" />
+          <header className="lf-a-head">
+            <div className="lf-a-head-text">
+              <h1>{a.title}</h1>
+              <p className="lf-a-byline">
+                <time dateTime={a.date}>{formatDate(a.date)}</time>
+                <span aria-hidden> · </span>
+                {a.minutes} min read
+                <span aria-hidden> · </span>
+                <Link href={a.project.href}>{a.project.name}</Link>
+              </p>
+              <Prose blocks={a.intro} className="lf-a-lede" />
+            </div>
+            {a.hero && <Figure figure={a.hero} variant="hero" />}
           </header>
 
-          {a.sections.map((s) => (
-            <section key={s.id} className="lf-cs-sec" aria-labelledby={s.id}>
-              <h2 id={s.id}>{s.title}</h2>
-              <div className="lf-cs-body">
-                <Prose blocks={s.blocks} />
-              </div>
-            </section>
-          ))}
+          <div className="lf-a-layout">
+            <nav className="lf-a-toc" aria-labelledby="toc-h">
+              <p id="toc-h">In this article</p>
+              <ol>
+                {a.sections.map((s) => (
+                  <li key={s.id}>
+                    <a href={`#${s.id}`}>{s.title}</a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+
+            <div className="lf-a-body">
+              {a.sections.map((s) => (
+                <section key={s.id} aria-labelledby={s.id}>
+                  <h2 id={s.id}>{s.title}</h2>
+                  <Prose blocks={s.blocks} />
+                </section>
+              ))}
+            </div>
+          </div>
         </article>
 
         <nav className="lf-cs-end" aria-label="More">

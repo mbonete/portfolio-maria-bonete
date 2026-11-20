@@ -2,8 +2,10 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 
 // The blog's articles, newest first. Each one's text is a Markdown file in src/articles, written in a
-// small subset: one "# " title, "## " sections, paragraphs, "- " lists, [links](url), **bold** and
-// `code`. The title and sections come from the file; the date and summary live here.
+// small subset: one "# " title, "## " sections, paragraphs, "- " lists, [links](url), **bold**, `code`
+// and figures, ![alt](src "caption") on a line of their own. A src of "figure:<name>" is a chart or
+// diagram drawn by the site (see Figure.tsx). The first figure before any section is the article's
+// head image. The title and sections come from the file; the date and summary live here.
 const index = [
   {
     slug: "marine-wobbles-difficulty",
@@ -31,7 +33,9 @@ export type Inline =
   | { kind: "code"; text: string }
   | { kind: "link"; text: string; href: string };
 
-export type Block = { kind: "p"; parts: Inline[] } | { kind: "ul"; items: Inline[][] };
+export type Figure = { kind: "figure"; src: string; alt: string; caption?: string };
+
+export type Block = { kind: "p"; parts: Inline[] } | { kind: "ul"; items: Inline[][] } | Figure;
 
 export type Article = {
   slug: string;
@@ -39,6 +43,8 @@ export type Article = {
   summary: string;
   title: string;
   project: (typeof projects)[keyof typeof projects];
+  minutes: number; // reading time, at 220 words a minute
+  hero?: Figure;
   intro: Block[];
   sections: { id: string; title: string; blocks: Block[] }[];
 };
@@ -49,7 +55,18 @@ export function getArticle(slug: string): Article | undefined {
   const entry = index.find((a) => a.slug === slug);
   if (!entry) return undefined;
   const source = readFileSync(path.join(process.cwd(), "src/articles", `${slug}.md`), "utf8");
-  return { ...entry, project: projects[entry.project], ...parse(source) };
+  const { title, intro, sections } = parse(source);
+  const hero = intro.find((b): b is Figure => b.kind === "figure");
+  const words = source.replace(/\]\([^)]*\)/g, "]").split(/\s+/).filter(Boolean).length;
+  return {
+    ...entry,
+    project: projects[entry.project],
+    minutes: Math.max(1, Math.round(words / 220)),
+    title,
+    hero,
+    intro: intro.filter((b) => b !== hero),
+    sections,
+  };
 }
 
 export function getArticles(): Article[] {
@@ -71,10 +88,13 @@ function parse(source: string) {
   const flush = () => {
     if (!run.length) return;
     const blocks = sections.length ? sections[sections.length - 1].blocks : intro;
+    const figure = run.length === 1 ? run[0].match(/^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]*)")?\)$/) : null;
     blocks.push(
-      run.every((l) => l.startsWith("- "))
-        ? { kind: "ul", items: run.map((l) => inline(l.slice(2))) }
-        : { kind: "p", parts: inline(run.join(" ")) },
+      figure
+        ? { kind: "figure", alt: figure[1], src: figure[2], caption: figure[3] }
+        : run.every((l) => l.startsWith("- "))
+          ? { kind: "ul", items: run.map((l) => inline(l.slice(2))) }
+          : { kind: "p", parts: inline(run.join(" ")) },
     );
     run = [];
   };
