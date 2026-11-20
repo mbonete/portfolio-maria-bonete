@@ -345,6 +345,22 @@
   .lf-devices .lf-phone { transition: none; }
   .lf-devices[data-playing] .lf-phone { transform: none; }
 }
+/* A desktop tool's side panel stands where the phone would: a dark strip cut from the app's window,
+   with the phone's shadow. It is taller than a phone for its width, so it takes less of the corner. */
+.lf-devices[data-side] { padding: 0 10% 6% 0; }
+.lf-side {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  width: 23%;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #1e1e1e;
+  box-shadow: 0 28px 40px -14px rgb(0 0 0 / 0.42), 0 8px 14px -6px rgb(0 0 0 / 0.28);
+}
+.lf-side img { display: block; width: 100%; height: auto; }
+
 .lf-browser {
   overflow: hidden;
   border-radius: 10px;
@@ -494,6 +510,8 @@
 .lf-principles li { padding-top: 18px; border-top: 1px solid color-mix(in oklab, var(--paper) 30%, transparent); }
 .lf-principles h3 { font-size: 1.5rem; line-height: 1.12; letter-spacing: -0.01em; }
 .lf-principles p { margin-top: 12px; font-size: 0.9375rem; color: color-mix(in oklab, var(--paper) 76%, var(--ink)); }
+.lf-principles p a { color: var(--paper); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.lf-principles p a:hover { text-underline-offset: 6px; }
 /* The site itself as the case study: the section's last word, in the display face. */
 .lf-built {
   max-width: 30ch;
@@ -586,6 +604,42 @@
 .lf-cs-lede { max-width: 52ch; margin-top: clamp(24px, 3vw, 40px); font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.45; }
 .lf-cs-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: clamp(28px, 3vw, 40px); }
 .lf-cs-links a { text-decoration: underline; text-underline-offset: 5px; font-weight: 600; }
+/* A project shown as objects rather than a demo video: the band's composition under the lede. */
+.lf-cs-object { max-width: 1180px; margin-top: clamp(32px, 4vw, 56px); }
+.lf-cs-status { margin-top: clamp(32px, 4vw, 48px); font-weight: 600; }
+.lf-cs-status + .lf-cs-links { margin-top: 14px; }
+
+/* A command to paste into a terminal: ink like the terminal it goes to, with a button that copies it. */
+.lf-command { display: grid; gap: 12px; justify-items: start; }
+.lf-command pre {
+  width: 100%;
+  margin: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  border-radius: 6px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 0.8125rem/1.75 ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: pre;
+  scrollbar-color: color-mix(in oklab, var(--paper) 45%, var(--ink)) var(--ink);
+}
+.lf-command pre ::selection { background: var(--gold); color: var(--ink); }
+.lf-command button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 200ms var(--ease);
+}
+.lf-command button:hover { background: color-mix(in oklab, var(--ink) 82%, var(--paper)); }
+.lf-command button[data-state="copied"] { background: var(--band); color: var(--ink); }
 
 /* The video's play button leads the head's links, like the bands' buttons on the home page. */
 .lf-cs-play {

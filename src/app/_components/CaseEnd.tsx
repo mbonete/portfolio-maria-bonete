@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { caseStudies, marineWobbles, person } from "@/content";
+import { caseStudies, marineWobbles, person, switchboard } from "@/content";
 
 const ext = { target: "_blank", rel: "noreferrer" } as const;
 
@@ -7,6 +7,7 @@ const ext = { target: "_blank", rel: "noreferrer" } as const;
 const order = [
   { slug: "marine-wobbles", title: marineWobbles.title },
   ...caseStudies.map((c) => ({ slug: c.slug, title: c.title })),
+  { slug: switchboard.slug, title: switchboard.title },
 ];
 
 // Every case study ends the same way: the next one, the CV, email and LinkedIn.

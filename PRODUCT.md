@@ -25,7 +25,7 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 ## Capabilities and Constraints
 
 - Next.js 16 (App Router), React 19, Tailwind 4; deployed as a static-friendly site.
-- Routes: `/` (hero, "Engineering, now with agents", work, experience, contact), `/work/marine-wobbles`, `/work/quote-and-nod`, `/work/doorplate`, `/how-this-site-was-built`. All static.
+- Routes: `/` (hero, "Engineering, now with agents", work, experience, contact), `/work/marine-wobbles`, `/work/quote-and-nod`, `/work/doorplate`, `/work/switchboard`, `/how-this-site-was-built`. All static.
 - The site: a Blender-rendered gold folding screen on an azurite ground as the hero (folds shut at a click); one flat colour per project with its real product in a rendered phone frame and/or browser window; short silent loops in the phones; YouTube demos that play in place (privacy-enhanced, loaded on click).
 - Mobile: LCP under 2.5s on a mid-range phone; heavy effects degrade on small screens and under reduced motion.
 - Free fonts only.
@@ -43,10 +43,11 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 ## Evidence on Hand
 
 - Projects: Quote & Nod (formerly Dwelltrace; never link dwelltrace.com, an unrelated product) and Doorplate (formerly Homely) (full case studies, demo videos on YouTube), Guess The BPM and The Coffee Place (live sites, highlights in their sections).
+- Switchboard: open source (MIT), public repos github.com/mbonete/cmux-switchboard-panel (a cmux sidebar panel, one JS file) and github.com/mbonete/cmux-switchboard (a local Node.js web dashboard). It sorts the agents running in cmux into needs you / working / your move / stale. Screenshots use made-up sessions, never real ones. Tested with Claude Code on cmux 0.65.2: allowing a command, replying and answering a question from the dashboard all reached the agent; plan approval is untested, so the site doesn't mention it. Similar tools exist (Claude Code's Agent view, cmux's Agents Board template), so no claims of being first or unique.
 - Marine Wobbles: native Android tap-to-pop match-3 (Kotlin, Jetpack Compose), in internal testing on Google Play. 80 levels, 27 illustrated episodes generated from her prompts, difficulty measured by seven strategy bots over seeded games. Its repo is private: never link it. No download, rating, release-date or price claims.
 - Roles: Wandity (Full Stack Developer, Sept 2024–present), Bidz Labs (Front-end Architect, Web3), Aventu (freelance), CaneLab Ltd. (front-end).
 - CV at public/cv.pdf; GitHub github.com/mbonete; LinkedIn in/maria-bonete.
-- AI practice: an opening line naming the tools (Claude Code and Codex), then five practices (not a fixed order), each stating the problem it prevents and what she does: grilling to a shared understanding, goals that end on evidence (/goal), model and effort chosen per task, parallel agents with clear ownership, and review by a different agent. No experiment results or test figures (the owner rejected them); an example only where it can be checked. The section links to this site's public repo, where the agents' instructions and co-authored commits can be checked. The case studies don't say what agents did in each project (owner's decision, 2026-11-18).
+- AI practice: an opening line naming the tools (Claude Code and Codex), then five practices (not a fixed order), each stating the problem it prevents and what she does: grilling to a shared understanding, goals that end on evidence (/goal), model and effort chosen per task, parallel agents with clear ownership (its example links to Switchboard), and review by a different agent. No experiment results or test figures (the owner rejected them); an example only where it can be checked. The section links to this site's public repo, where the agents' instructions and co-authored commits can be checked. The case studies don't say what agents did in each project (owner's decision, 2026-11-18).
 - Absent and never to be fabricated: testimonials, client logos, usage metrics, store ratings or downloads.
 
 ## Product Principles

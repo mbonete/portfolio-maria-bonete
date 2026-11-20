@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { aiIntro, aiPractices, caseStudies, entries, experience, marineWobbles, person } from "@/content";
+import { aiIntro, aiPractices, caseStudies, entries, experience, marineWobbles, person, switchboard } from "@/content";
 import FoldingScreen from "./_components/FoldingScreen";
 import LoopVideo from "./_components/LoopVideo";
 import { BandVideo, CloseVideo } from "./_components/BandVideo";
@@ -102,6 +102,21 @@ const bands: Band[] = [
       ...(doorplate.repo ? [{ label: "Code", href: doorplate.repo, external: true }] : []),
     ],
     video: true,
+  },
+  {
+    id: switchboard.slug,
+    title: switchboard.title,
+    kind: "cmux panel and web dashboard · JavaScript, Node.js",
+    status: switchboard.status,
+    summary: switchboard.summary,
+    stack: switchboard.stack,
+    ground: switchboard.band.ground,
+    tone: switchboard.band.tone,
+    showcase: <Devices desktop={switchboard.band.desktop} side={switchboard.band.panel} />,
+    links: [
+      { label: "See the project", href: `/work/${switchboard.slug}`, primary: true },
+      { label: "Code", href: switchboard.panelRepo, external: true },
+    ],
   },
   {
     id: "guess-the-bpm",
@@ -331,6 +346,12 @@ export default function LabF() {
                 <p>
                   {p.text}
                   {p.example && <> {p.example}</>}
+                  {p.link && (
+                    <>
+                      {" "}
+                      {p.link.lead} <Link href={p.link.href}>{p.link.label}</Link>.
+                    </>
+                  )}
                 </p>
               </li>
             ))}
