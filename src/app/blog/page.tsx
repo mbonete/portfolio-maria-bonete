@@ -70,15 +70,15 @@ export default function BlogPage() {
               </li>
             ))}
           </ol>
-        </section>
 
-        <nav className="lf-cs-end" aria-label="More">
-          <Link href="/#work">See the work</Link>
-          <a href={`mailto:${person.email}`}>Email me</a>
-          <a href={person.links.linkedin} target="_blank" rel="noreferrer">
-            Talk to me on LinkedIn
-          </a>
-        </nav>
+          <nav className="lf-p-end" aria-label="More">
+            <Link href="/#work">See the work</Link>
+            <a href={`mailto:${person.email}`}>Email me</a>
+            <a href={person.links.linkedin} target="_blank" rel="noreferrer">
+              Talk to me on LinkedIn
+            </a>
+          </nav>
+        </section>
       </main>
     </div>
   );

@@ -787,6 +787,28 @@
 .lf-p-text a:hover { text-decoration-thickness: 2px; }
 .lf-p-text code { font-size: 0.92em; }
 
+/* The way on, at the end of the text on paper: a hairline, then the links in the display face. */
+.lf-p-end {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 36px;
+  max-width: 68ch;
+  margin-top: clamp(48px, 6vw, 72px);
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in oklab, var(--ink) 22%, transparent);
+}
+.lf-p-end a {
+  padding-block: 6px;
+  font-family: var(--font-f-display), serif;
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  transition: text-underline-offset 220ms var(--ease);
+}
+.lf-p-end a:hover { text-underline-offset: 9px; }
+.lf-bi .lf-p-end { max-width: none; }
+
 /* The panel beside the text, and the phone in it, sized so phone and caption fit the window. */
 .lf-p-stage { display: none; }
 .lf-p-stage-in { --w: min(300px, 21vw, calc((100svh - 190px) / 1.867)); display: grid; justify-items: start; gap: 18px; width: var(--w); }

@@ -108,6 +108,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </section>
             ))}
           </article>
+
+          <nav className="lf-p-end" aria-label="More">
+            <Link href="/blog">All articles</Link>
+            <Link href={a.project.href}>The {a.project.name} case study</Link>
+            <a href={`mailto:${person.email}`}>Email me</a>
+          </nav>
         </div>
 
         {screens.length > 0 && (
@@ -124,12 +130,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </aside>
         )}
       </main>
-
-      <nav className="lf-cs-end" aria-label="More">
-        <Link href="/blog">All articles</Link>
-        <Link href={a.project.href}>The {a.project.name} case study</Link>
-        <a href={`mailto:${person.email}`}>Email me</a>
-      </nav>
     </div>
   );
 }
