@@ -169,7 +169,7 @@ export default function LabF() {
             <nav aria-label="Primary" className="lf-nav">
               <a href="#work">Work</a>
               <a href="#ai">AI practice</a>
-              <Link href="/blog" className="lf-nav-wide">Blog</Link>
+              <Link href="/blog">Blog</Link>
               <a href="#experience">Experience</a>
               <span className="lf-top-actions">
                 <a href={person.links.cv} {...ext}>

@@ -921,18 +921,20 @@
   .lf-index a { padding: 14px 0; }
   .lf-index-name { font-size: 1.5rem; }
   /* Each link carries its own side padding, so the space between links is part of its target, and the
-     bar's padding is cut by the same amount, so the text still starts on the gutter. The transparent
-     edge (with the margin cancelling its height) lets the gold line ease out when the bar settles back
-     here. */
+     bar's padding is cut by the same amount, so the text still starts on the gutter. The padding
+     narrows from 7px to 4px on narrow phones, so the six links stay on one row down to 360px wide. The
+     transparent edge (with the margin cancelling its height) lets the gold line ease out when the bar
+     settles back here. */
   .lf-top-bar {
+    --lp: clamp(4px, calc((100vw - 320px) / 10), 7px);
     flex-wrap: wrap;
     gap: 0;
-    padding-inline: calc(var(--gutter) - 7px);
+    padding-inline: calc(var(--gutter) - var(--lp));
     border-bottom: 1px solid transparent;
     margin-bottom: -1px;
   }
   .lf-nav { flex-wrap: wrap; gap: 0; }
-  .lf-top-bar a { padding-inline: 7px; }
+  .lf-top-bar a { padding-inline: var(--lp); }
   .lf-top-contact { white-space: nowrap; font-weight: 500; }
   .lf-top-contact-wide { display: none; }
   .lf-top-contact-narrow { display: inline; }

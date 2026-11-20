@@ -36,8 +36,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       style={{ "--band": a.project.ground } as React.CSSProperties}
     >
       <header className="lf-cs-top">
-        <Link href="/">Back to the site</Link>
-        <Link href="/blog">Blog</Link>
+        <Link href="/blog">Back to the blog</Link>
+        <Link href="/">Maria Bonete</Link>
       </header>
 
       <main>
