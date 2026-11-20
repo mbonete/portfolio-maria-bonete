@@ -170,6 +170,69 @@ export const marineWobbles = {
   trailerLength: 31, // seconds
 };
 
+// Open source: a panel for the cmux terminal and the local web dashboard that goes with it. Both repos
+// are public under the MIT license. The screenshots show made-up sessions.
+export const switchboard = {
+  slug: "switchboard",
+  title: "Switchboard",
+  status: "Open source under the MIT license",
+  summary:
+    "A panel for the cmux terminal that sorts the coding agents I have running into four lists: waiting on me, working, finished, and gone stale. Tapping a row opens that agent's terminal.",
+  stack: ["JavaScript", "cmux sidebar runtime", "Node.js", "Server-Sent Events"],
+  panelRepo: "https://github.com/mbonete/cmux-switchboard-panel",
+  dashboardRepo: "https://github.com/mbonete/cmux-switchboard",
+  install: [
+    "mkdir -p ~/.config/cmux/sidebars && \\",
+    "curl -fsSL -o ~/.config/cmux/sidebars/switchboard.js \\",
+    "  https://raw.githubusercontent.com/mbonete/cmux-switchboard-panel/main/switchboard.js && \\",
+    "cmux right-sidebar set custom switchboard",
+  ].join("\n"),
+  lists: [
+    { title: "Needs you", body: "An agent waiting for an answer or an approval, or a result I haven't read. The longest wait comes first." },
+    { title: "Working", body: "Agents in the middle of a turn, with a live timer, my last prompt and how many subagents are running." },
+    { title: "Your move", body: "Agents that finished and are waiting for my next message." },
+    { title: "Stale", body: "No activity for longer than a threshold I pick: a day, two days or a week. Collapsed until I open it." },
+  ],
+  decisions: [
+    {
+      title: "The panel needs no server",
+      body: "It reads the list of agents cmux already keeps, so nothing has to run alongside it. I've tested it with Claude Code.",
+    },
+    {
+      title: "A reply only goes into an empty prompt",
+      body: "The dashboard types a reply into the agent's terminal and presses Enter. Just before that, the server checks again that the agent is idle and its prompt box is empty, so a reply can't land in the middle of a turn or mix with a half-written draft.",
+    },
+    {
+      title: "Answers go through cmux",
+      body: "Allowing a command or answering a question uses cmux's Feed, which holds the agent's request for about two minutes before the agent falls back to its own prompt. The card counts that window down, then says to answer in the terminal.",
+    },
+    {
+      title: "Stale counts from the last prompt",
+      body: "cmux re-stamps an agent's last-activity time whenever it restores sessions after a restart, so Switchboard counts from the last prompt and the transcript, which a restart leaves alone.",
+    },
+    {
+      title: "The dashboard stays on the machine",
+      body: "It listens on 127.0.0.1, refuses requests addressed to any other host name, and every action needs a token created at start-up that only the page has, so another website open in the browser can't trigger one.",
+    },
+  ],
+  band: {
+    ground: "#f0a93b",
+    tone: "light" as const,
+    desktop: {
+      src: "/screens/switchboard-desktop.webp",
+      w: 1600,
+      h: 1000,
+      alt: "Switchboard's web dashboard: an agent asking to run the rate-limit tests, with Allow once, Always allow and Deny; an agent asking whether the second email goes out on day 3 or day 5; and two agents working, with their timers.",
+    },
+    panel: {
+      src: "/screens/switchboard-panel.webp",
+      w: 580,
+      h: 1500,
+      alt: "The Switchboard panel in cmux: two agents that need me, two working with live timers, two finished, and three stale ones collapsed.",
+    },
+  },
+};
+
 export const entries = [
   {
     title: "Guess The BPM",
@@ -191,7 +254,7 @@ export const entries = [
 // How I work with coding agents; an example only where it can be checked.
 export const aiIntro = "I work with coding agents in Claude Code and Codex.";
 
-export const aiPractices: { title: string; text: string; example?: string }[] = [
+export const aiPractices: { title: string; text: string; example?: string; link?: { lead: string; label: string; href: string } }[] = [
   {
     title: "Grilling to a shared understanding",
     text: "Before an agent writes any code, I have it grill me on the task until we understand it the same way. That's where the gaps come out: the case I hadn't mentioned, the assumption it would otherwise have made without asking.",
@@ -208,6 +271,7 @@ export const aiPractices: { title: string; text: string; example?: string }[] = 
   {
     title: "Running agents in parallel",
     text: "Several agents working at once can get far more done in a day, as long as their tasks are independent and each has its own copy of the code. The real limit is review: once finished work starts waiting on me, another agent stops helping.",
+    link: { lead: "To notice that sooner, I built", label: "Switchboard", href: "/work/switchboard" },
   },
   {
     title: "A different agent reviews the code",

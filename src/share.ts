@@ -10,6 +10,7 @@ const images = {
   "quote-and-nod": "Quote & Nod's job page with two vendor quotes, in a browser window and on a phone.",
   doorplate: "A Doorplate listing in a browser window, and the form to write to its owner on a phone.",
   "marine-wobbles": "Marine Wobbles on three phones: level 2, the Sakura Waters map and level 66.",
+  switchboard: "Switchboard's web dashboard in a browser window, with its cmux panel standing in front, on a saffron ground.",
 };
 
 // The card a page gets when its link is shared on LinkedIn, Slack, WhatsApp and the like: its title,

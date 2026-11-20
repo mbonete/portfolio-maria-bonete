@@ -11,23 +11,31 @@ export type Shot = { src: string; w: number; h: number; alt: string };
 // of its corner. With a video, the window's view is fixed at 16:9 so the demo can play in exactly the
 // screenshot's place: the phone steps out of the way and nothing around it moves. Nothing from
 // YouTube loads before the play button on the screenshot is pressed. The bar shows the site's public
-// address, and stays empty for a project that isn't deployed.
+// address, and stays empty for a project that isn't deployed. A desktop tool shows its side panel in
+// the phone's place.
 export default function Devices({
   url,
   desktop,
   phone,
+  side,
   video,
 }: {
   url?: string;
   desktop: Shot;
   phone?: Shot | { loop: string; poster: string; label: string };
+  side?: Shot;
   video?: { id: string; title: string; label: string };
 }) {
   const band = useBandVideo();
   const playing = Boolean(video && band?.playing);
 
   return (
-    <div className="lf-devices" data-phone={phone ? "" : undefined} data-playing={playing ? "" : undefined}>
+    <div
+      className="lf-devices"
+      data-phone={phone ? "" : undefined}
+      data-side={side ? "" : undefined}
+      data-playing={playing ? "" : undefined}
+    >
       <div className="lf-browser">
         <div className="lf-browser-bar" aria-hidden>
           <span className="lf-browser-dots" />
@@ -46,6 +54,11 @@ export default function Devices({
           {video && <PosterPlay label={video.label} />}
         </div>
       </div>
+      {side && (
+        <div className="lf-side">
+          <Image src={side.src} width={side.w} height={side.h} alt={side.alt} sizes="(max-width: 760px) 26vw, 13vw" />
+        </div>
+      )}
       {phone && (
         <Phone>
           {"loop" in phone ? (
