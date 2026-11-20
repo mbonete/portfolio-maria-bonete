@@ -160,8 +160,9 @@ export const marineWobbles = {
     "A tap-to-pop match-3 for Android, written natively in Kotlin and Jetpack Compose, with a coin store that takes real payments through Google Play.",
   facts: [
     { k: "Levels", v: "80, in eight chapters; each chapter adds a new mechanic" },
-    { k: "Difficulty", v: "7 strategy bots; about 2.2 million seeded games per balance run" },
-    { k: "Tests", v: "455 unit tests, and 264 recorded games replayed state for state" },
+    { k: "Difficulty", v: "Pacing follows flow theory and cognitive load research: one new rule at a time, difficulty rising with skill" },
+    { k: "Balance", v: "7 strategy bots play every level; about 2.2 million seeded games per run" },
+    { k: "Tests", v: "455 unit tests" },
     { k: "Art", v: "27 illustrated episodes, generated from my prompts" },
   ],
   stack: ["Kotlin", "Jetpack Compose", "Coroutines + StateFlow", "Play Billing", "kotlinx-serialization", "JUnit"],
