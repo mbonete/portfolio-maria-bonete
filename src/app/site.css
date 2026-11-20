@@ -749,61 +749,98 @@
 
 /* ---------- Blog ---------- */
 
-/* An article opens on its project's colour: title, date and reading time, intro, and its picture
-   beside them on wide screens. Then one reading column, with the list of its sections alongside. */
-.lf-a-head {
+/* An article read beside the game. Wide screens: the reading column on the right, and on the left a
+   panel of the project's colour, held in view, with the phone showing the screen of the rule being
+   read. Phones: one column; each rule's screen on the project's colour under its heading. */
+.lf-p { background: var(--paper); }
+.lf-p-read { padding: 0 var(--gutter) clamp(56px, 7vw, 96px); }
+.lf-p-top { display: flex; justify-content: space-between; gap: 24px; padding: 22px 0 0; font-size: 0.875rem; }
+.lf-p-top a { padding-block: 6px; text-decoration: underline; text-underline-offset: 6px; }
+.lf-p-head { margin-top: clamp(28px, 4vw, 48px); }
+.lf-p-head h1 { max-width: 20ch; font-size: clamp(2.2rem, 3.7vw, 3.35rem); line-height: 1.04; letter-spacing: -0.02em; }
+.lf-p-byline { margin-top: 14px; font-size: 0.9375rem; font-variant-numeric: tabular-nums; color: color-mix(in oklab, var(--ink) 74%, var(--paper)); }
+.lf-p-byline a { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+.lf-p-intro { max-width: 60ch; margin-top: 18px; font-size: clamp(1.125rem, 1.35vw, 1.1875rem); line-height: 1.55; }
+.lf-p-intro + .lf-p-intro { margin-top: 10px; }
+
+/* The contents: the rules by number, then the sections after them. */
+.lf-p-toc { max-width: 60ch; margin-top: clamp(28px, 3.5vw, 40px); }
+.lf-p-toc > p { font-size: 0.875rem; font-weight: 600; }
+.lf-p-toc ol { margin: 8px 0 0; padding: 0; list-style: none; border-top: 1px solid color-mix(in oklab, var(--ink) 22%, transparent); }
+.lf-p-toc li { border-bottom: 1px solid color-mix(in oklab, var(--ink) 22%, transparent); }
+.lf-p-toc a { display: grid; grid-template-columns: 2rem minmax(0, 1fr); align-items: baseline; padding: 8px 0; font-size: 1rem; line-height: 1.35; transition: box-shadow 200ms var(--ease); }
+.lf-p-toc a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.lf-p-toc a[aria-current] { font-weight: 600; box-shadow: inset 0 -2px 0 var(--gold); }
+.lf-p-n { font-family: var(--font-f-display), serif; font-weight: 400; font-variant-numeric: lining-nums; }
+.lf-p-toc .lf-p-n { font-size: 1.1875rem; line-height: 1; }
+
+/* A rule: its number and statement in the display face, then its text. */
+.lf-p-sec { max-width: 68ch; margin-top: clamp(40px, 4.5vw, 56px); }
+.lf-p-sec h2 { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); align-items: baseline; font-size: clamp(1.55rem, 2.1vw, 1.9rem); line-height: 1.14; letter-spacing: -0.01em; scroll-margin-top: 24px; }
+.lf-p-sec h2:not(:has(.lf-p-n)) { display: block; }
+.lf-p-text { margin-top: 12px; font-size: 1.125rem; line-height: 1.62; }
+.lf-p-sec h2:has(.lf-p-n) ~ .lf-p-text { padding-left: 2.4rem; }
+.lf-p-text :is(p, ul, .lf-fig) + :is(p, ul, .lf-fig) { margin-top: 1em; }
+.lf-p-text ul { display: grid; gap: 10px; margin: 0; padding: 0 0 0 1.1em; }
+.lf-p-text ul > li::marker { content: "\2013  "; }
+.lf-p-text a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.lf-p-text a:hover { text-decoration-thickness: 2px; }
+.lf-p-text code { font-size: 0.92em; }
+
+/* The panel beside the text, and the phone in it, sized so phone and caption fit the window. */
+.lf-p-stage { display: none; }
+.lf-p-stage-in { --w: min(300px, 21vw, calc((100svh - 190px) / 1.867)); display: grid; justify-items: start; gap: 18px; width: var(--w); }
+.lf-p-stage-in .lf-phone { width: 100%; }
+.lf-p-screen { position: absolute; inset: 0; opacity: 0; transition: opacity 220ms var(--ease); }
+.lf-p-screen[data-on] { opacity: 1; }
+.lf-p-screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.lf-p-caption { min-height: 2.9em; font-size: 0.875rem; line-height: 1.45; color: color-mix(in oklab, var(--ink) 84%, var(--band)); }
+/* The rule numbers, the current one in full ink and underlined: gold has no contrast on this blue, so
+   gold marks the current rule in the contents on paper instead. */
+.lf-p-rules { display: flex; flex-wrap: wrap; gap: 2px; margin: 0 0 0 -8px; padding: 0; list-style: none; }
+.lf-p-rules a {
   display: grid;
-  gap: clamp(28px, 4vw, 48px) clamp(32px, 5vw, 88px);
-  padding: clamp(24px, 4vw, 56px) var(--gutter) clamp(40px, 5vw, 72px);
-  background: var(--band);
+  place-items: center;
+  min-width: 34px;
+  height: 36px;
+  font-family: var(--font-f-display), serif;
+  font-size: 1.1875rem;
+  color: color-mix(in oklab, var(--ink) 62%, var(--band));
+  box-shadow: inset 0 -2px 0 transparent;
+  transition: color 200ms var(--ease), box-shadow 200ms var(--ease);
 }
-.lf-cs-page[data-tone="dark"] .lf-a-head { color: #fbf5e9; }
-.lf-a-head h1 { max-width: 20ch; font-size: clamp(2.4rem, 4.6vw, 4.25rem); line-height: 1.02; letter-spacing: -0.02em; }
-.lf-a-byline { margin-top: 18px; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
-.lf-a-byline a { text-decoration: underline; text-underline-offset: 4px; }
-.lf-a-lede { max-width: 56ch; margin-top: 22px; font-size: clamp(1.125rem, 1.4vw, 1.25rem); line-height: 1.5; }
-.lf-a-lede + .lf-a-lede { margin-top: 12px; }
+.lf-p-rules a:hover { color: var(--ink); }
+.lf-p-rules a[aria-current] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
+.lf-phone-screen > img { object-position: top; }
 
-.lf-a-layout {
-  display: grid;
-  gap: 40px clamp(40px, 5vw, 88px);
-  padding: clamp(36px, 5vw, 72px) var(--gutter) clamp(64px, 8vw, 112px);
+/* A rule's screen on phones: the top of the phone, large enough to read the game's own line, rising
+   from a band of the project's colour that crops it; the caption sits under the band. */
+.lf-p-shot { margin: 16px calc(-1 * var(--gutter)) 0; }
+.lf-p-shot-band { display: flex; justify-content: center; height: min(340px, 84vw); padding-top: 24px; overflow: hidden; background: var(--band); }
+.lf-p-shot-band .lf-phone { flex: 0 0 auto; width: min(72%, 300px); height: max-content; }
+.lf-p-shot figcaption { margin-top: 10px; padding-inline: var(--gutter); font-size: 0.875rem; line-height: 1.45; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
+
+@media (min-width: 900px) {
+  .lf-p-grid { display: grid; grid-template-columns: minmax(300px, 36%) minmax(0, 1fr); }
+  .lf-p-read { grid-column: 2; grid-row: 1; padding-inline: clamp(40px, 5vw, 96px) var(--gutter); }
+  .lf-p-stage {
+    grid-column: 1;
+    grid-row: 1;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    display: grid;
+    place-items: center;
+    height: 100svh;
+    background: var(--band);
+  }
+  .lf-p-shot { display: none; }
 }
-.lf-a-toc > p { font-size: 0.875rem; font-weight: 600; }
-.lf-a-toc ol { margin: 10px 0 0; padding: 0; list-style: none; border-top: 1px solid color-mix(in oklab, var(--ink) 20%, transparent); }
-.lf-a-toc li { border-bottom: 1px solid color-mix(in oklab, var(--ink) 20%, transparent); }
-.lf-a-toc a { display: block; padding: 9px 0; font-size: 0.9375rem; line-height: 1.35; }
-.lf-a-toc a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
-.lf-a-body { min-width: 0; max-width: 68ch; font-size: 1.125rem; line-height: 1.62; }
-.lf-a-body section + section { margin-top: clamp(40px, 4.5vw, 56px); }
-.lf-a-body h2 { font-size: clamp(1.6rem, 2.3vw, 2.125rem); line-height: 1.12; letter-spacing: -0.01em; scroll-margin-top: 24px; }
-.lf-a-body :is(p, ul) + :is(p, ul) { margin-top: 1em; }
-.lf-a-body ul { display: grid; gap: 10px; margin: 0; padding: 0 0 0 1.1em; }
-.lf-a-body h2 + * { margin-top: 14px; }
-.lf-a-body ul > li::marker { content: "\2013  "; }
-.lf-a-body a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.lf-a-body a:hover { text-decoration-thickness: 2px; }
-.lf-a-body code { font-size: 0.92em; }
-
-/* Figures: a caption in the colour's own ink, a little quieter than the text. */
+/* Figures in the text: a caption in quieter ink. */
 .lf-fig { margin: 0; }
-.lf-fig img { display: block; width: 100%; height: auto; }
-.lf-fig figcaption { margin-top: 14px; font-size: 0.875rem; line-height: 1.45; }
-.lf-fig-hero figcaption { color: color-mix(in oklab, var(--ink) 84%, var(--band)); }
-.lf-fig-body figcaption { color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
-.lf-a-body .lf-fig { margin: 28px 0; }
-/* A phone screenshot sits small, its caption beside it. */
-.lf-fig-body[data-shape="portrait"] {
-  display: grid;
-  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
-  gap: 20px;
-  align-items: end;
-}
-.lf-fig[data-shape="portrait"] img {
-  border-radius: 22px;
-  box-shadow: 0 18px 40px -18px rgb(23 19 15 / 0.45), 0 4px 10px -4px rgb(23 19 15 / 0.2);
-}
+.lf-p-text .lf-fig { margin-block: 28px; }
+.lf-fig figcaption { margin-top: 14px; font-size: 0.875rem; line-height: 1.45; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
 
 /* The level chart: one bar per level, its height the tier, a dot under a level that teaches a mechanic;
    faint lines mark the tiers and the chapters. */
@@ -815,7 +852,6 @@
   font-size: 0.75rem;
   line-height: 1;
 }
-.lf-tiers[data-compact] { --plot-h: 100%; display: block; height: 100%; }
 .lf-tiers-y { display: grid; grid-template-rows: repeat(5, minmax(0, 1fr)); height: var(--plot-h); margin: 0; padding: 0; list-style: none; text-align: right; }
 .lf-tiers-y li { align-self: start; transform: translateY(-50%); }
 .lf-tiers-plot {
@@ -865,48 +901,54 @@
 .lf-flow-step { font-family: var(--font-f-display), serif; font-size: 1.25rem; line-height: 1.15; }
 .lf-flow-note { margin-top: 8px; font-size: 0.875rem; line-height: 1.45; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
 
-/* The blog's page: each article with its picture on its project's colour. */
+/* The blog's page: one row per article, its first screen in the phone on its project's colour. */
 .lf-bi { padding: clamp(20px, 3vw, 40px) var(--gutter) clamp(64px, 8vw, 112px); }
 .lf-bi h1 { font-size: clamp(3rem, 7vw, 6rem); line-height: 0.95; letter-spacing: -0.02em; }
-.lf-bi-list { display: grid; gap: clamp(32px, 4vw, 48px); margin: clamp(28px, 4vw, 48px) 0 0; padding: 0; list-style: none; }
+.lf-bi-list { display: grid; gap: clamp(28px, 3.5vw, 44px); margin: clamp(28px, 4vw, 48px) 0 0; padding: 0; list-style: none; }
 .lf-bi-list > li {
   display: grid;
-  grid-template-columns: minmax(0, 360px) minmax(0, 62ch);
-  gap: 20px clamp(24px, 3vw, 48px);
-  align-items: center;
-  padding-top: clamp(28px, 4vw, 48px);
+  grid-template-columns: minmax(0, 260px) minmax(0, 64ch);
+  gap: 20px clamp(28px, 3.5vw, 56px);
+  align-items: start;
+  padding-top: clamp(28px, 3.5vw, 44px);
   border-top: 1px solid color-mix(in oklab, var(--ink) 25%, transparent);
 }
-.lf-bi-thumb { display: grid; place-items: center; aspect-ratio: 16 / 10; padding: 9%; background: var(--band); color: var(--ink); }
-.lf-bi-thumb > * { width: 100%; }
-.lf-bi-thumb:has(.lf-tiers) > * { height: 100%; }
-.lf-bi-text h2 { font-size: clamp(1.6rem, 2.6vw, 2.25rem); line-height: 1.1; letter-spacing: -0.01em; }
-.lf-bi-text h2 a {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
-  transition: text-underline-offset 220ms var(--ease);
-}
-.lf-bi-text h2 a:hover { text-underline-offset: 9px; }
-.lf-bi-text .lf-a-byline { margin-top: 12px; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
-.lf-bi-summary { max-width: 52ch; margin-top: 12px; font-size: 1.0625rem; line-height: 1.5; }
+.lf-bi-tile { display: grid; place-items: center; padding: 28px 0; overflow: hidden; background: var(--band); }
+.lf-bi-tile .lf-phone { display: block; width: 160px; transition: transform 320ms var(--ease); }
+.lf-bi-list > li:has(h2 a:hover) .lf-bi-tile .lf-phone, .lf-bi-tile:hover .lf-phone { transform: translateY(-4px); }
+.lf-bi-text h2 { font-size: clamp(1.6rem, 2.5vw, 2.15rem); line-height: 1.1; letter-spacing: -0.01em; }
+.lf-bi-text h2 a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.lf-bi-text h2 a:hover { text-decoration-thickness: 2px; }
+.lf-bi-text .lf-p-byline { margin-top: 10px; }
+.lf-bi-summary { max-width: 56ch; margin-top: 10px; font-size: 1.0625rem; line-height: 1.5; }
+.lf-bi-rules { max-width: 56ch; margin: 16px 0 0; padding: 0; list-style: none; border-top: 1px solid color-mix(in oklab, var(--ink) 18%, transparent); }
+.lf-bi-rules li { display: grid; grid-template-columns: 1.8rem minmax(0, 1fr); align-items: baseline; padding: 6px 0; border-bottom: 1px solid color-mix(in oklab, var(--ink) 18%, transparent); font-size: 0.9375rem; }
+.lf-bi-rules .lf-p-n { font-size: 1.0625rem; }
 
+/* Wide screens: the rules beside the summary, so a row uses the width. */
 @media (min-width: 1100px) {
-  .lf-a-head { grid-template-columns: minmax(0, 7fr) minmax(0, 6fr); align-items: center; }
-  .lf-a-layout { grid-template-columns: minmax(200px, 250px) minmax(0, 68ch); }
-  .lf-a-toc { position: sticky; top: 24px; align-self: start; }
+  .lf-bi-list > li { grid-template-columns: minmax(0, 300px) minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; }
+  .lf-bi-tile { grid-row: 1 / -1; }
+  .lf-bi-text { display: contents; }
+  .lf-bi-text > :not(.lf-bi-rules) { grid-column: 2; }
+  .lf-bi-rules { grid-column: 3; grid-row: 1 / -1; align-self: start; margin-top: 6px; }
 }
 @media (max-width: 760px) {
-  .lf-a-body { font-size: 1.0625rem; }
-  .lf-a-toc a { padding: 11px 0; }
-  .lf-fig-body[data-shape="portrait"] { grid-template-columns: minmax(0, 46%) minmax(0, 1fr); gap: 16px; }
+  .lf-p-text { font-size: 1.0625rem; }
+  .lf-p-toc { margin-top: 24px; }
+  .lf-p-toc a { padding: 8px 0; }
+  .lf-p-sec h2 { grid-template-columns: 2rem minmax(0, 1fr); }
+  .lf-p-sec h2:has(.lf-p-n) ~ .lf-p-text, .lf-p-sec h2:has(.lf-p-n) ~ .lf-p-shot { padding-left: 0; }
   .lf-tiers-plot { column-gap: 1px; }
   .lf-flow { grid-template-columns: 1fr; }
   .lf-flow li { padding: 0 0 22px 32px; }
   .lf-flow li::before { top: 8px; bottom: -8px; left: 7px; right: auto; width: 2px; height: auto; }
   .lf-flow li:last-child { padding-bottom: 0; }
   .lf-bi-list > li { grid-template-columns: 1fr; }
-  .lf-bi-thumb { aspect-ratio: 2 / 1; padding: 6% 9%; }
+  .lf-bi-tile .lf-phone { width: 36vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-p-screen, .lf-bi-tile .lf-phone, .lf-p-rules a { transition: none; }
 }
 
 /* ---------- Phones and narrow windows ---------- */

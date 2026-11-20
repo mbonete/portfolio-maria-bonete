@@ -2,13 +2,15 @@
 
 Marine Wobbles, my match-3 for Android, sells coin packs through Google Play Billing. Each purchase is recorded twice, in Google's records and in the game's save file, and the two can drift apart. These are the rules the game follows to keep them matched.
 
-![The game's three coin packs: a handful, a pouch and a chest.](/blog/coin-packs.webp)
-
 ## 1. Grant coins only for paid purchases
+
+![The coin screen while a payment is pending: the first pack's button says Waiting, and a note says the coins arrive when Google confirms the payment.](/blog/screens/coins-pending.webp "A pending payment, in the debug build's fake shop.")
 
 Google marks a purchase as PURCHASED or PENDING. Coins are granted only for PURCHASED. While a slow payment such as cash at a shop is pending, the pack shows “Waiting for payment — your coins arrive when Google confirms it.”
 
 ## 2. Save the coins before consuming
+
+![The coin screen right after a paid purchase, with a note saying 250 coins were added and the balance at 250.](/blog/screens/coins-added.webp "A paid purchase: 250 coins added.")
 
 Consuming a purchase tells Google it has been used, so the pack can be bought again. After that, Google no longer returns it when the game asks for unfinished purchases. If the app closed after consuming but before saving, the player would lose coins they paid for.
 
@@ -27,6 +29,8 @@ Each time the game returns to the foreground, and when the coin screen opens, it
 If Google refuses a new purchase because an earlier paid purchase of that pack was never consumed, the game fetches that purchase and finishes it the same way.
 
 ## 5. Keep the game usable when Google Play can't be reached
+
+![The coin screen when Google Play can't be reached: the packs are greyed out under a line saying the shop can't reach Google Play right now.](/blog/screens/coins-unreachable.webp "Google Play out of reach: the packs are greyed out.")
 
 When the phone is offline or billing is unavailable, the coin screen still opens, with the packs greyed out and one line explaining why. Coins earned by playing and the booster store still work.
 

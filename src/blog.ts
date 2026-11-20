@@ -4,8 +4,9 @@ import path from "node:path";
 // The blog's articles, newest first. Each one's text is a Markdown file in src/articles, written in a
 // small subset: one "# " title, "## " sections, paragraphs, "- " lists, [links](url), **bold**, `code`
 // and figures, ![alt](src "caption") on a line of their own. A src of "figure:<name>" is a chart or
-// diagram drawn by the site (see Figure.tsx). The first figure before any section is the article's
-// head image. The title and sections come from the file; the date and summary live here.
+// diagram drawn by the site (see Figure.tsx). A figure from /blog/screens/ is a game screen: it becomes
+// its section's screen, shown in the phone beside the text. The title and sections come from the file;
+// the date and summary live here.
 const index = [
   {
     slug: "marine-wobbles-difficulty",
@@ -37,6 +38,14 @@ export type Figure = { kind: "figure"; src: string; alt: string; caption?: strin
 
 export type Block = { kind: "p"; parts: Inline[] } | { kind: "ul"; items: Inline[][] } | Figure;
 
+export type Section = {
+  id: string;
+  number?: string; // "1" for a rule; none for the sections after the rules
+  title: string; // without its number
+  screen?: Figure;
+  blocks: Block[];
+};
+
 export type Article = {
   slug: string;
   date: string;
@@ -44,9 +53,9 @@ export type Article = {
   title: string;
   project: (typeof projects)[keyof typeof projects];
   minutes: number; // reading time, at 220 words a minute
-  hero?: Figure;
+  lead?: Figure; // the first screen, for the head on phones and the list of articles
   intro: Block[];
-  sections: { id: string; title: string; blocks: Block[] }[];
+  sections: Section[];
 };
 
 export const slugs = index.map((a) => a.slug);
@@ -56,15 +65,14 @@ export function getArticle(slug: string): Article | undefined {
   if (!entry) return undefined;
   const source = readFileSync(path.join(process.cwd(), "src/articles", `${slug}.md`), "utf8");
   const { title, intro, sections } = parse(source);
-  const hero = intro.find((b): b is Figure => b.kind === "figure");
   const words = source.replace(/\]\([^)]*\)/g, "]").split(/\s+/).filter(Boolean).length;
   return {
     ...entry,
     project: projects[entry.project],
     minutes: Math.max(1, Math.round(words / 220)),
     title,
-    hero,
-    intro: intro.filter((b) => b !== hero),
+    lead: sections.find((s) => s.screen)?.screen,
+    intro,
     sections,
   };
 }
@@ -82,20 +90,25 @@ export function formatDate(date: string) {
 function parse(source: string) {
   let title = "";
   const intro: Block[] = [];
-  const sections: Article["sections"] = [];
+  const sections: Section[] = [];
   // Paragraphs and lists are runs of lines between blank lines.
   let run: string[] = [];
   const flush = () => {
     if (!run.length) return;
     const blocks = sections.length ? sections[sections.length - 1].blocks : intro;
     const figure = run.length === 1 ? run[0].match(/^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]*)")?\)$/) : null;
-    blocks.push(
-      figure
-        ? { kind: "figure", alt: figure[1], src: figure[2], caption: figure[3] }
-        : run.every((l) => l.startsWith("- "))
-          ? { kind: "ul", items: run.map((l) => inline(l.slice(2))) }
-          : { kind: "p", parts: inline(run.join(" ")) },
-    );
+    const section = sections[sections.length - 1];
+    if (figure && figure[2].startsWith("/blog/screens/") && section && !section.screen) {
+      section.screen = { kind: "figure", alt: figure[1], src: figure[2], caption: figure[3] };
+    } else {
+      blocks.push(
+        figure
+          ? { kind: "figure", alt: figure[1], src: figure[2], caption: figure[3] }
+          : run.every((l) => l.startsWith("- "))
+            ? { kind: "ul", items: run.map((l) => inline(l.slice(2))) }
+            : { kind: "p", parts: inline(run.join(" ")) },
+      );
+    }
     run = [];
   };
   for (const raw of source.split("\n")) {
@@ -106,7 +119,13 @@ function parse(source: string) {
     } else if (line.startsWith("## ")) {
       flush();
       const heading = line.slice(3);
-      sections.push({ id: headingId(heading), title: heading, blocks: [] });
+      const numbered = heading.match(/^(\d+)\.\s+(.*)$/);
+      sections.push({
+        id: headingId(heading),
+        number: numbered?.[1],
+        title: numbered ? numbered[2] : heading,
+        blocks: [],
+      });
     } else if (line === "") {
       flush();
     } else {

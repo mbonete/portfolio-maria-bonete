@@ -26,7 +26,7 @@ function Parts({ parts }: { parts: Inline[] }) {
 export default function Prose({ blocks, className }: { blocks: Block[]; className?: string }) {
   return blocks.map((b, i) =>
     b.kind === "figure" ? (
-      <Figure key={i} figure={b} variant="body" />
+      <Figure key={i} figure={b} />
     ) : b.kind === "p" ? (
       <p key={i} className={className}>
         <Parts parts={b.parts} />

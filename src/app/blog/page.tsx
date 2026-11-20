@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { formatDate, getArticles } from "@/blog";
 import { person } from "@/content";
-import Figure from "@/app/_components/Figure";
+import { ScreenImage } from "@/app/_components/Figure";
 import { share } from "@/share";
 
 const title = "Blog";
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   ...share({ title, description, path: "/blog", image: "site" }),
 };
 
-// The articles, newest first: each with its picture on its project's colour, then the title, the date
-// and reading time, and the summary.
+// One row per article, newest first: its first game screen in the phone on its project's colour, then
+// the title, date and reading time, the summary and the rules it covers.
 export default function BlogPage() {
   return (
     <div className="lf lf-cs-page flex-1" style={{ "--band": "var(--paper)" } as React.CSSProperties}>
@@ -27,24 +27,28 @@ export default function BlogPage() {
         <section className="lf-bi" aria-labelledby="blog-h">
           <h1 id="blog-h">Blog</h1>
           <ol className="lf-bi-list">
-            {getArticles().map((a) => (
+            {getArticles().map((a, i) => (
               <li key={a.slug}>
-                {a.hero && (
+                {a.lead && (
                   <Link
                     href={`/blog/${a.slug}`}
-                    className="lf-bi-thumb"
+                    className="lf-bi-tile"
                     style={{ "--band": a.project.ground } as React.CSSProperties}
                     tabIndex={-1}
                     aria-hidden
                   >
-                    <Figure figure={a.hero} variant="thumb" />
+                    <span className="lf-phone">
+                      <span className="lf-phone-screen">
+                        <ScreenImage figure={a.lead} sizes="(max-width: 760px) 36vw, 150px" eager={i === 0} />
+                      </span>
+                    </span>
                   </Link>
                 )}
                 <div className="lf-bi-text">
                   <h2>
                     <Link href={`/blog/${a.slug}`}>{a.title}</Link>
                   </h2>
-                  <p className="lf-a-byline">
+                  <p className="lf-p-byline">
                     <time dateTime={a.date}>{formatDate(a.date)}</time>
                     <span aria-hidden> · </span>
                     {a.minutes} min read
@@ -52,6 +56,16 @@ export default function BlogPage() {
                     {a.project.name}
                   </p>
                   <p className="lf-bi-summary">{a.summary}</p>
+                  <ol className="lf-bi-rules" aria-label="The rules it covers">
+                    {a.sections
+                      .filter((s) => s.number)
+                      .map((s) => (
+                        <li key={s.id}>
+                          <span className="lf-p-n">{s.number}</span>
+                          {s.title}
+                        </li>
+                      ))}
+                  </ol>
                 </div>
               </li>
             ))}

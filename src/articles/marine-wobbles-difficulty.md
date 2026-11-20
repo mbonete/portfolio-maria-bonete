@@ -2,13 +2,17 @@
 
 Marine Wobbles, my match-3 for Android, has 80 levels in eight chapters, and each chapter adds a new mechanic. These are the rules that decide which levels are easy and which are hard, and the research each rule follows.
 
-![Bar chart of the tier of each of Marine Wobbles' 80 levels, from tutorial to peak. The bars rise and fall in a sawtooth that climbs across the eight chapters, and the levels that teach a new mechanic sit low.](figure:level-tiers "The tier of each of the 80 levels, in eight chapters of ten. A dot marks a level that teaches a new mechanic.")
-
 ## 1. Let the average climb, with dips
+
+![The map of chapter 5, Sakura Waters, with levels 41 to 50 along a path between islands.](/blog/screens/map-sakura-waters.webp "Chapter 5, Sakura Waters: levels 41 to 50.")
 
 The levels follow a rising sawtooth: the average difficulty climbs slowly, single levels go up and down, and every hard peak is followed by an easy level. Difficulty that rises as the player gets better is the core of flow theory ([Csikszentmihalyi](https://doi.org/10.1007/978-94-017-9088-8_16)).
 
+![Bar chart of the tier of each of Marine Wobbles' 80 levels, from tutorial to peak. The bars rise and fall in a sawtooth that climbs across the eight chapters, and the levels that teach a new mechanic sit low.](figure:level-tiers "The tier of each of the 80 levels, in eight chapters of ten. A dot marks a level that teaches a new mechanic.")
+
 ## 2. Teach a new rule on a plain board
+
+![Level 42: a board of plain pieces with some squares marked as patches, 0 of 14 cleared and 39 moves left.](/blog/screens/level-42.webp "Level 42 teaches patches, on the plain board.")
 
 A player meeting a new rule has enough to take in. So the level that introduces a mechanic uses the plain default board: pieces fall straight down and nothing else unusual is on it. I check everything on the board, rather than only what changed since the last level, because a board can change one thing and still show the new rule beside two others the player hasn't met.
 
@@ -16,11 +20,15 @@ This follows cognitive load research. In [Pollock, Chandler and Sweller's experi
 
 ## 3. Teach, practise, then test
 
+![Level 46: a board with green coral blocks among the pieces and most squares marked as patches, 0 of 28 cleared and 47 moves left.](/blog/screens/level-46.webp "Level 46 tests patches, with coral added.")
+
 A mechanic is never introduced and tested in the same level. Levels come in short runs about one mechanic: the first teaches it, the next ones practise it and add a twist, and the last one tests it. Each run starts easy and ends hard, which is where the sawtooth comes from.
 
 [Linehan and colleagues (CHI PLAY 2014)](https://hdl.handle.net/10468/3461) found the same structure in Portal, Portal 2 and Braid: each skill arrives alone in a simple puzzle, then gets practised and combined with earlier ones, and complexity climbs until the next skill arrives.
 
 ## 4. Climb one step at a time
+
+![Level 61's lesson card, Make an urchin: make 4 big pops in a row for an urchin, then tap it to clear everything around it.](/blog/screens/level-61-lesson.webp "Level 61, the easy level after the peak at level 60, teaches the urchin.")
 
 Every level has a tier: tutorial, easy, medium, hard or peak. From one level to the next, difficulty climbs at most one tier, so an easy level is never followed by a hard one. Drops have no limit. There are never more than two hard levels in a row, and a peak is always followed by an easy level.
 
@@ -30,9 +38,9 @@ The easy level after a peak is common design practice. The closest study, by [Gu
 
 ## 5. Get new players to competence first
 
-A first-time player doesn't know how to play yet, so the first chapter is about getting them there. The first open shows a short film of groups being tapped and one sentence with the rule, and level 1 points at a real group on the board. Every level opens on its goal in one line, each lesson teaches one mechanic in one short line, and the early boards are dealt in clumps so the groups are big. That help fades out over the first two chapters. Levels 1 to 10 hold nothing hard, and levels 11 to 30 no peak.
+![Level 1's goal card: score 3,900 points in 22 moves, with a Let's play button.](/blog/screens/level-1-goal.webp "Level 1 opens on its goal in one line.")
 
-![Level 2: a group of purple octopuses popping for 1,500 points.](/marine-wobbles/board.webp "Level 2: a big group of octopuses pops for 1,500 points.")
+A first-time player doesn't know how to play yet, so the first chapter is about getting them there. The first open shows a short film of groups being tapped and one sentence with the rule, and level 1 points at a real group on the board. Every level opens on its goal in one line, each lesson teaches one mechanic in one short line, and the early boards are dealt in clumps so the groups are big. That help fades out over the first two chapters. Levels 1 to 10 hold nothing hard, and levels 11 to 30 no peak.
 
 [Self-determination theory](https://doi.org/10.1007/s11031-006-9051-8) links a player's sense of competence to how much they enjoy a game.
 
