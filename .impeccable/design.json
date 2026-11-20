@@ -1,0 +1,424 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-20T00:00:00Z",
+  "title": "Design System: Maria Bonete",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(19.0% 0.010 67)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262320",
+          "#433f3b",
+          "#605d59",
+          "#82807d",
+          "#a6a4a2",
+          "#cbcac9",
+          "#eeeeee"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(95.6% 0.018 86)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252422",
+          "#41403c",
+          "#605d58",
+          "#838079",
+          "#a8a49d",
+          "#cccac5",
+          "#efeeec"
+        ]
+      },
+      "gold": {
+        "role": "tertiary",
+        "displayName": "Screen Gold",
+        "canonical": "oklch(73.5% 0.097 81)",
+        "tonalRamp": [
+          "#0e0b05",
+          "#2d2210",
+          "#503c18",
+          "#72592c",
+          "#9a7b43",
+          "#bda06d",
+          "#d8c8ae",
+          "#f2eee7"
+        ]
+      },
+      "azurite": {
+        "role": "primary",
+        "displayName": "Azurite",
+        "canonical": "oklch(62.6% 0.145 269)",
+        "tonalRamp": [
+          "#070a18",
+          "#182143",
+          "#2a3a76",
+          "#4258a2",
+          "#5f79d4",
+          "#8aa2e6",
+          "#bdcaed",
+          "#ebeef8"
+        ],
+        "note": "Measured edge under grain #5c76cc, used only for the overscroll band."
+      },
+      "lavender": {
+        "role": "secondary",
+        "displayName": "Lavender",
+        "canonical": "oklch(73.1% 0.095 292)",
+        "tonalRamp": [
+          "#0b0a11",
+          "#242133",
+          "#403a5c",
+          "#5e5681",
+          "#8177ad",
+          "#a59cd0",
+          "#cbc7e2",
+          "#eeedf5"
+        ]
+      },
+      "light-ink": {
+        "role": "neutral",
+        "displayName": "Light Ink",
+        "canonical": "oklch(97.2% 0.017 85)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252422",
+          "#413f3c",
+          "#605d59",
+          "#83807a",
+          "#a7a49e",
+          "#cccac6",
+          "#efeeed"
+        ]
+      },
+      "band-marine": {
+        "role": "project",
+        "displayName": "Marine Blue",
+        "canonical": "oklch(76.0% 0.108 232)",
+        "tonalRamp": [
+          "#050c10",
+          "#102733",
+          "#17455b",
+          "#2b6581",
+          "#4289ac",
+          "#6daed0",
+          "#aed0e3",
+          "#e7f0f5"
+        ]
+      },
+      "band-terracotta": {
+        "role": "project",
+        "displayName": "Terracotta",
+        "canonical": "oklch(54.3% 0.146 36)",
+        "tonalRamp": [
+          "#170603",
+          "#411307",
+          "#712008",
+          "#9b3a1f",
+          "#c45e43",
+          "#d88f7b",
+          "#e6c1b7",
+          "#f6ece9"
+        ]
+      },
+      "band-forest": {
+        "role": "project",
+        "displayName": "Forest",
+        "canonical": "oklch(47.3% 0.090 162)",
+        "tonalRamp": [
+          "#030e08",
+          "#062b1c",
+          "#034c33",
+          "#226d4e",
+          "#538f72",
+          "#88af9b",
+          "#bdd0c6",
+          "#ebf0ed"
+        ]
+      },
+      "band-ultramarine": {
+        "role": "project",
+        "displayName": "Ultramarine",
+        "canonical": "oklch(46.9% 0.245 269)",
+        "tonalRamp": [
+          "#030627",
+          "#0d1366",
+          "#1c1cb0",
+          "#2d3fe2",
+          "#4f70fb",
+          "#809ffd",
+          "#b9caf7",
+          "#eaeefa"
+        ]
+      },
+      "band-wine": {
+        "role": "project",
+        "displayName": "Wine",
+        "canonical": "oklch(39.8% 0.124 16)",
+        "tonalRamp": [
+          "#180406",
+          "#420f16",
+          "#721a29",
+          "#923f47",
+          "#b2676c",
+          "#ca9597",
+          "#ddc3c4",
+          "#f3eded"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The name in the hero only; sized from the unit shared with the folding screen."
+      },
+      "headline-case": {
+        "displayName": "Case Headline",
+        "purpose": "Case-study titles."
+      },
+      "headline-band": {
+        "displayName": "Band Headline",
+        "purpose": "Project names on the home bands."
+      },
+      "headline-section": {
+        "displayName": "Section Headline",
+        "purpose": "Work, Experience, AI and contact titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sticky case-study section headings; article titles and rule headings use the same role at their own sizes."
+      },
+      "title-link": {
+        "displayName": "Display Link",
+        "purpose": "Contact links and the end links of every inner page."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default text."
+      },
+      "body-reading": {
+        "displayName": "Reading",
+        "purpose": "Article text, 68ch column."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Top bars, captions, dates, stack lines, table heads."
+      }
+    },
+    "shadows": [
+      {
+        "name": "handset",
+        "value": "0 28px 40px -14px rgb(0 0 0 / 0.42), 0 8px 14px -6px rgb(0 0 0 / 0.28)",
+        "purpose": "Cast by the rendered phone's body outline."
+      },
+      {
+        "name": "window",
+        "value": "0 40px 70px -30px rgb(0 0 0 / 0.5), 0 10px 24px -12px rgb(0 0 0 / 0.35)",
+        "purpose": "Browser window and full-width case-study video."
+      },
+      {
+        "name": "disc",
+        "value": "0 18px 40px -14px rgb(0 0 0 / 0.55), 0 4px 10px -4px rgb(0 0 0 / 0.3)",
+        "purpose": "The cream play disc."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The one easing for every transition."
+      },
+      {
+        "name": "state",
+        "value": "200ms",
+        "purpose": "Button fills, underline colour, rule marks."
+      },
+      {
+        "name": "underline-offset",
+        "value": "220ms",
+        "purpose": "Link underline offset growth; article screen crossfade."
+      },
+      {
+        "name": "disc",
+        "value": "260ms",
+        "purpose": "Play disc scale and wash."
+      },
+      {
+        "name": "bar",
+        "value": "300ms",
+        "purpose": "Narrow fixed top bar slide."
+      },
+      {
+        "name": "tile-lift",
+        "value": "320ms",
+        "purpose": "Blog list phone rises 4px on hover."
+      },
+      {
+        "name": "phone-step",
+        "value": "520ms",
+        "purpose": "Band phone steps down while a demo plays."
+      },
+      {
+        "name": "reduced",
+        "value": "none",
+        "purpose": "All transitions off under prefers-reduced-motion; the hero screen arrives open."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "760px"
+      },
+      {
+        "name": "article-panel",
+        "value": "900px"
+      },
+      {
+        "name": "wide",
+        "value": "1100px"
+      },
+      {
+        "name": "coarse-pointer",
+        "value": "(pointer: coarse): 44px targets"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The hero's one way in: ink with a little azurite, paper label, near-square.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Get in touch</a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;min-height:44px;padding:0 22px;border-radius:2px;background:color-mix(in oklab,#17130f 86%,#6581df);color:#f6f0e3;font:500 1rem 'Instrument Sans',system-ui,sans-serif;text-decoration:none;transition:background-color 200ms cubic-bezier(0.16, 1, 0.3, 1)}.ds-btn-primary:hover{background:color-mix(in oklab,#17130f 74%,#6581df)}.ds-btn-primary:focus-visible{outline:2px solid #17130f;outline-offset:4px}"
+    },
+    {
+      "name": "Band Button (dark ground)",
+      "kind": "button",
+      "refersTo": "button-band-dark",
+      "description": "A band's main link on a dark project ground: Light Ink fill, ink label.",
+      "html": "<div class=\"ds-band-dark\"><a class=\"ds-btn-band\" href=\"#\">Read the case study</a></div>",
+      "css": ".ds-band-dark{--fg:#fbf5e9;--band:#b4492c;background:var(--band);padding:32px}.ds-btn-band{display:inline-flex;align-items:center;min-height:44px;padding:0 22px;border-radius:2px;background:var(--fg);color:#17130f;font:500 1rem 'Instrument Sans',system-ui,sans-serif;text-decoration:none;transition:background-color 200ms cubic-bezier(0.16, 1, 0.3, 1)}.ds-btn-band:hover{background:color-mix(in oklab,var(--fg) 84%,var(--band))}.ds-btn-band:focus-visible{outline:2px solid var(--fg);outline-offset:4px}"
+    },
+    {
+      "name": "Band Link",
+      "kind": "custom",
+      "refersTo": "link-inline",
+      "description": "Inline link in a band: 1px underline whose offset grows on hover.",
+      "html": "<a class=\"ds-link\" href=\"#\">Live site</a>",
+      "css": ".ds-link{color:#17130f;font:1rem 'Instrument Sans',system-ui,sans-serif;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;transition:text-underline-offset 220ms cubic-bezier(0.16, 1, 0.3, 1)}.ds-link:hover{text-underline-offset:8px}.ds-link:focus-visible{outline:2px solid currentColor;outline-offset:4px}"
+    },
+    {
+      "name": "End Links",
+      "kind": "nav",
+      "refersTo": "link-display",
+      "description": "The lavender band that closes every inner page: display-face links.",
+      "html": "<nav class=\"ds-end\"><a href=\"#\">All articles</a><a href=\"#\">Email me</a></nav>",
+      "css": ".ds-end{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 40px;padding:72px 40px;background:#a99ddf;color:#17130f}.ds-end a{color:inherit;font-family:'Hina Mincho',serif;font-size:clamp(1.75rem,3.4vw,2.75rem);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:8px;transition:text-underline-offset 220ms cubic-bezier(0.16, 1, 0.3, 1)}.ds-end a:hover{text-underline-offset:12px}.ds-end a:focus-visible{outline:2px solid currentColor;outline-offset:4px}"
+    },
+    {
+      "name": "Narrow Fixed Top Bar",
+      "kind": "nav",
+      "refersTo": "nav-fixed-narrow",
+      "description": "Phones, past the hero: ink bar with a gold line.",
+      "html": "<nav class=\"ds-topbar\"><a href=\"#\">Work</a><a href=\"#\">AI</a><a href=\"#\">Blog</a><a href=\"#\" class=\"ds-topbar-contact\">Contact</a></nav>",
+      "css": ".ds-topbar{display:flex;flex-wrap:wrap;padding:4px 14px;background:#17130f;color:#f6f0e3;border-bottom:1px solid #c9a35f;font:0.875rem 'Instrument Sans',system-ui,sans-serif}.ds-topbar a{color:inherit;padding:6px 7px;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:6px;transition:text-decoration-color 200ms cubic-bezier(0.16, 1, 0.3, 1)}.ds-topbar a:hover{text-decoration-color:currentColor}.ds-topbar a:focus-visible{outline:2px solid currentColor;outline-offset:-2px}.ds-topbar-contact{margin-left:auto;font-weight:500}"
+    },
+    {
+      "name": "Work Index Row",
+      "kind": "custom",
+      "refersTo": "index-row",
+      "description": "On ink: swatch and number, project name in the display face, kind at right, hairlines.",
+      "html": "<ul class=\"ds-index\"><li><a href=\"#\"><span class=\"ds-index-n\"><span class=\"ds-swatch\" style=\"background:#63bdea\"></span>01</span><span class=\"ds-index-name\">Marine Wobbles</span><span class=\"ds-index-kind\">Android game</span></a></li></ul>",
+      "css": ".ds-index{margin:0;padding:0 24px;list-style:none;background:#17130f;color:#f6f0e3}.ds-index li{border-block:1px solid color-mix(in oklab,#f6f0e3 22%,transparent)}.ds-index a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:18px;align-items:baseline;padding:18px 0;color:inherit;text-decoration:none}.ds-index-n{display:inline-flex;align-items:center;align-self:center;gap:18px;font:0.8125rem 'Instrument Sans',sans-serif;font-variant-numeric:tabular-nums;color:color-mix(in oklab,#f6f0e3 65%,#17130f)}.ds-swatch{width:14px;height:14px}.ds-index-name{font-family:'Hina Mincho',serif;font-size:2rem;line-height:1.1;text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:6px;transition:text-decoration-color 200ms cubic-bezier(0.16, 1, 0.3, 1)}.ds-index a:hover .ds-index-name{text-decoration-color:currentColor}.ds-index a:focus-visible{outline:2px solid currentColor;outline-offset:4px}.ds-index-kind{font:0.875rem 'Instrument Sans',sans-serif;color:color-mix(in oklab,#f6f0e3 76%,#17130f)}"
+    },
+    {
+      "name": "Play Disc",
+      "kind": "button",
+      "refersTo": "play-disc",
+      "description": "Cream disc with a CSS triangle over a light ink wash; plays a demo in place.",
+      "html": "<button class=\"ds-play\" aria-label=\"Play the demo\"><span></span></button>",
+      "css": ".ds-play{display:grid;place-items:center;width:240px;height:150px;padding:0;border:0;background:#63bdea linear-gradient(rgb(23 19 15/.1),rgb(23 19 15/.1));cursor:pointer}.ds-play span{display:grid;place-items:center;width:72px;aspect-ratio:1;border-radius:50%;background:#f6f0e3;box-shadow:0 18px 40px -14px rgb(0 0 0/.55),0 4px 10px -4px rgb(0 0 0/.3);transition:transform 260ms cubic-bezier(0.16, 1, 0.3, 1)}.ds-play span::before{content:'';margin-left:12%;border-block:12px solid transparent;border-left:19px solid #17130f}.ds-play:hover span{transform:scale(1.06)}.ds-play:focus-visible{outline:none}.ds-play:focus-visible span{outline:3px solid #f6f0e3;outline-offset:4px}"
+    },
+    {
+      "name": "Browser Window",
+      "kind": "card",
+      "refersTo": "browser-window",
+      "description": "The site shown in a neutral window: three dots, centred URL, warm chrome, window shadow.",
+      "html": "<div class=\"ds-browser\"><div class=\"ds-browser-bar\"><span class=\"ds-dots\"></span><span class=\"ds-url\">example.com</span></div><div class=\"ds-browser-view\"></div></div>",
+      "css": ".ds-browser{width:320px;overflow:hidden;border-radius:10px;background:#fbfaf7;box-shadow:0 40px 70px -30px rgb(0 0 0/.5),0 10px 24px -12px rgb(0 0 0/.35)}.ds-browser-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:28px;padding:0 12px;background:#ece8df;border-bottom:1px solid rgb(0 0 0/.08)}.ds-dots{width:8px;height:8px;border-radius:50%;background:#c9c3b6;box-shadow:14px 0 #c9c3b6,28px 0 #c9c3b6}.ds-url{padding:2px 14px;border-radius:6px;background:#fbfaf7;color:#4a463f;font:0.6875rem/1.6 'Instrument Sans',sans-serif}.ds-browser-view{aspect-ratio:16/9;background:#fbfaf7}"
+    },
+    {
+      "name": "Article Contents",
+      "kind": "nav",
+      "refersTo": "article-toc",
+      "description": "Numbered rules on paper; the current one at 600 with a gold 2px underline.",
+      "html": "<ol class=\"ds-toc\"><li><a href=\"#\"><span>1</span>A first rule</a></li><li><a href=\"#\" aria-current=\"true\"><span>2</span>The rule being read</a></li></ol>",
+      "css": ".ds-toc{margin:0;padding:0;list-style:none;background:#f6f0e3;color:#17130f;border-top:1px solid color-mix(in oklab,#17130f 22%,transparent)}.ds-toc li{border-bottom:1px solid color-mix(in oklab,#17130f 22%,transparent)}.ds-toc a{display:grid;grid-template-columns:2rem minmax(0,1fr);align-items:baseline;padding:8px 0;color:inherit;text-decoration:none;font:1rem/1.35 'Instrument Sans',sans-serif;transition:box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1)}.ds-toc a:hover{text-decoration:underline;text-underline-offset:4px}.ds-toc a:focus-visible{outline:2px solid currentColor;outline-offset:4px}.ds-toc a[aria-current]{font-weight:600;box-shadow:inset 0 -2px 0 #c9a35f}.ds-toc span{font-family:'Hina Mincho',serif;font-size:1.1875rem;line-height:1}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Object on Its Ground",
+    "overview": "Every surface repeats one formula: a crafted object (the gold folding screen in the hero, the real product in a rendered phone or browser window for each project) set on one flat colour, its name set very large in a single-weight Mincho, and a few facts in a plain sans beside it. Colour is spent in whole fields, never in gradients or tints: azurite for the hero, one flat ground per project, ink for the index and the AI section, lavender for the closing contact, cream paper for reading. The objects carry the only depth; the grounds stay flat.\n\nDensity is low at the top of each section and rises where the reading starts. Bands and heads are large-type posters; case-study sections and blog articles settle onto paper in a two-column reading layout, the heading or the product held beside the text. Hairline rules in ink or paper at 18 to 30 percent opacity divide lists and sections; there are no cards and no boxed panels.\n\nLinks are underlined text, and the underline is the interaction: it appears, moves further from the letters, or thickens on hover. Only the main way into a section is a filled button, and it is a near-square ink block.",
+    "keyCharacteristics": [
+      "One flat colour per section, edge to edge; the section's ink flips to light on dark grounds.",
+      "Hina Mincho at 400 for names, headings, numerals and the closing links; Instrument Sans for everything else.",
+      "Real objects (Blender-rendered screen, phone frame, browser window) carry soft cast shadows; nothing else is lifted.",
+      "Hairline dividers and underlines instead of cards, chips or icons.",
+      "Gold appears only as a fitting: a 1-2px line marking a current or fixed state."
+    ],
+    "rules": [
+      {
+        "name": "The One Ground Rule",
+        "body": "A section is one flat colour, edge to edge. A project's colour belongs to that project everywhere it appears, and no section mixes two grounds.",
+        "section": "colors"
+      },
+      {
+        "name": "The Gold Is a Fitting Rule",
+        "body": "Gold is never a fill, a text colour or a ground. It is a 1-2px line marking state, and only on ink or paper; on the project blues it has no contrast, so the current state there is marked in full ink.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Weight Display Rule",
+        "body": "The display face is always 400. Hierarchy in display type comes from size and tight leading, never from weight or italic.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sentence Case Rule",
+        "body": "No uppercase, no tracked-out labels. Letter-spacing is only ever negative, on display sizes.",
+        "section": "typography"
+      },
+      {
+        "name": "The Beside Rule",
+        "body": "On wide screens, the thing being explained stays beside the reading: the case-study heading sticks at 24px, the article's phone sticks full height. Neither floats over the text.",
+        "section": "layout"
+      },
+      {
+        "name": "The Objects Only Rule",
+        "body": "Shadows belong to rendered or physical objects (phone, window, video, disc). Text, buttons, lists and sections never cast one.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** give every new section one flat ground from the palette, and give a new project its own ground and tone.",
+      "**Do** set names, headings, numerals and closing links in Hina Mincho at 400, large and tight (line-height under 1 at headline sizes).",
+      "**Do** show the real product in the phone or browser frame on the project's ground.",
+      "**Do** derive quiet text by mixing the current ink toward the current ground, and keep full Light Ink for small text on dark grounds.",
+      "**Do** use underlines as the link affordance and animate only their offset, thickness or colour, on `cubic-bezier(0.16, 1, 0.3, 1)`.",
+      "**Do** keep a 44px target on buttons and on every link under a coarse pointer, and drop all transitions under reduced motion."
+    ],
+    "donts": [
+      "**Don't** use gradients, tints or textures on grounds, except the hero's grain.",
+      "**Don't** use gold as a fill, text colour or on a blue ground.",
+      "**Don't** put shadows on text, buttons, lists or sections; only objects cast them.",
+      "**Don't** add cards, chips, pills or boxed panels; divide with hairlines.",
+      "**Don't** bold or italicise the display face, or let the browser synthesise either.",
+      "**Don't** add uppercase or letter-spaced labels, or a small invented label above a heading.",
+      "**Don't** use icon glyphs or icon fonts; draw the few marks needed (play, stop) in CSS."
+    ]
+  }
+}
