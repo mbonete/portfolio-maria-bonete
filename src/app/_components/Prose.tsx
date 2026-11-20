@@ -1,0 +1,41 @@
+import Link from "next/link";
+import type { Block, Inline } from "@/blog";
+
+const ext = { target: "_blank", rel: "noreferrer" } as const;
+
+function Parts({ parts }: { parts: Inline[] }) {
+  return parts.map((p, i) => {
+    if (p.kind === "strong") return <strong key={i}>{p.text}</strong>;
+    if (p.kind === "code") return <code key={i}>{p.text}</code>;
+    if (p.kind === "link")
+      return p.href.startsWith("/") ? (
+        <Link key={i} href={p.href}>
+          {p.text}
+        </Link>
+      ) : (
+        <a key={i} href={p.href} {...ext}>
+          {p.text}
+        </a>
+      );
+    return p.text;
+  });
+}
+
+// An article's paragraphs and lists, with the case studies' list style.
+export default function Prose({ blocks, className }: { blocks: Block[]; className?: string }) {
+  return blocks.map((b, i) =>
+    b.kind === "p" ? (
+      <p key={i} className={className}>
+        <Parts parts={b.parts} />
+      </p>
+    ) : (
+      <ul key={i} className="lf-cs-points">
+        {b.items.map((item, j) => (
+          <li key={j}>
+            <Parts parts={item} />
+          </li>
+        ))}
+      </ul>
+    ),
+  );
+}

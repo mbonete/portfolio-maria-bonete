@@ -518,6 +518,31 @@
 .lf-exp-what li::marker { content: "\2013  "; }
 .lf-exp-stack { margin-top: 14px; font-size: 0.875rem; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
 
+/* The articles, laid out like Experience: the date in the margin, the title with its project, then the
+   summary. On the home page the section shares Experience's paper, so it leaves the space below to it. */
+.lf-blog { padding: clamp(96px, 12vw, 176px) var(--gutter) 0; }
+.lf-blog h2 { font-size: clamp(3rem, 8vw, 7.5rem); line-height: 0.92; letter-spacing: -0.02em; }
+.lf-posts { margin: clamp(48px, 6vw, 88px) 0 0; padding: 0; list-style: none; }
+.lf-posts > li {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 4fr) minmax(0, 7fr);
+  gap: 12px clamp(24px, 4vw, 72px);
+  padding: clamp(24px, 3vw, 40px) 0;
+  border-top: 1px solid color-mix(in oklab, var(--ink) 25%, transparent);
+}
+.lf-posts > li:last-child { border-bottom: 1px solid color-mix(in oklab, var(--ink) 25%, transparent); }
+.lf-posts-date { padding-top: 0.45em; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.lf-posts-title :is(h2, h3) { font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.12; letter-spacing: -0.01em; }
+.lf-posts-title a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  transition: text-underline-offset 220ms var(--ease);
+}
+.lf-posts-title a:hover { text-underline-offset: 9px; }
+.lf-posts-title p { margin-top: 8px; font-size: 0.875rem; }
+.lf-posts-summary { max-width: 40ch; padding-top: 0.2em; font-size: 1.0625rem; }
+
 .lf-contact {
   display: grid;
   gap: 24px;
@@ -747,6 +772,14 @@
 }
 .lf-cs-end a:hover { text-underline-offset: 12px; }
 
+/* ---------- Blog ---------- */
+
+/* An article opens like a case study, on its project's colour, with a title sized for a sentence. */
+.lf-post-meta { font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.lf-post .lf-cs-head h1 { max-width: 18ch; margin-top: 16px; font-size: clamp(2.6rem, 6vw, 5.75rem); line-height: 0.98; letter-spacing: -0.02em; }
+.lf-cs-body code { font-size: 0.94em; }
+.lf-blog-index .lf-posts { margin-top: clamp(56px, 7vw, 104px); }
+
 /* ---------- Phones and narrow windows ---------- */
 
 @media (max-width: 1100px) and (min-width: 761px) {
@@ -827,6 +860,9 @@
   .lf-exp-list > li { grid-template-columns: 1fr; }
   .lf-exp-dates { order: 1; padding-top: 0; }
   .lf-exp-what { order: 2; }
+  .lf-posts > li { grid-template-columns: 1fr; }
+  .lf-posts-date { order: 1; padding-top: 0; }
+  .lf-posts-summary { order: 2; padding-top: 0; }
   .lf-cs-numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .lf-cs-sec { grid-template-columns: 1fr; row-gap: 20px; }
   .lf-cs-sec h2 { position: static; }

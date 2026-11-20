@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getArticles } from "@/blog";
 import { aiIntro, aiPractices, caseStudies, entries, experience, marineWobbles, person } from "@/content";
 import FoldingScreen from "./_components/FoldingScreen";
 import LoopVideo from "./_components/LoopVideo";
 import { BandVideo, CloseVideo } from "./_components/BandVideo";
 import Devices from "./_components/Devices";
 import Phone from "./_components/Phone";
+import PostList from "./_components/PostList";
 import StickyTop from "./_components/StickyTop";
 
 
@@ -169,6 +171,7 @@ export default function LabF() {
             <nav aria-label="Primary" className="lf-nav">
               <a href="#work">Work</a>
               <a href="#ai">AI practice</a>
+              <a href="#blog" className="lf-nav-wide">Blog</a>
               <a href="#experience">Experience</a>
               <span className="lf-top-actions">
                 <a href={person.links.cv} {...ext}>
@@ -326,6 +329,11 @@ export default function LabF() {
             </a>
             , with the instructions its agents follow.
           </p>
+        </section>
+
+        <section id="blog" className="lf-blog" aria-labelledby="blog-h">
+          <h2 id="blog-h">Blog</h2>
+          <PostList articles={getArticles()} />
         </section>
 
         <section id="experience" className="lf-exp" aria-labelledby="exp-h">
