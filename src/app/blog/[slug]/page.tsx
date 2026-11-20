@@ -34,7 +34,7 @@ function Shot({ figure, eager }: { figure: Figure; eager?: boolean }) {
       <div className="lf-p-shot-band">
         <div className="lf-phone">
           <div className="lf-phone-screen">
-            <ScreenImage figure={figure} sizes="(max-width: 899px) 72vw, 1px" eager={eager} />
+            <ScreenImage figure={figure} sizes="(max-width: 899px) 72vw, 1px" priority={eager} />
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               rules={a.sections.flatMap((s) => (s.number ? [{ id: s.id, number: s.number, title: s.title }] : []))}
             >
               {screens.map((f, i) => (
-                <ScreenImage key={f.src} figure={f} sizes="(max-width: 899px) 1px, 300px" eager={i === 0} />
+                <ScreenImage key={f.src} figure={f} sizes="(max-width: 899px) 1px, 320px" priority={i === 0} eager />
               ))}
             </ArticleStage>
           </aside>

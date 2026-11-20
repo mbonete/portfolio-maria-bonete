@@ -791,8 +791,10 @@
 .lf-p-stage { display: none; }
 .lf-p-stage-in { --w: min(300px, 21vw, calc((100svh - 190px) / 1.867)); display: grid; justify-items: start; gap: 18px; width: var(--w); }
 .lf-p-stage-in .lf-phone { width: 100%; }
-.lf-p-screen { position: absolute; inset: 0; opacity: 0; transition: opacity 220ms var(--ease); }
-.lf-p-screen[data-on] { opacity: 1; }
+/* The new screen fades in over the old one, which stays whole underneath until it is covered, so a
+   change never shows two screens at half strength. */
+.lf-p-screen { position: absolute; inset: 0; z-index: 0; opacity: 0; transition: opacity 0s linear 240ms; }
+.lf-p-screen[data-on] { z-index: 1; opacity: 1; transition: opacity 240ms var(--ease); }
 .lf-p-screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .lf-p-caption { min-height: 2.9em; font-size: 0.875rem; line-height: 1.45; color: color-mix(in oklab, var(--ink) 84%, var(--band)); }
 /* The rule numbers, the current one in full ink and underlined: gold has no contrast on this blue, so

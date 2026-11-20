@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["10.1.5.124", "10.1.1.4"],
   images: {
     formats: ["image/avif", "image/webp"],
-    qualities: [65, 70, 75],
+    qualities: [65, 70, 75, 90],
   },
 };
 

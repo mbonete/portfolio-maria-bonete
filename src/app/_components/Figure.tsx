@@ -18,7 +18,30 @@ export default function Figure({ figure }: { figure: FigureBlock }) {
   );
 }
 
-// A game screen in the site's phone frame. The screens in public/blog/screens are 720 by 1440.
-export function ScreenImage({ figure, sizes, eager }: { figure: FigureBlock; sizes: string; eager?: boolean }) {
-  return <Image src={figure.src} width={720} height={1440} alt={figure.alt} sizes={sizes} priority={eager} />;
+// A game screen in the site's phone frame. The screens in public/blog/screens are full-resolution
+// captures, 1080 by 2160, served at quality 90 so the game's small text stays sharp. "priority" loads
+// it first; "eager" loads it without waiting for it to come into view.
+export function ScreenImage({
+  figure,
+  sizes,
+  priority,
+  eager,
+}: {
+  figure: FigureBlock;
+  sizes: string;
+  priority?: boolean;
+  eager?: boolean;
+}) {
+  return (
+    <Image
+      src={figure.src}
+      width={1080}
+      height={2160}
+      alt={figure.alt}
+      sizes={sizes}
+      quality={90}
+      priority={priority}
+      loading={priority ? undefined : eager ? "eager" : "lazy"}
+    />
+  );
 }

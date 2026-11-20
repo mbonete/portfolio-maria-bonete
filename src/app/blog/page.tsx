@@ -39,7 +39,7 @@ export default function BlogPage() {
                   >
                     <span className="lf-phone">
                       <span className="lf-phone-screen">
-                        <ScreenImage figure={a.lead} sizes="(max-width: 760px) 36vw, 150px" eager={i === 0} />
+                        <ScreenImage figure={a.lead} sizes="(max-width: 760px) 36vw, 160px" priority={i === 0} />
                       </span>
                     </span>
                   </Link>

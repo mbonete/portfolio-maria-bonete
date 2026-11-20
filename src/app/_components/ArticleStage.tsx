@@ -4,8 +4,15 @@ import { useEffect, useState } from "react";
 
 // The phone beside an article (wide screens): it shows the screen of the section being read. A section
 // counts as being read once its heading passes 40% of the window's height; a section without a screen
-// keeps the one before it. Above the first heading, the first section counts. The rule numbers under
-// the caption, and the contents list at the top of the text, mark the same section in gold.
+// keeps the one before it, and above the first heading the first section counts. The rule numbers under
+// the caption, and the contents list at the top of the text, mark the same section.
+//
+// The phone changes only once scrolling has settled for a moment, so a fast scroll past several rules
+// doesn't flash every screen on the way. Links to a section scroll to it and update the address in
+// place, without adding a history entry, so the browser's Back button leaves the article for the page
+// before it rather than stepping back through sections.
+const SETTLE_MS = 140;
+
 export default function ArticleStage({
   sections,
   captions,
@@ -23,22 +30,46 @@ export default function ArticleStage({
     const headings = sections
       .map((s) => document.getElementById(s.id))
       .filter((h): h is HTMLElement => h !== null);
-    const update = () => {
+    const reading = () => {
       const line = window.innerHeight * 0.4;
       let at = 0;
       headings.forEach((h, i) => {
         if (h.getBoundingClientRect().top < line) at = i;
       });
-      setCurrent(at);
+      return at;
     };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const settle = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => setCurrent(reading()), SETTLE_MS);
+    };
+    // The first reading, once laid out: a page opened at a section starts on that section's screen.
+    const first = requestAnimationFrame(() => setCurrent(reading()));
+    window.addEventListener("scroll", settle, { passive: true });
+    window.addEventListener("resize", settle);
     return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      cancelAnimationFrame(first);
+      clearTimeout(timer);
+      window.removeEventListener("scroll", settle);
+      window.removeEventListener("resize", settle);
     };
   }, [sections]);
+
+  // Section links (the contents and the rule numbers) move within the page without adding history.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const link = (e.target as Element).closest<HTMLAnchorElement>(".lf-p-toc a, .lf-p-rules a");
+      const target = link && document.getElementById(link.hash.slice(1));
+      if (!link || !target) return;
+      e.preventDefault();
+      const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: still ? "auto" : "smooth", block: "start" });
+      history.replaceState(history.state, "", link.hash);
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   useEffect(() => {
     const id = sections[current]?.id;
