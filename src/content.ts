@@ -180,7 +180,7 @@ export const switchboard = {
     "A panel for the cmux terminal that sorts the coding agents I have running into four lists: waiting on me, working, finished, and gone stale. Tapping a row opens that agent's terminal.",
   stack: ["JavaScript", "cmux sidebar runtime", "Node.js", "Server-Sent Events"],
   panelRepo: "https://github.com/mbonete/cmux-switchboard-panel",
-  dashboardRepo: "https://github.com/mbonete/cmux-switchboard",
+  dashboardRepo: "https://github.com/mbonete/cmux-switchboard-web",
   install: [
     "mkdir -p ~/.config/cmux/sidebars && \\",
     "curl -fsSL -o ~/.config/cmux/sidebars/switchboard.js \\",
