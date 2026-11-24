@@ -10,7 +10,7 @@ const ALT = {
 // The renders: N frames from nearly shut to open. A click plays them one way or the other.
 const N = 28;
 const MS = 650;
-const HOLD = 1000; // how long it rests shut when the page opens
+const HOLD = 300; // how long it rests shut when the page opens
 const pad = (k: number) => String(k).padStart(2, "0");
 const clamp = (v: number) => Math.min(Math.max(v, 0), 1);
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
