@@ -83,8 +83,14 @@ const bands: Band[] = [
     stack: promptBeach.stack,
     ground: promptBeach.band.ground,
     tone: promptBeach.band.tone,
-    showcase: <Devices desktop={promptBeach.band.desktop} />,
+    showcase: (
+      <Devices
+        video={{ id: promptBeach.videoId, title: "Prompt Beach demo", label: `Play the demo, ${promptBeach.videoLength} seconds` }}
+        desktop={promptBeach.band.desktop}
+      />
+    ),
     links: [{ label: "Code", href: promptBeach.repo, primary: true, external: true }],
+    video: true,
   },
   {
     id: "quote-and-nod",

@@ -243,6 +243,8 @@ export const promptBeach = {
     "A local dashboard for the coding agents running in cmux, drawn as an Art Deco beachfront at sunset. Each git repository is a building and each agent a person in it: at a desk while it works, waving when it needs me, dozing once it goes stale. Clicking a person opens a card to allow a command, answer a question or reply.",
   stack: ["TypeScript", "Three.js (WebGPU, WebGL 2)", "Vite", "Node.js"],
   repo: "https://github.com/mbonete/cmux-prompt-beach",
+  videoId: "gpAPlLyvSwc",
+  videoLength: 38, // seconds
   band: {
     ground: "#18557a", // its deep sea at sunset
     tone: "dark" as const,
