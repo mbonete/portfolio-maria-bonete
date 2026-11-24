@@ -13,6 +13,8 @@ colors:
   band-forest: "#1f6b4c"
   band-ultramarine: "#2b3ae0"
   band-wine: "#7c212f"
+  band-deep-sea: "#18557a"
+  band-bordeaux: "#551822"
 typography:
   display:
     fontFamily: "Hina Mincho, serif"
@@ -150,6 +152,8 @@ Each project owns one flat ground, used for its home band, its case-study head a
 - **Forest** (`band-forest`, dark tone): Doorplate.
 - **Ultramarine** (`band-ultramarine`, dark tone): Guess The BPM.
 - **Wine** (`band-wine`, dark tone): The Coffee Place.
+- **Deep Sea** (`band-deep-sea`, dark tone): Prompt Beach. The open water in its sunset look.
+- **Bordeaux** (`band-bordeaux`, dark tone): Studiolo. Darker than Wine, so the two don't read as one colour.
 
 ### Neutral
 - **Ink** (`ink`): text on light grounds; the ground of the work index, the AI section, the numbers strip and the footer; the fill of buttons on light grounds; selection background.

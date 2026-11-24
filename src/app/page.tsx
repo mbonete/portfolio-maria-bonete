@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { aiIntro, aiPractices, caseStudies, entries, experience, marineWobbles, person, switchboard } from "@/content";
+import { aiIntro, aiPractices, caseStudies, entries, experience, marineWobbles, person, promptBeach, studiolo, switchboard } from "@/content";
 import FoldingScreen from "./_components/FoldingScreen";
 import LoopVideo from "./_components/LoopVideo";
 import { BandVideo, CloseVideo } from "./_components/BandVideo";
@@ -60,6 +60,33 @@ const bands: Band[] = [
     ],
   },
   {
+    id: switchboard.slug,
+    title: switchboard.title,
+    kind: "cmux panel and web dashboard · JavaScript, Node.js",
+    status: switchboard.status,
+    summary: switchboard.summary,
+    stack: switchboard.stack,
+    ground: switchboard.band.ground,
+    tone: switchboard.band.tone,
+    showcase: <Devices desktop={switchboard.band.desktop} side={switchboard.band.panel} />,
+    links: [
+      { label: "See the project", href: `/work/${switchboard.slug}`, primary: true },
+      { label: "Code", href: switchboard.panelRepo, external: true },
+    ],
+  },
+  {
+    id: "prompt-beach",
+    title: promptBeach.title,
+    kind: "3D dashboard for cmux · Three.js, Node.js",
+    status: promptBeach.status,
+    summary: promptBeach.summary,
+    stack: promptBeach.stack,
+    ground: promptBeach.band.ground,
+    tone: promptBeach.band.tone,
+    showcase: <Devices desktop={promptBeach.band.desktop} />,
+    links: [{ label: "Code", href: promptBeach.repo, primary: true, external: true }],
+  },
+  {
     id: "quote-and-nod",
     title: quoteAndNod.title,
     kind: "Web app · Next.js, Supabase",
@@ -78,6 +105,20 @@ const bands: Band[] = [
       { label: "Read the case study", href: "/work/quote-and-nod", primary: true },
     ],
     video: true,
+  },
+  {
+    id: "studiolo",
+    title: studiolo.title,
+    kind: "3D web gallery · Three.js, Blender",
+    summary: studiolo.summary,
+    stack: studiolo.stack,
+    ground: studiolo.band.ground,
+    tone: studiolo.band.tone,
+    showcase: <Devices url="mystudiolo.netlify.app" desktop={studiolo.band.desktop} />,
+    links: [
+      { label: "Open the live site", href: studiolo.live, primary: true, external: true },
+      { label: "Code", href: studiolo.repo, external: true },
+    ],
   },
   {
     id: "doorplate",
@@ -99,21 +140,6 @@ const bands: Band[] = [
       ...(doorplate.repo ? [{ label: "Code", href: doorplate.repo, external: true }] : []),
     ],
     video: true,
-  },
-  {
-    id: switchboard.slug,
-    title: switchboard.title,
-    kind: "cmux panel and web dashboard · JavaScript, Node.js",
-    status: switchboard.status,
-    summary: switchboard.summary,
-    stack: switchboard.stack,
-    ground: switchboard.band.ground,
-    tone: switchboard.band.tone,
-    showcase: <Devices desktop={switchboard.band.desktop} side={switchboard.band.panel} />,
-    links: [
-      { label: "See the project", href: `/work/${switchboard.slug}`, primary: true },
-      { label: "Code", href: switchboard.panelRepo, external: true },
-    ],
   },
   {
     id: "guess-the-bpm",

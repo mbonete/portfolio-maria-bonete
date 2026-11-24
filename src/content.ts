@@ -233,6 +233,49 @@ export const switchboard = {
   },
 };
 
+// Open source (MIT). A separate project from Switchboard: the same cmux data, drawn as a 3D city. The
+// screenshot comes from its demo mode, with made-up projects and agents. Plan approval is untested, so
+// it isn't mentioned.
+export const promptBeach = {
+  title: "Prompt Beach",
+  status: "Open source under the MIT license",
+  summary:
+    "A local dashboard for the coding agents running in cmux, drawn as an Art Deco beachfront at sunset. Each git repository is a building and each agent a person in it: at a desk while it works, waving when it needs me, dozing once it goes stale. Clicking a person opens a card to allow a command, answer a question or reply.",
+  stack: ["TypeScript", "Three.js (WebGPU, WebGL 2)", "Vite", "Node.js"],
+  repo: "https://github.com/mbonete/cmux-prompt-beach",
+  band: {
+    ground: "#18557a", // its deep sea at sunset
+    tone: "dark" as const,
+    desktop: {
+      src: "/screens/prompt-beach-desktop.webp",
+      w: 1600,
+      h: 1000,
+      alt: "Prompt Beach with made-up projects: a beachfront at sunset with one building per repository, each under a sign with its name, pink light beams and badges over the agents that need me, and the count of agents in each state at the top right.",
+    },
+  },
+};
+
+// Live at mystudiolo.netlify.app. The hall's own README and PRODUCT.md are the sources; the screenshot
+// is its opening view.
+export const studiolo = {
+  title: "Studiolo",
+  summary:
+    "Nine of my favourite paintings, hung in the architecture of Raphael's School of Athens, rebuilt in 3D. I solved the camera from the fresco, so the visit starts at Raphael's viewpoint and walks toward his vanishing point. Clicking a painting walks up to it and opens a high-resolution scan to zoom into.",
+  stack: ["React", "TypeScript", "React Three Fiber", "OpenSeadragon", "Blender (Python)"],
+  repo: "https://github.com/mbonete/athens-gallery",
+  live: "https://mystudiolo.netlify.app/",
+  band: {
+    ground: "#551822", // bordeaux
+    tone: "dark" as const,
+    desktop: {
+      src: "/screens/studiolo-desktop.webp",
+      w: 1600,
+      h: 1000,
+      alt: "Studiolo's opening view from Raphael's viewpoint: the vaulted hall seen through a painted arch, paintings on its side walls, Bosch's Garden of Earthly Delights open in the far doorway, and two banners at the steps with the title and how to visit.",
+    },
+  },
+};
+
 export const entries = [
   {
     title: "Guess The BPM",
