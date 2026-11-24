@@ -45,7 +45,7 @@ export default function Devices({
           <Image src={desktop.src} width={desktop.w} height={desktop.h} alt={desktop.alt} sizes="(max-width: 760px) 92vw, 52vw" />
           {video && playing && (
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&controls=0&playsinline=1&iv_load_policy=3`}
+              src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&playsinline=1&iv_load_policy=3`}
               title={video.title}
               allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
               allowFullScreen
