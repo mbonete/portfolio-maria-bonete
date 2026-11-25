@@ -153,6 +153,11 @@
   outline-offset: 4px;
 }
 
+/* Test hero (test/hero): the studio scene sits just under the name instead of crossing it, and the
+   role line starts below its floor shadow. */
+.lf-studio { margin-top: calc(var(--u) * 0.05); }
+.lf-foot.lf-foot-studio { margin-top: calc(var(--u) * -0.06); }
+
 .lf-foot {
   display: flex;
   justify-content: space-between;
@@ -1088,6 +1093,8 @@
   .lf-stage { padding-top: 12px; }
   .lf-name { width: 100%; white-space: normal; line-height: 0.88; }
   .lf-object { margin-top: calc(var(--u) * -0.12); }
+  .lf-studio { margin-top: 20px; }
+  .lf-foot.lf-foot-studio { margin-top: 12px; }
   .lf-tag { display: none; }
   /* With the tags gone, the role opens the intro instead; the place stays for screen readers. */
   .lf-role-who {

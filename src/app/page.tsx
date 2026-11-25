@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { aiIntro, aiPractices, caseStudies, entries, experience, marineWobbles, person, promptBeach, studiolo, switchboard } from "@/content";
-import FoldingScreen from "./_components/FoldingScreen";
+import StudioScene from "./_components/StudioScene";
 import LoopVideo from "./_components/LoopVideo";
 import { BandVideo, CloseVideo } from "./_components/BandVideo";
 import Devices from "./_components/Devices";
@@ -234,7 +234,7 @@ export default function LabF() {
         </header>
         <StickyTop />
 
-        <FoldingScreen
+        <StudioScene
           name={
             <>
               <h1 id="lf-name" className="lf-name">
