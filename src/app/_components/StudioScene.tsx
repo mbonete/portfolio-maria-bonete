@@ -3,7 +3,7 @@
 import { useEffect, useRef, type MouseEvent, type PointerEvent as PointerEventR, type ReactNode } from "react";
 import { FRAME, LAYERS, TARGETS } from "./studio-layers";
 
-// Test hero (branch test/hero): the studio scene, rendered in Blender, on the blue ground under the
+// The hero's object: the studio, rendered in Blender (tools/studio), on the blue ground under the
 // name. Three things in it answer a click or tap: the conga gives a hit, the maracas a shake, the
 // keyboard a burst of typing while its LEDs flare. The studio is a stack of renders from the same
 // camera (tools/studio/layers.py): the room without the conga and the maracas, each of those cut out on
@@ -217,7 +217,7 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
 
   return (
     <>
-      <div className="lf-stage lf-stage-studio">
+      <div className="lf-stage">
         {name}
         <div className="lf-object lf-studio" ref={boxRef} onClick={onClick} onPointerMove={onPointerMove}>
           {/* eslint-disable-next-line @next/next/no-img-element -- art-directed srcset, not next/image */}
@@ -249,7 +249,7 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
           ))}
         </div>
       </div>
-      <div className="lf-foot lf-foot-studio">{intro}</div>
+      <div className="lf-foot">{intro}</div>
     </>
   );
 }

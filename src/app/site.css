@@ -1,11 +1,11 @@
 /* The site: one crafted object on one flat colour, its name set large, a few facts. The hero's object
-   is the gold screen, which folds shut at a click; every project repeats the formula with its own
-   colour and object. Scoped under .lf. */
+   is a studio rendered in Blender, whose conga, maracas and keyboard answer a click; every project
+   repeats the formula with its own colour and object. Scoped under .lf. */
 
 .lf {
   --ink: #17130f;
   --paper: #f6f0e3;
-  /* The gold of the screen's fittings, between the leaf's lit and shaded tones in the render. */
+  /* The gold of the folding screen's fittings (the old hero), between the leaf's lit and shaded tones. */
   --gold: #c9a35f;
   /* The contact section's ground. */
   --ground: #a99ddf;
@@ -32,18 +32,18 @@
 :where(.lf) p { margin: 0; text-wrap: pretty; }
 :where(.lf) li { text-wrap: pretty; }
 
-/* ---------- Hero: the folding screen on azurite ---------- */
+/* ---------- Hero: the studio on azurite ---------- */
 
-/* A frame, not a stack: small print in the corners, the name and the screen filling the middle. The
-   ground is azurite, the blue the Rinpa painters laid beside gold leaf; the leaf in the renders
-   mirrors it. */
+/* A frame, not a stack: small print in the corners, the name and the studio filling the middle. The
+   ground is azurite, the blue the Rinpa painters laid beside gold leaf; the folding screen's leaf in
+   the render mirrors it. */
 .lf-hero {
   --hero-ground: #6581df;
   /* The ground as it reads under its grain, measured from a render, for the overscroll band
      (OverscrollColour) to match. */
   --edge: #5c76cc;
   --fg: var(--ink);
-  /* One unit sizes the name, the screen and the gaps around them: as large as the window's height
+  /* One unit sizes the name, the studio and the gaps around them: as large as the window's height
      allows. */
   --u: max(3.4rem, min(18.5vw, calc((100svh - 160px) / 3.7), 24rem));
   position: relative;
@@ -51,7 +51,7 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: max(100svh, 640px);
-  /* The grain is on the ground only; the screen stays clean. */
+  /* The grain is on the ground only; the studio stays clean. */
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.168 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), var(--hero-ground);
   overflow: clip;
   color: var(--fg);
@@ -80,10 +80,10 @@
 .lf-top a:hover { text-decoration-color: currentColor; }
 .lf-top-contact-narrow { display: none; }
 
-/* The name and the screen share --u, so the screen crosses the letters at the same place at every
+/* The name and the studio share --u, so the studio keeps the same place under the letters at every
    width. */
 .lf-stage {
-  /* The name's size: a touch under the unit, so the screen stays the larger form. */
+  /* The name's size: a touch under the unit. */
   --n: calc(var(--u) * 0.95);
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -94,7 +94,6 @@
 .lf-name {
   grid-area: 1 / 1;
   position: relative;
-  /* Between the two plates: in front of the panels folding away, behind the two folding forward. */
   z-index: 1;
   font-family: var(--font-f-display), serif;
   font-size: var(--n);
@@ -130,33 +129,12 @@
   display: grid;
   /* Wider than the name, so the object leads and the name rests on it. */
   width: min(calc(var(--u) * 5.7), 96vw);
-  /* Lifts the screen just into the name: its top edge covers the lowest tenth of the letters. */
-  margin-top: calc(var(--u) * -0.075);
+  /* Just under the name. */
+  margin-top: calc(var(--u) * 0.05);
   user-select: none;
   -webkit-user-select: none;
 }
-.lf-object-front { z-index: 2; pointer-events: none; }
 .lf-object > * { grid-area: 1 / 1; display: block; width: 100%; height: auto; }
-/* What shows, by the stage's data-state: the shut still, the renders while it moves, or the open
-   still. It arrives shut, except with reduced motion, when it is open from the start. */
-.lf-shut, .lf-open, .lf-seq { visibility: hidden; }
-.lf-stage:is([data-state="arriving"], [data-state="shut"]) .lf-shut,
-.lf-stage[data-state="open"] .lf-open,
-.lf-stage[data-state="moving"] .lf-seq { visibility: visible; }
-@media (prefers-reduced-motion: reduce) {
-  .lf-stage[data-state="arriving"] .lf-shut { visibility: hidden; }
-  .lf-stage[data-state="arriving"] .lf-open { visibility: visible; }
-}
-.lf-stage[data-ready] .lf-object:not(.lf-object-front) { cursor: pointer; }
-.lf-hero:has(.lf-fold:focus-visible) .lf-object:not(.lf-object-front) {
-  outline: 2px solid var(--fg);
-  outline-offset: 4px;
-}
-
-/* Test hero (test/hero): the studio scene sits just under the name instead of crossing it, and the
-   role line starts below its floor shadow. */
-.lf-studio { margin-top: calc(var(--u) * 0.05); }
-.lf-foot.lf-foot-studio { margin-top: calc(var(--u) * -0.06); }
 /* The interactive layers sit on the studio at their place in its frame (StudioScene sets each box). */
 .lf-studio > .lf-layer { position: absolute; height: auto; pointer-events: none; }
 .lf-layer-conga { transform-origin: 50% 97%; }
@@ -182,8 +160,8 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: 32px;
-  /* Up beside the screen's feet: the foot runs over its floor shadow. */
-  margin-top: calc(var(--u) * -0.2);
+  /* Starts just below the studio's floor shadow. */
+  margin-top: calc(var(--u) * -0.06);
   padding: 0 var(--gutter) 28px;
   position: relative;
   z-index: 2;
@@ -1107,13 +1085,11 @@
     transition: padding 220ms var(--ease), background-color 220ms var(--ease), color 220ms var(--ease),
       border-bottom-color 220ms var(--ease);
   }
-  /* Two lines, "Bonete" threaded through the screen. */
+  /* The name on two lines, the studio the full width under it. */
   .lf-hero { --u: 30vw; }
   .lf-stage { padding-top: 12px; }
   .lf-name { width: 100%; white-space: normal; line-height: 0.88; }
-  .lf-object { margin-top: calc(var(--u) * -0.12); }
-  .lf-studio { margin-top: 20px; }
-  .lf-foot.lf-foot-studio { margin-top: 12px; }
+  .lf-object { margin-top: 20px; }
   .lf-tag { display: none; }
   /* With the tags gone, the role opens the intro instead; the place stays for screen readers. */
   .lf-role-who {
@@ -1126,7 +1102,7 @@
     white-space: normal;
     font-weight: 500;
   }
-  .lf-foot { flex-direction: column; align-items: stretch; gap: 28px; margin-top: 0; }
+  .lf-foot { flex-direction: column; align-items: stretch; gap: 28px; margin-top: 12px; }
   .lf-intro { flex-direction: column; align-items: flex-start; gap: 16px; }
   .lf-role { max-width: 32ch; }
   .lf-role-wide { display: none; }
