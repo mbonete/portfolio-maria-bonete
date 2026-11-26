@@ -323,7 +323,7 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
             sizes="(max-width: 760px) 96vw, 80vw"
             width={FRAME.w}
             height={FRAME.h}
-            alt="A studio set out on the blue ground: a lacquered folding screen painted on paper with a violet stream and a plum branch, a potted monstera, a desk with three monitors showing Prompt Beach, a code editor and Switchboard, a computer with lit fans, a plush capybara in a scarf, a coffee tray, a stack of books with a camera on top, maracas, a conga, and an easel holding an unfinished abstract painting, a palette at its foot."
+            alt="A studio set out on the blue ground: a gold-leaf folding screen painted with a violet stream and a plum branch, a potted monstera, a desk with three monitors showing Prompt Beach, a code editor and Switchboard, a computer with lit fans, a plush capybara in a scarf, a coffee tray, a stack of books with a camera on top, maracas, a conga, and an easel holding an unfinished abstract painting, a palette at its foot."
             fetchPriority="high"
             draggable={false}
           />
