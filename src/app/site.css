@@ -35,8 +35,7 @@
 /* ---------- Hero: the studio on azurite ---------- */
 
 /* A frame, not a stack: small print in the corners, the name and the studio filling the middle. The
-   ground is azurite, the blue the Rinpa painters laid beside gold leaf; the folding screen's leaf in
-   the render mirrors it. */
+   ground is azurite, the blue the Rinpa painters laid beside gold leaf. */
 .lf-hero {
   --hero-ground: #6581df;
   /* The ground as it reads under its grain, measured from a render, for the overscroll band
@@ -139,6 +138,20 @@
 .lf-studio > .lf-layer { position: absolute; height: auto; pointer-events: none; }
 .lf-layer-conga { transform-origin: 50% 97%; }
 .lf-layer-maracas { transform-origin: 50% 55%; }
+.lf-layer-capybara { transform-origin: 50% 95%; }
+/* The painting's next stage and the computer's next colours, faded in over the room. */
+.lf-swap { opacity: 0; transition: opacity 450ms var(--ease); }
+/* The flash's burst at the camera, added as light. */
+.lf-studio > .lf-burst {
+  position: absolute;
+  width: 7%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0, rgb(255 250 240 / 0.7) 16%, rgb(255 250 240 / 0) 62%);
+  mix-blend-mode: plus-lighter;
+  opacity: 0;
+  pointer-events: none;
+}
 /* The keyboard LEDs' extra light, added to the room under it. */
 .lf-glow { opacity: 0; mix-blend-mode: plus-lighter; }
 @supports not (mix-blend-mode: plus-lighter) {

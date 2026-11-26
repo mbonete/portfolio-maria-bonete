@@ -13,11 +13,14 @@ and the keyboard LEDs' extra light, each answering a click with a CC0 sound.
 2. The folding screen reuses the hero's old painted panels: run `../gold-screen/build.sh` first (it writes
    the gitignored `../gold-screen/p3/`).
 3. The middle monitor's picture: `python3 ide.py` (headless Chrome) -> `renders/ide.png`.
-4. The painting on the easel: `blender -b --factory-startup --python-exit-code 1 -P painting.py`.
+4. The painting on the easel: `blender -b --factory-startup --python-exit-code 1 -P painting.py`, and again with
+   `PAINT_STAGE=1`, `2` and `3` for the stages a click moves it through.
 5. The scene in one piece, to look at: `blender -b --factory-startup -P scene.py -- $PWD/renders/studio.png
    2400 256` (about 4.5 minutes on an M3).
-6. What the page shows: `blender -b --factory-startup -P layers.py -- $PWD/renders/layers 2400 256` (about 8
-   minutes) renders the room and the interactive layers from the same camera, then
+6. What the page shows: `blender -b --factory-startup -P layers.py -- $PWD/renders/layers 2400 256` (about
+   35 minutes) renders the room and the interactive layers from the same camera (the cut-outs, the
+   monstera's breeze frame by frame, the silhouettes, the lights, the computer's colours, the painting's
+   stages, the flash), then
    `KEYS_K=20 ./encode-layers.sh` writes their web sizes, the hit map (`hit.png`) and
    `src/app/_components/studio-layers.ts` (where each layer sits).
 7. The sounds: `./sounds.sh NAME SOURCE START SECONDS [PEAK_DB]` for each (sources in `ASSETS.md`) writes

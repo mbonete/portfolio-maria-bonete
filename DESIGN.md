@@ -137,7 +137,7 @@ Links are underlined text, and the underline is the interaction: it appears, mov
 A warm ink-on-cream base with whole fields of saturated colour, one per section, and gold kept to hairlines.
 
 ### Primary
-- **Azurite** (`azurite`): the hero's ground, under a fractal-noise grain on the ground only. The blue the Rinpa painters laid beside gold leaf; the folding screen's leaf reflects it. Its measured edge tone under grain (#5c76cc) is used only to match the overscroll band.
+- **Azurite** (`azurite`): the hero's ground, under a fractal-noise grain on the ground only. The blue the Rinpa painters laid beside gold leaf. Its measured edge tone under grain (#5c76cc) is used only to match the overscroll band.
 
 ### Secondary
 - **Lavender** (`lavender`): the closing ground. Ends the home page (contact) and every case study, the blog list and every article (the end links).

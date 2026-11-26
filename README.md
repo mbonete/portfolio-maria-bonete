@@ -8,7 +8,7 @@ Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS 4, deployed on Ne
 
 ## How it's put together
 
-- **The hero** is a studio rendered in Blender, with every object modelled in Python in `tools/studio/`. The conga, the maracas and the keyboard answer a click with a recording: each is rendered as a layer of its own from the same camera, so it can move over the room while its shadow stays on the floor. With reduced motion on, they play their sound and stay still. Textures and sounds are CC0, listed in `tools/studio/ASSETS.md`.
+- **The hero** is a studio rendered in Blender, with every object modelled in Python in `tools/studio/`. Eight things in it answer a click with a recording. Each of those is rendered as a layer of its own from the same camera: the ones that move as cut-outs over the room, whose shadows stay on the floor; the lights as light added on top; the painting's stages and the computer's colours shown in place. With reduced motion on, nothing moves, but the sounds play and the lights and the painting still change. Textures and sounds are CC0, listed in `tools/studio/ASSETS.md`.
 - **Each project** gets one flat colour and its real product, in a browser window, on a phone or both. The phones play short silent loops of the product in use.
 - **Demo videos** play from YouTube's privacy-enhanced domain, and nothing from YouTube loads until you press play.
 - **Most of the copy** lives in `src/content.ts`, and all of it follows the writing rules in `CLAUDE.md`. `PRODUCT.md` describes the audience and the constraints, and `docs/` records design decisions.

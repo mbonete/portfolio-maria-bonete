@@ -5,12 +5,17 @@
 # running out on bare primed canvas; the block and the lower orbit still pencil.
 # Writes renders/painting.png (colour, sRGB; bare canvas in the gesso's own colour) and
 # renders/painting_paint.png (R = paint cover, G = paint height), which easel.py picks up.
-# Usage: blender -b --factory-startup --python-exit-code 1 -P painting.py
+# PAINT_STAGE=1..3 paints further on, for the hero's easel (a click moves the painting a stage on) and
+# writes painting-s<N>.png and painting-s<N>_paint.png: 1 the ground and the front hill finished,
+# 2 the block painted, 3 the lower orbit painted along its whole arc (the painting finished).
+# Usage: [PAINT_STAGE=N] blender -b --factory-startup --python-exit-code 1 -P painting.py
 import math, os
 import numpy as np
 import bpy
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+STAGE = int(os.environ.get("PAINT_STAGE", "0"))
+SUFFIX = f"-s{STAGE}" if STAGE else ""
 W, H = 2048, 2062          # 87.4 x 88 cm
 rng = np.random.default_rng(11)
 f32 = np.float32
@@ -174,28 +179,34 @@ def reached(edge_field, soft=0.05):
 
 
 # the ground: worked over the top and left; the right-middle and lower right still bare canvas
-ground = reached((U - 0.72) * 1.2 + (V - 0.50) * 1.0)
+ground = reached((U - 0.72) * 1.2 + (V - 0.50) * 1.0) if STAGE < 1 else None
 paint(np.ones((H, W), f32), srgb(245, 222, 186), 1.0, ground, 0.045)
-paint(fill(sdf["pale"]), srgb(249, 232, 203), 1.0, reached(U - 0.80), 0.04)
+paint(fill(sdf["pale"]), srgb(249, 232, 203), 1.0, reached(U - 0.80) if STAGE < 1 else None, 0.04)
 paint(fill(sdf["sun"]), srgb(233, 177, 92), 1.0, None, 0.06)
 paint(fill(sdf["midhill"]), srgb(167, 160, 99), 0.95, None, 0.06)                # the olive hill
 paint(fill(sdf["terra"]), srgb(204, 111, 62), 0.96, None, 0.06)
 # the front hill only blocked in, thin and dry, its strokes stopping part-way across
-paint(fill(sdf["front"]), srgb(241, 205, 153), 0.88, reached(U - 0.70, 0.08), 0.05, dry=0.10)
-# a first thin wash on the block's top half
-paint(fill(block), srgb(236, 192, 104), 0.55, reached(V - 0.50, 0.03), 0.05, dry=0.25)
+if STAGE < 1:
+    paint(fill(sdf["front"]), srgb(241, 205, 153), 0.88, reached(U - 0.70, 0.08), 0.05, dry=0.10)
+else:   # stage 1 on: worked across in a second, fuller coat
+    paint(fill(sdf["front"]), srgb(241, 205, 153), 0.97, None, 0.05)
+# a first thin wash on the block's top half; from stage 2, the block painted
+if STAGE < 2:
+    paint(fill(block), srgb(236, 192, 104), 0.55, reached(V - 0.50, 0.03), 0.05, dry=0.25)
+else:
+    paint(fill(block), srgb(236, 192, 104), 0.97, None, 0.06)
 # the orbits in lilac: the upper one finished, the lower one from its dot to the edge
 lilac = srgb(122, 124, 199)
 taper1 = np.clip(1.0 - np.maximum(U - 0.55, 0) / 0.2, 0.25, 1)
 paint(line(orbit1, 6.0 * taper1) * (V < o1[1]) * (U < 0.70), lilac, 1.0, None, 0.02)
 paint(fill(circle(0.545, 0.1345, 0.0095)), lilac, 1.0, None, 0.02)
-paint(line(orbit2, 5.0) * (V < o2[1]) * (U > 0.742), lilac, 1.0, None, 0.02)
+paint(line(orbit2, 5.0) * (V < o2[1]) * (U > (0.742 if STAGE < 3 else 0.505)), lilac, 1.0, None, 0.02)
 paint(fill(circle(0.742, 0.584, 0.0072)), lilac, 1.0, None, 0.02)
 
 
 def save(name, arr):
     im = bpy.data.images.new(name, W, H, alpha=True, float_buffer=False)
-    im.colorspace_settings.name = "sRGB" if name == "painting" else "Non-Color"
+    im.colorspace_settings.name = "Non-Color" if name.endswith("_paint") else "sRGB"
     rgba = np.ones((H, W, 4), f32); rgba[..., :3] = np.clip(arr, 0, 1)
     im.pixels.foreach_set(rgba[::-1].ravel())      # Blender stores rows bottom-up
     path = os.path.join(HERE, "renders", name + ".png")
@@ -204,5 +215,5 @@ def save(name, arr):
 
 
 os.makedirs(os.path.join(HERE, "renders"), exist_ok=True)
-save("painting", img)
-save("painting_paint", np.stack([cover, np.clip(height, 0, 1), np.zeros_like(cover)], -1))
+save("painting" + SUFFIX, img)
+save("painting" + SUFFIX + "_paint", np.stack([cover, np.clip(height, 0, 1), np.zeros_like(cover)], -1))

@@ -302,8 +302,12 @@ def leaves(mats, rng):
         d0 = (D + st * steep * lr.uniform(0.8, 1.2)).normalized()
         d1 = (D * 0.6 + T0 * 0.4 - N0 * 0.15).normalized()
         bow = {"young": 0.01, "up": 0.02, "mid": 0.06, "low": 0.12}[spec["tier"]] * lr.uniform(0.7, 1.3)
-        obs.append(petiole(f"monstera petiole {i}", S, d0, E, d1, spec["L"], lr.random(), mats, bow,
-                           r_base=STEMS[spec["stem"]][2] * lr.uniform(0.6, 0.8)))
+        pet = petiole(f"monstera petiole {i}", S, d0, E, d1, spec["L"], lr.random(), mats, bow,
+                      r_base=STEMS[spec["stem"]][2] * lr.uniform(0.6, 0.8))
+        obs.append(pet)
+        # where the leaf would swing from in a breeze (layers.py): its node on the stem, and the blade's base
+        for o in (ob, rib, pet):
+            o["sway_node"], o["sway_blade"], o["sway_tier"], o["sway_len"] = tuple(S), tuple(E), spec["tier"], spec["L"]
     return obs
 
 

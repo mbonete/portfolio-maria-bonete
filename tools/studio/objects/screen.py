@@ -1,6 +1,9 @@
-# The gold folding screen of today's hero (tools/gold-screen/scene.py, painted by paint.py), as one object
-# of the studio: four 1.0 x 1.6 m panels of burnished gold leaf in black lacquer frames, each painting in
-# an indigo brocade mounting edged with gold piping, brass corner fittings with domed nails, lacquer feet.
+# The folding screen of the old hero (tools/gold-screen/scene.py, painted by paint.py), as one object of
+# the studio: four 1.0 x 1.6 m panels in black lacquer frames, each painting in an indigo brocade mounting
+# edged with gold piping, brass corner fittings with domed nails, lacquer feet. The paintings are on washi
+# (owner's call, 2026-11-26: on gold leaf, folded at 75 degrees, the leaf mirrored the studio's strip light
+# as straight yellow bands); SCREEN_PAPER=0 brings back the burnished gold leaf. Each frame is four rails
+# with rounded arrises, standing 6 mm proud of the recessed painting and its mounting.
 # A murasaki stream runs from the top of panel 1 across the fold into panel 2; a sumi plum in bloom rises
 # on panel 3 and reaches over panel 4. Same paintings (tools/gold-screen/p3), same shaders, same sizes.
 #
@@ -63,6 +66,13 @@ GESSO = 0.14              # the gesso showing through the leaf
 # leaf seen in a reflection is taken this far toward grey, so the folds keep the hero's burnished gold.
 GOLD_IN_GOLD = 0.5
 STREAM_COAT = 0.25        # the murasaki's coat (hero 0.6, seen square on; at 74 degrees it would wash to lavender)
+PAPER = os.environ.get("SCREEN_PAPER", "1") == "1"
+KINDEI_METAL = 0.35       # the mist bands in gold paint on the paper: this much of it shines as metal, the rest
+                          # is the matte glue it is ground in (the hero's paper test had 0.7)
+REC = 0.006               # how far the painting sits back from the frame's face
+# The painting's straight-edged mist bands are left off the paper, relief and all (owner's call,
+# 2026-11-26); SCREEN_MIST=1 paints them back in gold (kindei)
+MIST = os.environ.get("SCREEN_MIST", "0") == "1"
 
 
 # =============================================================================================
@@ -257,6 +267,52 @@ def _face():
     b2.inputs["Distance"].default_value = 0.0012
     l.new(det.outputs["Green"], b2.inputs["Height"]); l.new(b1.outputs["Normal"], b2.inputs["Normal"])
     NRM = b2.outputs["Normal"]
+    if PAPER:
+        # The same painting on washi (the hero's PAPER=1): unbleached kozo with its cloudy formation and a
+        # net of fibres, stained a little where the leaf had its patina; dust and cut leaf still metal, as
+        # gold flakes scattered on paper are; the stream without its coat.
+        iso = n.new("ShaderNodeMapping"); iso.inputs["Scale"].default_value = (2.5, 1.0, 1.0)   # UV: 4 panels wide, 1 tall
+        l.new(uv.outputs["UV"], iso.inputs["Vector"])
+        form = n.new("ShaderNodeTexNoise"); form.inputs["Scale"].default_value = 70; form.inputs["Detail"].default_value = 8
+        form.inputs["Roughness"].default_value = 0.62; l.new(iso.outputs["Vector"], form.inputs["Vector"])
+        warp = n.new("ShaderNodeTexNoise"); warp.inputs["Scale"].default_value = 40; l.new(iso.outputs["Vector"], warp.inputs["Vector"])
+        wadd = n.new("ShaderNodeVectorMath"); wadd.operation = "MULTIPLY_ADD"; wadd.inputs[1].default_value = (0.012, 0.012, 0.012)
+        l.new(warp.outputs["Color"], wadd.inputs[0]); l.new(iso.outputs["Vector"], wadd.inputs[2])
+        fib = n.new("ShaderNodeTexVoronoi"); fib.feature = "DISTANCE_TO_EDGE"; fib.inputs["Scale"].default_value = 55
+        l.new(wadd.outputs["Vector"], fib.inputs["Vector"])
+        fline = n.new("ShaderNodeMapRange"); fline.inputs["From Min"].default_value = 0.0; fline.inputs["From Max"].default_value = 0.035
+        fline.inputs["To Min"].default_value = 1.0; fline.inputs["To Max"].default_value = 0.0; fline.interpolation_type = "SMOOTHSTEP"
+        l.new(fib.outputs["Distance"], fline.inputs["Value"])
+        pc = mixc(form.outputs["Fac"], (0.88, 0.82, 0.68, 1), (0.80, 0.73, 0.58, 1))
+        pc = mixc(pat.outputs["Result"], pc, (0.76, 0.67, 0.50, 1))
+        fk = n.new("ShaderNodeMath"); fk.operation = "MULTIPLY"; fk.inputs[1].default_value = 0.5
+        l.new(fline.outputs["Result"], fk.inputs[0])
+        pc = mixc(fk.outputs["Value"], pc, (0.93, 0.89, 0.79, 1))
+        ph = n.new("ShaderNodeMath"); ph.operation = "MULTIPLY_ADD"; ph.inputs[1].default_value = 0.6
+        l.new(fline.outputs["Result"], ph.inputs[0]); l.new(form.outputs["Fac"], ph.inputs[2])
+        pb = n.new("ShaderNodeBump"); pb.inputs["Strength"].default_value = 0.12; pb.inputs["Distance"].default_value = 0.0004
+        l.new(ph.outputs["Value"], pb.inputs["Height"])
+        pr = n.new("ShaderNodeBump"); pr.inputs["Strength"].default_value = 0.6; pr.inputs["Distance"].default_value = 0.0012
+        relief = det.outputs["Green"]
+        if not MIST:     # the bands' raised gesso goes with them; the blossoms and gold lines keep theirs
+            keep = n.new("ShaderNodeMath"); keep.operation = "SUBTRACT"; keep.inputs[0].default_value = 1.0
+            l.new(sep.outputs["Blue"], keep.inputs[1])
+            rl = n.new("ShaderNodeMath"); rl.operation = "MULTIPLY"
+            l.new(det.outputs["Green"], rl.inputs[0]); l.new(keep.outputs[0], rl.inputs[1])
+            relief = rl.outputs[0]
+        l.new(relief, pr.inputs["Height"]); l.new(pb.outputs["Normal"], pr.inputs["Normal"])
+        PN = pr.outputs["Normal"]
+        sh = bsdf(pc, 0.0, 0.88, PN, **{"Specular IOR Level": 0.3, "Sheen Weight": 0.25})
+        if MIST:
+            sh = mixs(sep.outputs["Blue"], sh, mixs(KINDEI_METAL, metal((0.96, 0.76, 0.42, 1), 0.55, PN),
+                                                     diffuse((0.86, 0.68, 0.38, 1), PN)))
+        sh = mixs(det.outputs["Blue"], sh, mixs(0.3, metal((1.0, 0.82, 0.48, 1), 0.25, PN), diffuse((0.98, 0.82, 0.5, 1), PN)))
+        vcol = mixc(det.outputs["Red"], (0.062, 0.024, 0.19, 1), (0.105, 0.048, 0.28, 1))
+        sh = mixs(sep.outputs["Red"], sh, bsdf(vcol, 0.0, 0.7, PN))
+        sh = mixs(sep.outputs["Green"], sh, mixs(0.5, metal((0.98, 0.84, 0.52, 1), 0.4, PN), diffuse((0.95, 0.80, 0.50, 1), PN)))
+        sh = mixs(artT.outputs["Alpha"], sh, bsdf(artT.outputs["Color"], 0.0, 0.85, PN, **{"Specular IOR Level": 0.12}))
+        l.new(sh, n["Material Output"].inputs["Surface"])
+        return face
     ground = mixs(GESSO, metal(goldc, burn.outputs["Value"], NRM), diffuse(goldc, NRM))
     # mist bands: a paler, finer gold, part dust and so part matte
     cloud = mixs(0.42, metal((0.98, 0.80, 0.46, 1), 0.32, NRM), diffuse((0.93, 0.77, 0.47, 1), NRM))
@@ -340,18 +396,26 @@ def layout():
 def _panel(i, start, d, f, a, mats, hinge_left, hinge_right):
     lac, brs, brc, pip, face, washi = mats
     c = start + d * (PW / 2); c.z = LEG + PH / 2
-    obs = [_box(f"screen frame {i + 1}", (PW, T, PH), c, a, lac, 0.005)]
-    obs.append(_plane(f"screen brocade {i + 1}", PW - 2 * FR, PH - 2 * FR, c + f * (T / 2 + 0.001), a, brc))
+    # the frame: top and bottom rails the panel's width, the stiles between them, all with rounded arrises
+    # (a fine seam where they butt); behind the painting, a core REC thinner on each face
+    obs = []
+    for sz in (-1, 1):
+        obs.append(_box(f"screen frame {i + 1}", (PW, T, FR), c + Vector((0, 0, sz * (PH / 2 - FR / 2))), a, lac, 0.004))
+    for sx in (-1, 1):
+        obs.append(_box(f"screen frame {i + 1}", (FR, T, PH - 2 * FR + 0.001), c + d * (sx * (PW / 2 - FR / 2)), a, lac, 0.004))
+    obs.append(_box(f"screen core {i + 1}", (PW - 2 * FR + 0.004, T - 2 * REC, PH - 2 * FR + 0.004), c, a, lac))
+    face_y = T / 2 - REC
+    obs.append(_plane(f"screen brocade {i + 1}", PW - 2 * FR, PH - 2 * FR, c + f * (face_y + 0.001), a, brc))
     obs.append(_plane(f"screen piping {i + 1}", PW - 2 * FR - 2 * BR + 0.009, PH - 2 * FR - 2 * BR + 0.009,
-                      c + f * (T / 2 + 0.0013), a, pip))
+                      c + f * (face_y + 0.0013), a, pip))
     w, h = PW - 2 * FR - 2 * BR, PH - 2 * FR - 2 * BR
-    gold = _plane(f"screen gold {i + 1}", w, h, c + f * (T / 2 + 0.0016), a, face)
+    gold = _plane(f"screen gold {i + 1}", w, h, c + f * (face_y + 0.0016), a, face)
     uvl = gold.data.uv_layers.active.data
     for loop in gold.data.loops:
         u, v = uvl[loop.index].uv
         uvl[loop.index].uv = ((i + (FR + BR) / PW + u * (w / PW)) / 4, (FR + BR) / PH + v * (h / PH))
     obs.append(gold)
-    back = _plane(f"screen back {i + 1}", PW - 2 * FR, PH - 2 * FR, c - f * (T / 2 + 0.001), a, washi, back=True)
+    back = _plane(f"screen back {i + 1}", PW - 2 * FR, PH - 2 * FR, c - f * (face_y + 0.001), a, washi, back=True)
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)   # object space in metres, for the paper
     obs.append(back)
     # corner fittings (kanagu): an L of brass on each corner of the frame, three domed nails. On the outer

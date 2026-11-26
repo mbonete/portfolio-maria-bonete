@@ -35,7 +35,7 @@ const steps = [
   {
     id: "hero",
     title: "A hero rendered in Blender",
-    body: "The studio under my name is one Blender scene, with every object modelled in Python: the folding screen, the desk with two of my projects and this site's code on its monitors, the plush capybara, the instruments and the easel. The painting on the easel is painted in code and left unfinished. A click on the conga or the maracas plays a recording and moves it; a click on the keyboard plays typing and flares its lights. Each of the three is rendered as a layer of its own from the same camera, so it can move while its shadow stays on the floor. The textures, the environment the glossy surfaces reflect and the sounds are public domain (CC0), from Poly Haven, ambientCG and Freesound (recordings by Sassaby, Sadiquecat and stu556).",
+    body: "The studio under my name is one Blender scene, with every object modelled in Python: the folding screen, the desk with two of my projects and this site's code on its monitors, the plush capybara, the instruments and the easel. Eight things in it answer a click with a recording: the conga, the maracas and the capybara move, the keyboard and the computer change their lights, the camera fires its flash, a breeze goes through the monstera, and the painting on the easel, painted in code and left unfinished, moves on a stage. Each of them is rendered as a layer of its own from the same camera, so it can change while the rest of the room stays as it is. The textures, the environment the glossy surfaces reflect and the sounds are public domain (CC0), from Poly Haven, ambientCG and Freesound (recordings by Sassaby, Sadiquecat, stu556, Breviceps, Kodack, Eirikr, saturdaysoundguy and Garuda1982).",
   },
   {
     id: "screens",

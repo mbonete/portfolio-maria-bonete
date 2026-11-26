@@ -26,7 +26,7 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 
 - Next.js 16 (App Router), React 19, Tailwind 4; deployed as a static-friendly site.
 - Routes: `/` (hero, work, "Engineering, now with agents", experience, contact), `/work/marine-wobbles`, `/work/quote-and-nod`, `/work/doorplate`, `/work/switchboard`, `/how-this-site-was-built`, `/blog` and one page per article (`/blog/<slug>`, text in `src/articles`; linked from the desktop menu on `/`, with no list of articles there, owner's call). All static.
-- The site: a Blender-rendered studio on an azurite ground as the hero (a gold folding screen, a desk with three monitors showing her projects, a plush capybara, a conga and maracas, an easel with an unfinished painting; the conga, the maracas and the keyboard play a CC0 recording at a click); one flat colour per project with its real product in a rendered phone frame and/or browser window; short silent loops in the phones; YouTube demos that play in place (privacy-enhanced, loaded on click).
+- The site: a Blender-rendered studio on an azurite ground as the hero (a folding screen painted on paper, a desk with three monitors showing her projects, a plush capybara, a conga and maracas, an easel with an unfinished painting; eight of its things play a CC0 recording at a click: the conga, maracas and capybara move, the keyboard's and the computer's lights change, the camera flashes, the monstera sways, the painting moves on a stage); one flat colour per project with its real product in a rendered phone frame and/or browser window; short silent loops in the phones; YouTube demos that play in place (privacy-enhanced, loaded on click).
 - Mobile: LCP under 2.5s on a mid-range phone; heavy effects degrade on small screens and under reduced motion.
 - Free fonts only.
 
@@ -60,4 +60,4 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 
 ## Accessibility & Inclusion
 
-Respect prefers-reduced-motion (loops show a still; the studio's objects play their sound without moving); keyboard-operable studio objects (a button each), video controls and navigation; legible contrast on every section colour.
+Respect prefers-reduced-motion (loops show a still; the studio's things play their sound without moving, while lights and the painting still change); keyboard-operable studio objects (a button each), video controls and navigation; legible contrast on every section colour.
