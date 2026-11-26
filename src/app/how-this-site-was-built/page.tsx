@@ -35,7 +35,7 @@ const steps = [
   {
     id: "hero",
     title: "A hero rendered in Blender",
-    body: "The folding screen is a sequence of Blender renders from shut to open, so a click plays it folding one way or the other. The panels folding toward you stand in front of the letters of my name and the others behind. The profile shadow on the open screen comes from a silhouette I chose; that one image is AI-generated.",
+    body: "The studio under my name is one Blender scene, with every object modelled in Python: the folding screen, the desk with two of my projects and this site's code on its monitors, the plush capybara, the instruments and the easel. The painting on the easel is painted in code and left unfinished. A click on the conga or the maracas plays a recording and moves it; a click on the keyboard plays typing and flares its lights. Each of the three is rendered as a layer of its own from the same camera, so it can move while its shadow stays on the floor. The textures, the environment the glossy surfaces reflect and the sounds are public domain (CC0), from Poly Haven, ambientCG and Freesound (recordings by Sassaby, Sadiquecat and stu556).",
   },
   {
     id: "screens",

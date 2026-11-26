@@ -119,7 +119,7 @@ components:
 
 **Creative North Star: "The Object on Its Ground"**
 
-Every surface repeats one formula: a crafted object (the gold folding screen in the hero, the real product in a rendered phone or browser window for each project) set on one flat colour, its name set very large in a single-weight Mincho, and a few facts in a plain sans beside it. Colour is spent in whole fields, never in gradients or tints: azurite for the hero, one flat ground per project, ink for the index and the AI section, lavender for the closing contact, cream paper for reading. The objects carry the only depth; the grounds stay flat.
+Every surface repeats one formula: a crafted object (a studio rendered in Blender in the hero, the real product in a rendered phone or browser window for each project) set on one flat colour, its name set very large in a single-weight Mincho, and a few facts in a plain sans beside it. Colour is spent in whole fields, never in gradients or tints: azurite for the hero, one flat ground per project, ink for the index and the AI section, lavender for the closing contact, cream paper for reading. The objects carry the only depth; the grounds stay flat.
 
 Density is low at the top of each section and rises where the reading starts. Bands and heads are large-type posters; case-study sections and blog articles settle onto paper in a two-column reading layout, the heading or the product held beside the text. Hairline rules in ink or paper at 18 to 30 percent opacity divide lists and sections; there are no cards and no boxed panels.
 
@@ -128,7 +128,7 @@ Links are underlined text, and the underline is the interaction: it appears, mov
 **Key Characteristics:**
 - One flat colour per section, edge to edge; the section's ink flips to light on dark grounds.
 - Hina Mincho at 400 for names, headings, numerals and the closing links; Instrument Sans for everything else.
-- Real objects (Blender-rendered screen, phone frame, browser window) carry soft cast shadows; nothing else is lifted.
+- Real objects (the Blender-rendered studio, phone frame, browser window) carry soft cast shadows; nothing else is lifted.
 - Hairline dividers and underlines instead of cards, chips or icons.
 - Gold appears only as a fitting: a 1-2px line marking a current or fixed state.
 
@@ -174,7 +174,7 @@ Each project owns one flat ground, used for its home band, its case-study head a
 **Character:** A Japanese-Mincho Latin with one weight, set huge and tight, against a neutral grotesque. Hina Mincho has no bold and no italic, and `font-synthesis: none` forbids the browser from faking either.
 
 ### Hierarchy
-- **Display** (400, sized from one unit shared with the folding screen and bounded by the window's height, line-height 0.75, -0.035em): the name in the hero only. The screen crosses the letters at the same place at every width.
+- **Display** (400, sized from one unit shared with the studio and bounded by the window's height, line-height 0.75, -0.035em): the name in the hero only. The studio keeps the same place under the letters at every width.
 - **Headline** (400, line-height 0.88 to 0.92, -0.02 to -0.025em): project names on the bands (`headline-band`), case-study titles (`headline-case`), section titles such as Work, Experience and Get in touch (`headline-section`; the contact title runs larger, to 12rem).
 - **Title** (400, 1.04 line-height): sticky case-study section headings; article titles (clamp(2.2rem, 3.7vw, 3.35rem)); rule headings in articles (clamp(1.55rem, 2.1vw, 1.9rem), 1.14).
 - **Display links** (`title-link`): the contact links and the end links of every inner page, set in the display face and underlined.
@@ -191,7 +191,7 @@ Each project owns one flat ground, used for its home band, its case-study head a
 
 A full-bleed stack of sections, each its own ground, padded by one fluid gutter (`spacing.gutter`) on both sides. Inside, a 5:7 two-column grid with a fluid column gap (`spacing.column-gap`) is the recurring split: the work index (title beside list), every band (copy beside object, under a full-width name), every case-study section (sticky heading beside the body). Poster sections (AI, experience, contact) take `spacing.section` vertical padding; bands and case heads take `spacing.band`.
 
-The hero is a frame, not a stack: top bar in the top corners, name and screen filling the middle, role and the primary button on one baseline in the bottom corners, all sized from one unit tied to the window's height.
+The hero is a frame, not a stack: top bar in the top corners, name and studio filling the middle, role and the primary button on one baseline in the bottom corners, all sized from one unit tied to the window's height.
 
 The blog article is the reading form of the same split: from 900px a sticky full-height panel of the project's ground at 36% holds the phone (at most 300px wide) beside a reading column on paper; below 900px each rule's screen sits inline in a band of the project's colour that crops the phone. The blog list is one row per article: a tile of the project's ground with the phone, then title, byline, summary and the numbered rules, which move into a third column from 1100px.
 

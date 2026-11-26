@@ -26,17 +26,16 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 
 - Next.js 16 (App Router), React 19, Tailwind 4; deployed as a static-friendly site.
 - Routes: `/` (hero, work, "Engineering, now with agents", experience, contact), `/work/marine-wobbles`, `/work/quote-and-nod`, `/work/doorplate`, `/work/switchboard`, `/how-this-site-was-built`, `/blog` and one page per article (`/blog/<slug>`, text in `src/articles`; linked from the desktop menu on `/`, with no list of articles there, owner's call). All static.
-- The site: a Blender-rendered gold folding screen on an azurite ground as the hero (folds shut at a click); one flat colour per project with its real product in a rendered phone frame and/or browser window; short silent loops in the phones; YouTube demos that play in place (privacy-enhanced, loaded on click).
+- The site: a Blender-rendered studio on an azurite ground as the hero (a gold folding screen, a desk with three monitors showing her projects, a plush capybara, a conga and maracas, an easel with an unfinished painting; the conga, the maracas and the keyboard play a CC0 recording at a click); one flat colour per project with its real product in a rendered phone frame and/or browser window; short silent loops in the phones; YouTube demos that play in place (privacy-enhanced, loaded on click).
 - Mobile: LCP under 2.5s on a mid-range phone; heavy effects degrade on small screens and under reduced motion.
 - Free fonts only.
 
 ## Brand Commitments
 
-- Design reference, not content: her taste is Bosch's *The Garden of Earthly Delights* (her desktop wallpaper), Japanese and Chinese art, and Art Nouveau; her own work leans to glossy inflated 3D, flowing lines and purple. Her hobbies (photography, travel, art, books, music) inform the design but are not shown as site content.
+- Design reference, not content: her taste is Bosch's *The Garden of Earthly Delights* (her desktop wallpaper), Japanese and Chinese art, and Art Nouveau; her own work leans to glossy inflated 3D, flowing lines and purple. Her hobbies (photography, travel, art, books, music) inform the design. The hero's studio holds objects from them (a camera, books, a conga and maracas, an easel), the owner's design; they are not otherwise site content.
 - Do not mention job-seeking. Use only photos of Maria alone or of places.
 
 - Light: cream paper, ink, and one flat colour per project section.
-- Exception chosen by the owner: the folding screen's profile shadow uses an owner-supplied silhouette that is AI-generated (its C2PA marks say so); the "How this site was built" page states that.
 - Must not look like a generic AI-generated site.
 - Learning material behind the AI section is never credited or presented as formal study; its wording, prices, model opinions and unfinished material stay private, and no private project is named. AI results are described generically.
 
@@ -61,4 +60,4 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 
 ## Accessibility & Inclusion
 
-Respect prefers-reduced-motion (loops show a still, the screen does not animate); keyboard-operable folding screen, video controls and navigation; legible contrast on every section colour.
+Respect prefers-reduced-motion (loops show a still; the studio's objects play their sound without moving); keyboard-operable studio objects (a button each), video controls and navigation; legible contrast on every section colour.
