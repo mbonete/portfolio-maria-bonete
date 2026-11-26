@@ -157,6 +157,25 @@
    role line starts below its floor shadow. */
 .lf-studio { margin-top: calc(var(--u) * 0.05); }
 .lf-foot.lf-foot-studio { margin-top: calc(var(--u) * -0.06); }
+/* The interactive layers sit on the studio at their place in its frame (StudioScene sets each box). */
+.lf-studio > .lf-layer { position: absolute; height: auto; pointer-events: none; }
+.lf-layer-conga { transform-origin: 50% 97%; }
+.lf-layer-maracas { transform-origin: 50% 55%; }
+/* The keyboard LEDs' extra light, added to the room under it. */
+.lf-glow { opacity: 0; mix-blend-mode: plus-lighter; }
+@supports not (mix-blend-mode: plus-lighter) {
+  .lf-glow { mix-blend-mode: screen; }
+}
+/* The buttons are for the keyboard; a pointer goes through them to the studio's own hit test. */
+.lf-studio > .lf-hit {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  pointer-events: none;
+}
+.lf-studio > .lf-hit:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
 
 .lf-foot {
   display: flex;

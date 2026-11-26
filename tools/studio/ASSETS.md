@@ -16,3 +16,13 @@ All CC0 (public domain): no attribution is required, but the site's "How this si
 | Metal051A | ambientCG | https://ambientcg.com/view?id=Metal051A | CC0 |
 | Fingerprints002 | ambientCG | https://ambientcg.com/view?id=Fingerprints002 | CC0 |
 | oak_veneer_04 | Poly Haven | https://polyhaven.com/a/oak_veneer_04 | CC0 |
+
+## Sounds (the hero's interactions)
+
+Freesound's public preview of each recording (MP3), cut and levelled by `sounds.sh` into `public/studio/`.
+
+| file | recording | author | page | cut | licence |
+|---|---|---|---|---|---|
+| conga.mp3 | WhiteLowDrum(D)-Slap (an LP conga slap) | Sassaby | https://freesound.org/people/Sassaby/sounds/512073/ | 0–0.75 s, peak -4 dB | CC0 |
+| maracas.mp3 | Big Maraca OS 1 | Sadiquecat | https://freesound.org/people/Sadiquecat/sounds/792505/ | 0–0.56 s, peak -1.5 dB | CC0 |
+| keys.mp3 | Mechanical Keyboard Typing (Treble Version) | stu556 | https://freesound.org/people/stu556/sounds/450282/ | 35.75–36.95 s, peak -4 dB | CC0 |
