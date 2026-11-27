@@ -178,8 +178,11 @@ if "monstera" in PASSES:
 
 # ---------- silhouettes for the hit test ----------
 if "masks" in PASSES:
+    # the monitors: their slabs, glass and backs (not the arms or stand)
+    monitors = [ob for ob in scn.objects if ob.name.split(".")[0] in ("monitor slab", "monitor back")
+                or any(s.material and s.material.name in ("screen 0", "screen 1", "screen 2") for s in ob.material_slots)]
     targets = {"keys": tree(empty("keyboard")), "camera": tree(empty("camera")), "tower": tree(empty("tower")),
-               "easel": collection("easel")}
+               "easel": collection("easel"), "monitors": monitors}
     flags()
     fl.visible_camera = False
     samples, denoise = scn.cycles.samples, scn.cycles.use_denoising

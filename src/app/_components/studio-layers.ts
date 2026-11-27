@@ -28,8 +28,9 @@ export const BREEZE = { fps: 15, frames: 19 } as const;
 // Where the flash fires, for its burst.
 export const FLASH_HEAD = { x: 1380, y: 629 } as const;
 
-// hit.png: a quarter-size map, each thing's grey value 30 times its number here.
-export const HIT = { conga: 1, maracas: 2, keys: 3, capybara: 4, camera: 5, tower: 6, easel: 7, monstera: 8 } as const;
+// hit.png: a quarter-size map, each thing's grey value HIT_GREY times its number here.
+export const HIT = { conga: 1, maracas: 2, keys: 3, capybara: 4, camera: 5, tower: 6, easel: 7, monstera: 8, monitors: 9 } as const;
+export const HIT_GREY = 25;
 
 // Each thing's own box (its silhouette's), for the focus ring.
 export const TARGETS = {
@@ -41,4 +42,5 @@ export const TARGETS = {
   tower: { x: 1656, y: 294, w: 138, h: 256 },
   easel: { x: 1873, y: 59, w: 455, h: 860 },
   monstera: { x: 290, y: 185, w: 609, h: 722 },
+  monitors: { x: 805, y: 113, w: 833, h: 329 },
 } as const;

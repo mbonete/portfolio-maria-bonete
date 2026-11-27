@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef, type MouseEvent, type PointerEvent as PointerEventR, type ReactNode } from "react";
-import { BREEZE, CUTOUTS, FLASH_HEAD, FRAME, HIT, LIGHTS, SWAPS, TARGETS } from "./studio-layers";
+import { BREEZE, CUTOUTS, FLASH_HEAD, FRAME, HIT, HIT_GREY, LIGHTS, SWAPS, TARGETS } from "./studio-layers";
 
 // The hero's object: the studio, rendered in Blender (tools/studio), on the blue ground under the
-// name. Eight things in it answer a click or tap, each with a sound: the conga gives a hit, the maracas
-// a shake, the plush capybara a squeak as it squashes, the keyboard a burst of typing while its LEDs
-// flare, the camera a shot with its flash, the computer's LEDs change colour, the painting on the easel
-// moves on a stage, and a breeze goes through the monstera.
+// name. Nine things in it answer a click or tap, all but the monitors with a sound: the conga gives a
+// hit, the maracas a shake, the plush capybara a squeak as it squashes, the keyboard a burst of typing
+// while its LEDs flare, the camera a shot with its flash, the computer's LEDs change colour, the painting
+// on the easel moves on a stage, a breeze goes through the monstera, and the code on the middle monitor
+// scrolls. As soon as the room is up, that code scrolls once by itself, to show that the room is on.
 //
 // The studio is a stack of renders from one camera (tools/studio/layers.py): the room without the
 // things that move; the painting's stages and the computer's colours, each shown in place over it; the
@@ -27,9 +28,12 @@ const LABEL: Record<Thing, string> = {
   tower: "Change the colour of the computer's lights",
   easel: "Paint the next stage of the painting",
   monstera: "Send a breeze through the monstera",
+  monitors: "Scroll the code on the monitor",
 };
+const SILENT: Thing[] = ["monitors"]; // things that answer without a sound
 const WIDTHS = [1200, 1800, 2400];
 const REACH = { mouse: 18, touch: 30 }; // CSS px around each silhouette
+const CUE_AFTER = 600; // ms from the room's image loading to the code starting to scroll
 type Box = { x: number; y: number; w: number; h: number };
 const pct = (v: number, of: number) => `${((100 * v) / of).toFixed(4)}%`;
 const at = (b: Box) => ({ left: pct(b.x, FRAME.w), top: pct(b.y, FRAME.h), width: pct(b.w, FRAME.w), height: pct(b.h, FRAME.h) });
@@ -91,6 +95,25 @@ const MOVES: Partial<Record<Thing, { frames: Keyframe[]; ms: number; still?: Key
     easing: "ease-out",
   },
 };
+// The middle monitor's code column, taller than the screen (public/studio/ide-strip.webp, in
+// the render's tones), drawn over the screen through `matrix` (its window, in the strip's px, to the
+// frame's), with the glass's glow (ide-glow.webp) added over it; `line` is one line of code in the strip,
+// which holds `lines` of them, `shown` at a time.
+const IDE = {
+  win: { w: 229, h: 106.398 },
+  line: 4.2252,
+  lines: 152,
+  shown: 25,
+  matrix: [0.957740273, 0.00715649729, 0, -2.9066185e-5, 0.0708362759, 1.01408556, 0, 5.52027682e-5, 0, 0, 1, 0, 1196.7848, 263.96575, 0, 1],
+  glow: { x: 1193, y: 260, w: 236, h: 117 },
+};
+// A scroll is two flicks of FLICK_LINES, like someone skimming the file, SCROLL_MS in all (under the 5 s
+// that motion starting by itself may run without a control to pause it, WCAG 2.2.2); at the end of the
+// file, one flick back to the top.
+const FLICK = "cubic-bezier(0.12, 0.8, 0.3, 1)";
+const FLICK_LINES = 13;
+const SCROLL_MS = 2200;
+const TO_TOP_MS = 900;
 const BURST: Keyframe[] = [
   { opacity: 0, transform: "translate(-50%, -50%) scale(0.3)" },
   { opacity: 1, transform: "translate(-50%, -50%) scale(1)", offset: 0.08 },
@@ -105,7 +128,7 @@ const decoded = new Map<Thing, Promise<AudioBuffer>>();
 
 function fetchSounds() {
   for (const t of THINGS) {
-    if (raw.has(t)) continue;
+    if (raw.has(t) || SILENT.includes(t)) continue;
     const bytes = fetch(`/studio/${t}.mp3`).then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(r.status)));
     bytes.catch(() => {}); // a sound that will not load leaves the click silent, nothing more
     raw.set(t, bytes);
@@ -113,7 +136,7 @@ function fetchSounds() {
 }
 
 function play(t: Thing) {
-  if (typeof AudioContext === "undefined") return;
+  if (typeof AudioContext === "undefined" || SILENT.includes(t)) return;
   audio ??= new AudioContext();
   const ctx = audio;
   void ctx.resume();
@@ -165,6 +188,9 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
   const breeze = useRef<ImageBitmap[]>([]);
   const breezing = useRef<Promise<void> | null>(null);
   const swap = useRef({ tower: 0, easel: 0 });
+  const touched = useRef(false); // something in the studio was clicked
+  const ideAt = useRef(0); // the monitor's code: the first line shown, counted from the strip's top
+  const ideAnim = useRef<Animation | null>(null);
   const keep = (key: string) => (el: HTMLElement | null) => void (els.current[key] = el);
 
   useEffect(() => {
@@ -195,6 +221,83 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
     return () => {
       gone = true;
     };
+  }, []);
+
+  // As soon as the room is up (CUE_AFTER ms after its image loads) and while it is at least half in view,
+  // the code on the middle monitor scrolls, unless something has been clicked already; not with reduced
+  // motion.
+  useEffect(() => {
+    const box = boxRef.current;
+    const room = box?.querySelector("img");
+    if (!box || !room || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let gone = false;
+    let seen = false; // the studio at least half in view
+    let ready = false; // the room shown for CUE_AFTER ms
+    let wait = 0;
+    const cue = () => {
+      if (gone || !seen || !ready) return;
+      gone = true;
+      io.disconnect();
+      if (!touched.current) scroll();
+    };
+    const io = new IntersectionObserver(
+      ([e]) => {
+        seen = e.isIntersecting;
+        cue();
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(box);
+    const shown = new Promise<void>((r) => {
+      if (room.complete) r();
+      room.addEventListener("load", () => r(), { once: true });
+      room.addEventListener("error", () => r(), { once: true });
+    });
+    void shown.then(() => {
+      wait = window.setTimeout(() => {
+        ready = true;
+        cue();
+      }, CUE_AFTER);
+    });
+    return () => {
+      gone = true;
+      io.disconnect();
+      clearTimeout(wait);
+    };
+  }, []);
+
+  function scroll() {
+    const strip = els.current["ide-strip"];
+    if (!strip) return;
+    for (const k of ["ide", "ide-glow"]) els.current[k]?.style.setProperty("visibility", "visible");
+    const end = IDE.lines - IDE.shown;
+    const from = ideAt.current;
+    const to = (ideAt.current = from >= end ? 0 : Math.min(end, from + 2 * FLICK_LINES));
+    const y = (l: number) => `translateY(${(-l * IDE.line).toFixed(3)}px)`;
+    const css = getComputedStyle(strip).transform; // where it is, mid-scroll or not
+    const now = `translateY(${css === "none" ? 0 : new DOMMatrixReadOnly(css).m42}px)`;
+    ideAnim.current?.cancel();
+    strip.style.transform = y(to);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const two = to - from > FLICK_LINES;
+    const frames: Keyframe[] = two
+      ? [
+          { transform: now, easing: FLICK },
+          { transform: y(from + FLICK_LINES), offset: 0.32, easing: "linear" },
+          { transform: y(from + FLICK_LINES), offset: 0.68, easing: FLICK },
+          { transform: y(to) },
+        ]
+      : [{ transform: now, easing: FLICK }, { transform: y(to) }];
+    ideAnim.current = strip.animate(frames, { duration: two ? SCROLL_MS : TO_TOP_MS });
+  }
+
+  // The monitor's code is drawn in the frame's px, scaled to the studio's width.
+  useEffect(() => {
+    const box = boxRef.current;
+    if (!box) return;
+    const ro = new ResizeObserver(() => box.style.setProperty("--k", String(box.clientWidth / FRAME.w)));
+    ro.observe(box);
+    return () => ro.disconnect();
   }, []);
 
   function loadBreeze() {
@@ -230,7 +333,7 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
         const px = Math.round(mx + dx);
         const py = Math.round(my + dy);
         if (px < 0 || py < 0 || px >= m.w || py >= m.h) continue;
-        const t = BY_GREY[Math.round(m.data[(py * m.w + px) * 4] / 30)];
+        const t = BY_GREY[Math.round(m.data[(py * m.w + px) * 4] / HIT_GREY)];
         if (t) {
           best = t;
           bestD = d;
@@ -288,9 +391,11 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
   }
 
   function act(t: Thing) {
+    touched.current = true;
     play(t);
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (t === "tower" || t === "easel") return next(t);
+    if (t === "monitors") return scroll();
     if (t === "monstera") return still ? undefined : void loadBreeze().then(blow);
     const move = MOVES[t];
     if (!move) return;
@@ -327,6 +432,14 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
             fetchPriority="high"
             draggable={false}
           />
+          <div className="lf-ide" ref={keep("ide")} aria-hidden>
+            <div className="lf-ide-win" style={{ width: IDE.win.w, height: IDE.win.h, transform: `matrix3d(${IDE.matrix.join(",")})` }}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- a texture drawn through a transform */}
+              <img ref={keep("ide-strip")} src="/studio/ide-strip.webp" alt="" draggable={false} />
+            </div>
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element -- a layer of the render */}
+          <img className="lf-layer lf-ide-glow" ref={keep("ide-glow")} src="/studio/ide-glow.webp" style={at(IDE.glow)} alt="" aria-hidden draggable={false} />
           {(["tower", "easel"] as const).flatMap((r) =>
             Array.from({ length: SWAPS[r].count }, (_, k) => (
               <Layer

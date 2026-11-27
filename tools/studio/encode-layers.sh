@@ -10,7 +10,7 @@
 #                              page to add on top (mix-blend-mode: plus-lighter)
 #   tower-pN, easel-sN      -> tower-pN-*.webp, easel-sN-*.webp: each variant only where it differs from
 #                              its region's base, to show in place
-#   the silhouettes          -> hit.png, a quarter size, one grey per thing (HIT in the .ts)
+#   the silhouettes          -> hit.png, a quarter size, one grey per thing (HIT_GREY times its HIT number)
 # and writes where each sits, in the full frame, to src/app/_components/studio-layers.ts.
 # Usage: [KEYS_K=20] encode-layers.sh [renders/layers]
 set -e
@@ -120,15 +120,15 @@ swap tower p1 p2 p3
 swap easel s1 s2 s3
 
 # ---------- the hit map: one grey per thing, the nearer drawn last ----------
-typeset -A HIT; HIT=(conga 1 maracas 2 keys 3 capybara 4 camera 5 tower 6 easel 7 monstera 8)
-typeset -A SIL; SIL=(easel $L/mask-easel.png tower $L/mask-tower.png monstera $L/monstera-00.png keys $L/mask-keys.png
+typeset -A HIT; HIT=(conga 1 maracas 2 keys 3 capybara 4 camera 5 tower 6 easel 7 monstera 8 monitors 9); GREY=25
+typeset -A SIL; SIL=(monitors $L/mask-monitors.png easel $L/mask-easel.png tower $L/mask-tower.png monstera $L/monstera-00.png keys $L/mask-keys.png
   camera $L/mask-camera.png conga $L/conga.png capybara $L/capybara.png maracas $L/maracas.png)
 QW=$(( W / 4 )); QH=$(( H / 4 ))
 magick -size ${QW}x${QH} xc:black $T/hit.png
 typeset -A TGT
-for n in easel tower monstera keys camera conga capybara maracas; do
+for n in monitors easel tower monstera keys camera conga capybara maracas; do
   magick $SIL[$n] -alpha extract -resize ${QW}x${QH}! -threshold 50% $T/m.png
-  magick $T/hit.png \( $T/m.png -fill "gray($(( HIT[$n] * 30 )))" -opaque white -transparent black \) -composite $T/hit.png
+  magick $T/hit.png \( $T/m.png -fill "gray($(( HIT[$n] * GREY )))" -opaque white -transparent black \) -composite $T/hit.png
   TGT[$n]=$(bbox $SIL[$n] 50%)
 done
 magick $T/hit.png -colorspace gray -depth 8 -define png:compression-level=9 $P/hit.png
@@ -166,12 +166,13 @@ export const BREEZE = { fps: $(js "[d['fps']]"), frames: $(( ${#frames} - 1 )) }
 // Where the flash fires, for its burst.
 export const FLASH_HEAD = { x: $hx, y: $hy } as const;
 
-// hit.png: a quarter-size map, each thing's grey value 30 times its number here.
-export const HIT = { conga: 1, maracas: 2, keys: 3, capybara: 4, camera: 5, tower: 6, easel: 7, monstera: 8 } as const;
+// hit.png: a quarter-size map, each thing's grey value HIT_GREY times its number here.
+export const HIT = { conga: 1, maracas: 2, keys: 3, capybara: 4, camera: 5, tower: 6, easel: 7, monstera: 8, monitors: 9 } as const;
+export const HIT_GREY = $GREY;
 
 // Each thing's own box (its silhouette's), for the focus ring.
 export const TARGETS = {
-$(for n in conga maracas keys capybara camera tower easel monstera; do echo "  $n: $(box "$TGT[$n]"),"; done)
+$(for n in conga maracas keys capybara camera tower easel monstera monitors; do echo "  $n: $(box "$TGT[$n]"),"; done)
 } as const;
 EOF
 cat $TS
