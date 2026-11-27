@@ -232,6 +232,7 @@ Few, flat and nearly square: one per section, the way in.
 
 ### Lists and dividers
 - **Work index:** on ink; a hairline at 22% paper above and below each row; a 14px colour swatch and tabular number, the project name in the display face, its kind on the right.
+- **Steps grid** ("How this site was built"): short steps in one, two (from 900px) or three (from 1600px) columns; each a hairline at 22% ink, its title in the display face (1.625-2.25rem) and its text right under it, sized like the experience text.
 - **Contact list:** on the closing ground, no rules between rows; the whole row is the link: a short label in the sans at 80% Light Ink in a 7.5rem column (Email, LinkedIn, GitHub, CV), then the address itself as a display link. Under 760px the label sits above the address. The footer line follows on the same ground, under one hairline at 25% Light Ink inside the gutter.
 - **Numbered lists** (chapters, steps, article contents, blog rules): a display-face numeral in a fixed first column (1.8-2.4rem), hairline borders at 18-22% ink.
 - **Facts and tables:** label column at 600, hairline rows, tabular figures.

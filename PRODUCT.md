@@ -32,7 +32,7 @@ Visitors skim on phones and laptops, often in a recruiting pipeline with many ta
 
 ## Brand Commitments
 
-- Design reference, not content: her taste is Bosch's *The Garden of Earthly Delights* (her desktop wallpaper), Japanese and Chinese art, and Art Nouveau; her own work leans to glossy inflated 3D, flowing lines and purple. Her hobbies (photography, travel, art, books, music) inform the design. The hero's studio holds objects from them (a camera, books, a conga and maracas, an easel), the owner's design; they are not otherwise site content.
+- Design reference, not content: her taste is Bosch's *The Garden of Earthly Delights* (her desktop wallpaper), Japanese and Chinese art, and Art Nouveau; her own work leans to glossy inflated 3D, flowing lines and purple. Her hobbies (photography, travel, art, books, music) inform the design. The hero's studio introduces her through the things she likes, to show her personality, and holds objects from them (a camera, books, a conga and maracas, an easel), the owner's design; they are not otherwise site content.
 - Do not mention job-seeking. Use only photos of Maria alone or of places.
 
 - Light: cream paper, ink, and one flat colour per project section.

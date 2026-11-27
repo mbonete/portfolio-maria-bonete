@@ -1,6 +1,6 @@
 # Third-party assets in the studio scene
 
-All CC0 (public domain): no attribution is required, but the site's "How this site was built" page names the sources and the sounds' authors.
+All CC0 (public domain): no attribution is required, so the site's "How this site was built" page only says they are public domain. The sources and authors are listed here.
 
 | id | source | page | licence |
 |---|---|---|---|

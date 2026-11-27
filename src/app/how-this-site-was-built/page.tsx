@@ -20,12 +20,7 @@ const steps = [
   {
     id: "grilling",
     title: "Decided in grilling rounds",
-    body: "An agent interviewed me in rounds, recommending an answer to every question, and I made the calls. Audience first: recruiters and hiring managers who give a portfolio ten seconds, often on a phone. Then the constraints: free fonts only, and it must not look like another AI-generated site.",
-  },
-  {
-    id: "banned",
-    title: "A banned list before any pixels",
-    body: "Gradient text, purple-to-cyan, glow blobs, dot grids, glassmorphism, Inter or Geist as the voice, pill buttons, a centred column of identical sections, “Hi, I'm” heroes, an icon by every label, and a badge above the name.",
+    body: "An agent interviewed me in rounds, recommending an answer to every question, and I made the calls, from who the site is for to constraints such as free fonts only.",
   },
   {
     id: "prototypes",
@@ -35,17 +30,12 @@ const steps = [
   {
     id: "hero",
     title: "A hero rendered in Blender",
-    body: "The studio under my name is one Blender scene, with every object modelled in Python: the folding screen, the desk with two of my projects and this site's code on its monitors, the plush capybara, the instruments and the easel. Eight things in it answer a click with a recording: the conga, the maracas and the capybara move, the keyboard and the computer change their lights, the camera fires its flash, a breeze goes through the monstera, and the painting on the easel, painted in code and left unfinished, moves on a stage. Each of them is rendered as a layer of its own from the same camera, so it can change while the rest of the room stays as it is. The textures, the environment the glossy surfaces reflect and the sounds are public domain (CC0), from Poly Haven, ambientCG and Freesound (recordings by Sassaby, Sadiquecat, stu556, Breviceps, Kodack, Eirikr, saturdaysoundguy and Garuda1982).",
+    body: "The studio under my name introduces me through the things I like: Japanese art in the gold folding screen, photography and reading in the camera and the books, music in the conga and maracas, painting in the easel, and my own projects on the monitors. Eight things in it answer a click with a recording. I modelled the room in Blender with Python, and its textures and sounds are public domain.",
   },
   {
     id: "screens",
     title: "Real products on every project",
     body: "Each project shows its actual product. The short loops in the phones were recorded from the live sites by a script that plays them in a phone-sized browser, or cut from my game's trailer, and the phone itself is a frame I rendered rather than a downloaded mockup. Demo videos play in place and load nothing from YouTube until you press play.",
-  },
-  {
-    id: "copy",
-    title: "Copy held to written rules",
-    body: "The text follows writing rules kept in the repository: no contrast for effect, no slogans or marketing words, and every fact traceable to the code or my CV. Agents writing copy for this site load those rules first.",
   },
   {
     id: "checks",
@@ -70,24 +60,16 @@ export default function BuiltPage() {
           </p>
         </section>
 
-        {steps.map((s) => (
-          <section key={s.id} className="lf-cs-sec" aria-labelledby={s.id}>
-            <h2 id={s.id}>{s.title}</h2>
-            <div className="lf-cs-body">
+        {/* The steps are short, so they sit in a grid, each title right above its text, rather than one
+            full-width band each with the title far from the text. */}
+        <div className="lf-steps">
+          {steps.map((s) => (
+            <section key={s.id} aria-labelledby={s.id}>
+              <h2 id={s.id}>{s.title}</h2>
               <p>{s.body}</p>
-            </div>
-          </section>
-        ))}
-
-        <section className="lf-cs-sec" aria-labelledby="left-out">
-          <h2 id="left-out">Left out on purpose</h2>
-          <div className="lf-cs-body">
-            <p>
-              A chatbot that answers questions about me. It would be a cliché, it could make things up in front of a
-              recruiter, and it would need a paid key and abuse protection.
-            </p>
-          </div>
-        </section>
+            </section>
+          ))}
+        </div>
 
         <nav className="lf-cs-end" aria-label="More">
           <Link href="/#work">See the work</Link>

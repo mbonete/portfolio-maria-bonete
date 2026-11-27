@@ -784,6 +784,19 @@
   line-height: 1.04;
   letter-spacing: -0.015em;
 }
+/* "How this site was built": short steps in a grid, each title right above its text under a hairline,
+   one column on phones, two from 900px, three from 1600px. Text grows with the screen like Experience. */
+.lf-steps {
+  display: grid;
+  gap: clamp(40px, 4vw, 64px) clamp(32px, 4vw, 64px);
+  padding: clamp(72px, 8vw, 128px) var(--gutter);
+}
+@media (min-width: 900px) { .lf-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1600px) { .lf-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.lf-steps section { padding-top: 20px; border-top: 1px solid color-mix(in oklab, var(--ink) 22%, transparent); }
+.lf-steps h2 { font-size: clamp(1.625rem, 2.2vw, 2.25rem); line-height: 1.1; letter-spacing: -0.01em; }
+.lf-steps p { max-width: 36em; margin-top: 14px; font-size: clamp(1rem, 0.85rem + 0.35vw, 1.25rem); line-height: 1.6; }
+
 .lf-cs-body { display: grid; gap: 18px; max-width: 34em; font-size: 1.0625rem; }
 .lf-cs-body a { text-decoration: underline; text-underline-offset: 4px; }
 .lf-cs-wide { grid-column: 1 / -1; width: min(100%, 940px); justify-self: center; margin-top: clamp(32px, 4vw, 56px); }
