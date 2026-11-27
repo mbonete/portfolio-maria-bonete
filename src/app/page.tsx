@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { aiIntro, aiPractices, caseStudies, entries, experience, marineWobbles, person, promptBeach, studiolo, switchboard } from "@/content";
 import StudioScene from "./_components/StudioScene";
 import LoopVideo from "./_components/LoopVideo";
@@ -383,50 +384,70 @@ export default function LabF() {
         </section>
 
         <section id="experience" className="lf-exp" aria-labelledby="exp-h">
-          <h2 id="exp-h">Experience</h2>
-          <p className="lf-exp-note">Every role below was remote.</p>
+          <div className="lf-exp-head">
+            <h2 id="exp-h">Experience</h2>
+            <p className="lf-exp-note">Every role below was remote.</p>
+          </div>
           <ol className="lf-exp-list">
             {experience.map((x) => (
               <li key={x.id}>
-                <p className="lf-exp-dates">{x.dates}</p>
-                <div className="lf-exp-who">
-                  <h3>{x.company}</h3>
-                  <p>{x.role}</p>
-                </div>
-                <div className="lf-exp-what">
-                  <ul>
-                    {x.points.map((p) => (
-                      <li key={p}>{p}</li>
-                    ))}
-                  </ul>
-                  <p className="lf-exp-stack">{x.stack}</p>
-                </div>
+                <h3>{x.company}</h3>
+                <p className="lf-exp-meta">
+                  {x.role}
+                  <span className="lf-exp-dates"> · {x.dates}</span>
+                </p>
+                <ul>
+                  {x.points.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+                {/* Each name keeps its dot, so a wrapped line never starts with one. */}
+                <p className="lf-exp-stack">
+                  {x.stack.split(" · ").map((s, i, all) => (
+                    <Fragment key={s}>
+                      <span>{i < all.length - 1 ? `${s} ·` : s}</span>{" "}
+                    </Fragment>
+                  ))}
+                </p>
               </li>
             ))}
           </ol>
         </section>
 
-        <section id="contact" className="lf-contact" aria-labelledby="contact-h">
+        <section id="contact" className="lf-contact lf-close-block" aria-labelledby="contact-h">
           <h2 id="contact-h">Contact</h2>
-          <ul>
+          {/* A label, then the address itself, so a laptop without a mail app can still copy the
+              email and a recruiter sees the handles before opening them. */}
+          <ul className="lf-contact-list">
             <li>
-              {/* The address itself, so a laptop without a mail app can still copy it. */}
-              <a href={`mailto:${person.email}`}>{person.email}</a>
+              <a href={`mailto:${person.email}`}>
+                <span className="lf-contact-label">Email</span>
+                <span className="lf-contact-name">{person.email}</span>
+              </a>
             </li>
             <li>
-              <a href={person.links.linkedin} {...ext}>LinkedIn</a>
+              <a href={person.links.linkedin} {...ext}>
+                <span className="lf-contact-label">LinkedIn</span>
+                <span className="lf-contact-name">in/maria-bonete</span>
+              </a>
             </li>
             <li>
-              <a href={person.links.github} {...ext}>GitHub</a>
+              <a href={person.links.github} {...ext}>
+                <span className="lf-contact-label">GitHub</span>
+                <span className="lf-contact-name">github.com/mbonete</span>
+              </a>
             </li>
             <li>
-              <a href={person.links.cv} {...ext}>CV (PDF)</a>
+              <a href={person.links.cv} {...ext}>
+                <span className="lf-contact-label">CV</span>
+                <span className="lf-contact-name">PDF</span>
+              </a>
             </li>
           </ul>
         </section>
       </main>
 
-      <footer className="lf-end">
+      <footer className="lf-end lf-close-block">
         <p>Maria Bonete · Madrid</p>
       </footer>
     </div>

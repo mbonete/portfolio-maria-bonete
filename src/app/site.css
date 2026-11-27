@@ -7,8 +7,10 @@
   --paper: #f6f0e3;
   /* The gold of the folding screen's fittings (the old hero), between the leaf's lit and shaded tones. */
   --gold: #c9a35f;
-  /* The contact section's ground. */
-  --ground: #a99ddf;
+  /* The ground every page closes on (the contact and footer here, the end links of the inner pages):
+     lacquer, the ink of the screen's frame, with cream text. */
+  --close: var(--ink);
+  --close-fg: #fbf5e9;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --gutter: clamp(20px, 5vw, 88px);
 
@@ -530,57 +532,73 @@
 .lf-repo { margin-top: 20px; font-size: 1.125rem; }
 .lf-repo a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 
-/* Where the work happened: one row per role, the dates in the margin. */
-.lf-exp { padding: clamp(96px, 12vw, 176px) var(--gutter); }
-.lf-exp h2 { font-size: clamp(3rem, 8vw, 7.5rem); line-height: 0.92; letter-spacing: -0.02em; }
-.lf-exp-note { margin-top: 16px; font-size: 1.125rem; }
-.lf-exp-list { margin: clamp(48px, 6vw, 88px) 0 0; padding: 0; list-style: none; }
-.lf-exp-list > li {
+/* Where the work happened, laid out like a case-study section: the heading stays in view on the left
+   while the roles run down one reading column on the right, each stacked (company, role and dates,
+   what she did, the stack), so the eye never crosses the page within a role. The reading text grows
+   with the screen and stops at a reading measure. */
+.lf-exp {
+  /* Reading size: 16px on phones, 20px from about 1900px wide. Labels grow from 14px to 16px. */
+  --exp-read: clamp(1rem, 0.85rem + 0.35vw, 1.25rem);
+  --exp-label: clamp(0.875rem, 0.8rem + 0.15vw, 1rem);
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 4fr) minmax(0, 7fr);
-  gap: 12px clamp(24px, 4vw, 72px);
-  padding: clamp(24px, 3vw, 40px) 0;
-  border-top: 1px solid color-mix(in oklab, var(--ink) 25%, transparent);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: clamp(24px, 4vw, 72px);
+  padding: clamp(96px, 12vw, 176px) var(--gutter);
 }
-.lf-exp-list > li:last-child { border-bottom: 1px solid color-mix(in oklab, var(--ink) 25%, transparent); }
-.lf-exp-dates { padding-top: 0.45em; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
-.lf-exp-who h3 { font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.05; }
-.lf-exp-who p { margin-top: 6px; }
-.lf-exp-what ul { display: grid; gap: 8px; margin: 0; padding: 0 0 0 1.1em; }
-.lf-exp-what li { padding-left: 2px; }
-.lf-exp-what li::marker { content: "\2013  "; }
-.lf-exp-stack { margin-top: 14px; font-size: 0.875rem; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
+.lf-exp-head { align-self: start; position: sticky; top: clamp(24px, 3vw, 48px); }
+.lf-exp h2 { font-size: clamp(3rem, 8vw, 7.5rem); line-height: 0.92; letter-spacing: -0.02em; }
+.lf-exp-note { margin-top: 20px; font-size: clamp(1.125rem, 0.95rem + 0.3vw, 1.375rem); }
+.lf-exp-list { max-width: 36em; margin: 0; padding: 0; list-style: none; font-size: var(--exp-read); line-height: 1.6; }
+.lf-exp-list > li { padding-block: clamp(36px, 4vw, 56px); }
+.lf-exp-list > li:first-child { padding-top: 0; }
+.lf-exp-list > li:last-child { padding-bottom: 0; }
+.lf-exp-list > li + li { border-top: 1px solid color-mix(in oklab, var(--ink) 22%, transparent); }
+.lf-exp-list h3 { font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.04; letter-spacing: -0.015em; }
+.lf-exp-meta { margin-top: 10px; }
+.lf-exp-dates { font-variant-numeric: tabular-nums; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
+.lf-exp-list ul { display: grid; gap: 0.6em; margin: 1.1em 0 0; padding: 0 0 0 1.1em; }
+.lf-exp-list ul li { padding-left: 2px; }
+.lf-exp-list ul li::marker { content: "\2013  "; }
+.lf-exp-stack { margin-top: 1.1em; font-size: var(--exp-label); line-height: 1.55; color: color-mix(in oklab, var(--ink) 72%, var(--paper)); }
+.lf-exp-stack span { white-space: nowrap; }
 
+/* The page's close: the contact and the footer line on one ground, as one block. The heading sits
+   beside the ways to reach her, each a short label and the address itself in the display face, so
+   the eye goes straight from one to the other. */
+.lf-close-block { background: var(--close); color: var(--close-fg); }
 .lf-contact {
   display: grid;
-  gap: 24px;
-  justify-items: start;
-  padding: clamp(96px, 12vw, 176px) var(--gutter);
-  background: var(--ground);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 48px clamp(24px, 4vw, 72px);
+  align-items: start;
+  padding: clamp(96px, 12vw, 176px) var(--gutter) clamp(80px, 9vw, 136px);
 }
-.lf-contact h2 { font-size: clamp(3.6rem, 12vw, 12rem); line-height: 0.9; letter-spacing: -0.025em; }
-.lf-contact p { max-width: 40ch; font-size: 1.125rem; }
-.lf-contact ul { display: flex; flex-wrap: wrap; gap: 8px 40px; margin: 16px 0 0; padding: 0; list-style: none; }
-.lf-contact li a {
+.lf-contact h2 { font-size: clamp(3.6rem, 10vw, 11rem); line-height: 0.9; letter-spacing: -0.025em; }
+.lf-contact-list { display: grid; gap: clamp(14px, 1.6vw, 24px); margin: 0; padding: 0; list-style: none; }
+/* The whole row is the link: the label in a narrow column, the address beside it. */
+.lf-contact-list a {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  column-gap: clamp(16px, 2vw, 32px);
+  align-items: baseline;
+}
+.lf-contact-label { font-size: clamp(0.875rem, 0.75rem + 0.3vw, 1.125rem); color: color-mix(in oklab, var(--close-fg) 80%, var(--close)); }
+.lf-contact-name {
+  justify-self: start;
   font-family: var(--font-f-display), serif;
   font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+  line-height: 1.2;
   text-decoration: underline;
   text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklab, var(--close-fg) 45%, transparent);
   text-underline-offset: 8px;
-  transition: text-underline-offset 220ms var(--ease);
+  transition: text-underline-offset 220ms var(--ease), text-decoration-color 220ms var(--ease);
 }
-.lf-contact li a:hover { text-underline-offset: 12px; }
+.lf-contact-list a:hover .lf-contact-name { text-underline-offset: 12px; text-decoration-color: currentColor; }
 
-.lf-end {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 28px var(--gutter);
-  background: var(--ink);
-  color: color-mix(in oklab, var(--paper) 76%, var(--ink));
-  font-size: 0.875rem;
-}
-.lf-end a { text-decoration: underline; text-underline-offset: 4px; }
+/* The last line, under one hairline in the gutter, on the same ground. */
+.lf-end { padding: 0 var(--gutter) 32px; font-size: 0.875rem; color: color-mix(in oklab, var(--close-fg) 80%, var(--close)); }
+.lf-end p { padding-top: 24px; border-top: 1px solid color-mix(in oklab, var(--close-fg) 25%, transparent); }
 
 /* ---------- Case studies ---------- */
 
@@ -804,17 +822,20 @@
   justify-content: space-between;
   gap: 16px 40px;
   padding: clamp(72px, 9vw, 136px) var(--gutter);
-  background: var(--ground);
+  background: var(--close);
+  color: var(--close-fg);
 }
+/* The same display links as the home page's contact: a quiet underline that comes up to full on hover. */
 .lf-cs-end a {
   font-family: var(--font-f-display), serif;
   font-size: clamp(1.75rem, 3.4vw, 2.75rem);
   text-decoration: underline;
   text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklab, var(--close-fg) 45%, transparent);
   text-underline-offset: 8px;
-  transition: text-underline-offset 220ms var(--ease);
+  transition: text-underline-offset 220ms var(--ease), text-decoration-color 220ms var(--ease);
 }
-.lf-cs-end a:hover { text-underline-offset: 12px; }
+.lf-cs-end a:hover { text-underline-offset: 12px; text-decoration-color: currentColor; }
 
 /* ---------- Blog ---------- */
 
@@ -1123,9 +1144,12 @@
   .lf-band { grid-template-columns: 1fr; grid-template-areas: "title" "object" "copy"; }
 
   .lf-band-object { margin-top: 24px; }
-  .lf-exp-list > li { grid-template-columns: 1fr; }
-  .lf-exp-dates { order: 1; padding-top: 0; }
-  .lf-exp-what { order: 2; }
+  .lf-exp { grid-template-columns: 1fr; row-gap: clamp(40px, 10vw, 56px); }
+  .lf-exp-head { position: static; }
+  .lf-contact { grid-template-columns: 1fr; }
+  /* The label goes above the address, so the email fits the width at the display size. */
+  .lf-contact-list { gap: 24px; }
+  .lf-contact-list a { grid-template-columns: 1fr; row-gap: 2px; }
   .lf-cs-numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .lf-cs-sec { grid-template-columns: 1fr; row-gap: 20px; }
   .lf-cs-sec h2 { position: static; }

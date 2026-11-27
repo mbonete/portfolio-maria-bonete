@@ -6,7 +6,6 @@ colors:
   paper: "#f6f0e3"
   gold: "#c9a35f"
   azurite: "#6581df"
-  lavender: "#a99ddf"
   light-ink: "#fbf5e9"
   band-marine: "#63bdea"
   band-terracotta: "#b4492c"
@@ -119,7 +118,7 @@ components:
 
 **Creative North Star: "The Object on Its Ground"**
 
-Every surface repeats one formula: a crafted object (a studio rendered in Blender in the hero, the real product in a rendered phone or browser window for each project) set on one flat colour, its name set very large in a single-weight Mincho, and a few facts in a plain sans beside it. Colour is spent in whole fields, never in gradients or tints: azurite for the hero, one flat ground per project, ink for the index and the AI section, lavender for the closing contact, cream paper for reading. The objects carry the only depth; the grounds stay flat.
+Every surface repeats one formula: a crafted object (a studio rendered in Blender in the hero, the real product in a rendered phone or browser window for each project) set on one flat colour, its name set very large in a single-weight Mincho, and a few facts in a plain sans beside it. Colour is spent in whole fields, never in gradients or tints: azurite for the hero, one flat ground per project, ink for the index, the AI section and the close of every page, cream paper for reading. The objects carry the only depth; the grounds stay flat.
 
 Density is low at the top of each section and rises where the reading starts. Bands and heads are large-type posters; case-study sections and blog articles settle onto paper in a two-column reading layout, the heading or the product held beside the text. Hairline rules in ink or paper at 18 to 30 percent opacity divide lists and sections; there are no cards and no boxed panels.
 
@@ -140,7 +139,7 @@ A warm ink-on-cream base with whole fields of saturated colour, one per section,
 - **Azurite** (`azurite`): the hero's ground, under a fractal-noise grain on the ground only. The blue the Rinpa painters laid beside gold leaf. Its measured edge tone under grain (#5c76cc) is used only to match the overscroll band.
 
 ### Secondary
-- **Lavender** (`lavender`): the closing ground. Ends the home page (contact) and every case study, the blog list and every article (the end links).
+- **Lacquer** (`ink` as `--close`, with Light Ink text): the closing ground, the black lacquer of the screen's frame. Holds the home page's contact and footer line as one block, and the end links of every case study and of "How this site was built". The blog list and articles end on paper instead.
 
 ### Tertiary
 - **Screen Gold** (`gold`): the gold of the screen's fittings. Used only as a line: the bottom border of the fixed narrow top bar, and the 2px inset underline on the current rule in an article's contents.
@@ -177,9 +176,9 @@ Each project owns one flat ground, used for its home band, its case-study head a
 - **Display** (400, sized from one unit shared with the studio and bounded by the window's height, line-height 0.75, -0.035em): the name in the hero only. The studio keeps the same place under the letters at every width.
 - **Headline** (400, line-height 0.88 to 0.92, -0.02 to -0.025em): project names on the bands (`headline-band`), case-study titles (`headline-case`), section titles such as Work, Experience and Get in touch (`headline-section`; the contact title runs larger, to 12rem).
 - **Title** (400, 1.04 line-height): sticky case-study section headings; article titles (clamp(2.2rem, 3.7vw, 3.35rem)); rule headings in articles (clamp(1.55rem, 2.1vw, 1.9rem), 1.14).
-- **Display links** (`title-link`): the contact links and the end links of every inner page, set in the display face and underlined.
+- **Display links** (`title-link`): the contact addresses and the end links of the case studies, set in the display face and underlined.
 - **Numerals**: rule and chapter numbers, the case-study numbers strip (to 4.75rem) and the purchase-flow steps are in the display face with lining figures.
-- **Body** (400, 1rem, 1.55): default text. Case-study body 1.0625rem in a 34em column; article text 1.125rem/1.62 in a 68ch column (1.0625rem under 760px); ledes and intros 1.125-1.375rem.
+- **Body** (400, 1rem, 1.55): default text. Case-study body 1.0625rem in a 34em column; experience text grows with the screen from 1rem to 1.25rem in a 36em column, its stack lines from 0.875rem to 1rem; article text 1.125rem/1.62 in a 68ch column (1.0625rem under 760px); ledes and intros 1.125-1.375rem.
 - **Label** (0.875rem): top bars, stack lines, captions, dates and table heads. Weight 600 only for facts terms, status lines, table heads and the current rule; 500 for button labels.
 
 ### Named Rules
@@ -189,7 +188,7 @@ Each project owns one flat ground, used for its home band, its case-study head a
 
 ## Layout
 
-A full-bleed stack of sections, each its own ground, padded by one fluid gutter (`spacing.gutter`) on both sides. Inside, a 5:7 two-column grid with a fluid column gap (`spacing.column-gap`) is the recurring split: the work index (title beside list), every band (copy beside object, under a full-width name), every case-study section (sticky heading beside the body). Poster sections (AI, experience, contact) take `spacing.section` vertical padding; bands and case heads take `spacing.band`.
+A full-bleed stack of sections, each its own ground, padded by one fluid gutter (`spacing.gutter`) on both sides. Inside, a 5:7 two-column grid with a fluid column gap (`spacing.column-gap`) is the recurring split: the work index (title beside list), every band (copy beside object, under a full-width name), every case-study section and the experience section (sticky heading beside the body; experience stacks each role, company, role and dates, points and stack, in one reading column, so the eye never crosses the page within a role) and the contact section (heading beside its list). Poster sections (AI, experience, contact) take `spacing.section` vertical padding; bands and case heads take `spacing.band`.
 
 The hero is a frame, not a stack: top bar in the top corners, name and studio filling the middle, role and the primary button on one baseline in the bottom corners, all sized from one unit tied to the window's height.
 
@@ -198,7 +197,7 @@ The blog article is the reading form of the same split: from 900px a sticky full
 Breakpoints: 1100px (work index and blog rows reflow; AI heading grid), 900px (article side panel), 760px (single column everywhere; bands stack title, object, copy; the top bar becomes a fixed ink bar that hides on scroll down). Coarse pointers get 44px minimum targets on every top-bar and inline link.
 
 ### Named Rules
-**The Beside Rule.** On wide screens, the thing being explained stays beside the reading: the case-study heading sticks at 24px, the article's phone sticks full height. Neither floats over the text.
+**The Beside Rule.** On wide screens, the thing being explained stays beside the reading: the case-study heading sticks at 24px, the experience heading at 24 to 48px, the article's phone sticks full height. Neither floats over the text.
 
 ## Elevation & Depth
 
@@ -228,11 +227,12 @@ Few, flat and nearly square: one per section, the way in.
 ### Links
 - **Inline and band links:** underlined at 1px, 5px offset; the offset grows to 8px on hover (220ms).
 - **Top bar links:** underline hidden until hover (transparent decoration fading in).
-- **Display links:** the contact and end links, in the display face, 8px offset growing to 12px.
+- **Display links:** the contact and end links, in the display face; on the closing ground the underline sits at 45% Light Ink and 8px offset, and on hover comes up to full and moves to 12px.
 - **Reading links (articles):** 3px offset; thickens to 2px on hover.
 
 ### Lists and dividers
 - **Work index:** on ink; a hairline at 22% paper above and below each row; a 14px colour swatch and tabular number, the project name in the display face, its kind on the right.
+- **Contact list:** on the closing ground, no rules between rows; the whole row is the link: a short label in the sans at 80% Light Ink in a 7.5rem column (Email, LinkedIn, GitHub, CV), then the address itself as a display link. Under 760px the label sits above the address. The footer line follows on the same ground, under one hairline at 25% Light Ink inside the gutter.
 - **Numbered lists** (chapters, steps, article contents, blog rules): a display-face numeral in a fixed first column (1.8-2.4rem), hairline borders at 18-22% ink.
 - **Facts and tables:** label column at 600, hairline rows, tabular figures.
 - **Bulleted lists:** an en dash marker.
@@ -240,7 +240,7 @@ Few, flat and nearly square: one per section, the way in.
 ### Navigation
 - **Top bar:** label size, in the section's ink, links spread to the corners. Inner pages: a back link on the left, the site name or page kind on the right.
 - **Narrow fixed bar:** past the hero on phones, the bar fixes to the top in ink with a gold bottom line (the screen's black lacquer frame and gold fittings), hides until a scroll up or focus, and eases back into the hero (300ms).
-- **End links:** every inner page closes with a lavender band of display links (next, all articles, CV, email, LinkedIn).
+- **End links:** every case study and "How this site was built" close with a band of display links on the closing ground (next, CV, email, LinkedIn); the blog list and articles end with display links on paper under a hairline.
 
 ### Phone and browser frames (signature)
 The real product, never a mock: screenshots or a silent loop in the rendered phone frame, or the site in a neutral browser window (three neutral dots, centred URL, warm off-white chrome) with the phone standing at its right corner. On bands, phones stand in a staggered row of three, the lead one larger. While a demo plays, the phone steps down out of the way (520ms).
