@@ -30,7 +30,7 @@ const steps = [
   {
     id: "hero",
     title: "A hero rendered in Blender",
-    body: "The studio under my name introduces me through the things I like: Japanese art in the gold folding screen, photography and reading in the camera and the books, music in the conga and maracas, painting in the easel, and my own projects on the monitors. Eight things in it answer a click with a recording. I modelled the room in Blender with Python, and its textures and sounds are public domain.",
+    body: "The studio under my name introduces me through the things I like: Japanese art in the gold folding screen, photography and reading in the camera and the books, music in the conga and maracas, painting in the easel, and my own projects on the monitors. Nine things in it answer a click. I modelled the room in Blender with Python, and its textures and sounds are public domain.",
   },
   {
     id: "screens",

@@ -159,6 +159,24 @@
 @supports not (mix-blend-mode: plus-lighter) {
   .lf-glow { mix-blend-mode: screen; }
 }
+/* The middle monitor's code, drawn in the frame's px (--k = studio width / frame width) through
+   a perspective matrix onto the screen, and the glass's glow added over it; both shown once it scrolls. */
+.lf-studio > .lf-ide {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 0;
+  height: 0;
+  transform: scale(var(--k, 0));
+  transform-origin: 0 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.lf-ide-win { position: absolute; inset: 0 auto auto 0; overflow: hidden; transform-origin: 0 0; }
+.lf-ide-win > img { display: block; width: 100%; height: auto; }
+.lf-studio > .lf-ide-glow { visibility: hidden; mix-blend-mode: plus-lighter; }
+@supports not (mix-blend-mode: plus-lighter) {
+  .lf-studio > .lf-ide-glow { mix-blend-mode: screen; }
+}
 /* The buttons are for the keyboard; a pointer goes through them to the studio's own hit test. */
 .lf-studio > .lf-hit {
   position: absolute;
