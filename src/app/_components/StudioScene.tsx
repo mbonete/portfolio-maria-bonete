@@ -8,7 +8,8 @@ import { BREEZE, CUTOUTS, FLASH_HEAD, FRAME, HIT, HIT_GREY, LIGHTS, SWAPS, TARGE
 // hit, the maracas a shake, the plush capybara a squeak as it squashes, the keyboard a burst of typing
 // while its LEDs flare, the camera a shot with its flash, the computer's LEDs change colour, the painting
 // on the easel moves on a stage, a breeze goes through the monstera, and the code on the middle monitor
-// scrolls. As soon as the room is up, that code scrolls once by itself, to show that the room is on.
+// scrolls. As soon as the room is up, the computer comes on by itself, silently, to show that the room
+// answers: its lights change colour, the keyboard's LEDs flare and the code on the monitor scrolls.
 //
 // The studio is a stack of renders from one camera (tools/studio/layers.py): the room without the
 // things that move; the painting's stages and the computer's colours, each shown in place over it; the
@@ -33,7 +34,11 @@ const LABEL: Record<Thing, string> = {
 const SILENT: Thing[] = ["monitors"]; // things that answer without a sound
 const WIDTHS = [1200, 1800, 2400];
 const REACH = { mouse: 18, touch: 30 }; // CSS px around each silhouette
-const CUE_AFTER = 600; // ms from the room's image loading to the code starting to scroll
+const CUE_AFTER = 600; // ms from the room's image loading to the computer coming on
+// The computer coming on, in beats, one every `every` ms; on each, all at once, the tower's
+// lights move to their next colour (round to their own on the last beat), the keyboard's LEDs flare as
+// if someone typed and the code on the middle monitor flicks on. 4 beats of 1250 ms: 5 s in all.
+const CUE = { beats: SWAPS.tower.count + 1, every: 1250 };
 type Box = { x: number; y: number; w: number; h: number };
 const pct = (v: number, of: number) => `${((100 * v) / of).toFixed(4)}%`;
 const at = (b: Box) => ({ left: pct(b.x, FRAME.w), top: pct(b.y, FRAME.h), width: pct(b.w, FRAME.w), height: pct(b.h, FRAME.h) });
@@ -107,12 +112,14 @@ const IDE = {
   matrix: [0.957740273, 0.00715649729, 0, -2.9066185e-5, 0.0708362759, 1.01408556, 0, 5.52027682e-5, 0, 0, 1, 0, 1196.7848, 263.96575, 0, 1],
   glow: { x: 1193, y: 260, w: 236, h: 117 },
 };
-// A scroll is two flicks of FLICK_LINES, like someone skimming the file, SCROLL_MS in all (under the 5 s
-// that motion starting by itself may run without a control to pause it, WCAG 2.2.2); at the end of the
-// file, one flick back to the top.
+// A scroll is flicks of FLICK_LINES, like someone skimming the file: each takes FLICK_MS and they come
+// one every FLICK_EVERY ms (a click gives two, 2.2 s in all); at the end of the file, one flick back to
+// the top. Motion that starts by itself stays within 5 s, as it may without a control to pause it
+// (WCAG 2.2.2).
 const FLICK = "cubic-bezier(0.12, 0.8, 0.3, 1)";
 const FLICK_LINES = 13;
-const SCROLL_MS = 2200;
+const FLICK_MS = 700;
+const FLICK_EVERY = 1500;
 const TO_TOP_MS = 900;
 const BURST: Keyframe[] = [
   { opacity: 0, transform: "translate(-50%, -50%) scale(0.3)" },
@@ -224,8 +231,8 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
   }, []);
 
   // As soon as the room is up (CUE_AFTER ms after its image loads) and while it is at least half in view,
-  // the code on the middle monitor scrolls, unless something has been clicked already; not with reduced
-  // motion.
+  // the computer comes on (CUE), silently, unless something has been clicked already; a click stops what
+  // is left of it. Not with reduced motion.
   useEffect(() => {
     const box = boxRef.current;
     const room = box?.querySelector("img");
@@ -234,11 +241,16 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
     let seen = false; // the studio at least half in view
     let ready = false; // the room shown for CUE_AFTER ms
     let wait = 0;
+    const steps: number[] = [];
     const cue = () => {
       if (gone || !seen || !ready) return;
       gone = true;
       io.disconnect();
-      if (!touched.current) scroll();
+      if (touched.current) return;
+      scroll(CUE.beats, CUE.every);
+      const keys = MOVES.keys!;
+      animate("keys", keys.frames, CUE.every, keys.easing, CUE.beats);
+      for (let b = 0; b < CUE.beats; b++) steps.push(window.setTimeout(() => !touched.current && next("tower"), b * CUE.every));
     };
     const io = new IntersectionObserver(
       ([e]) => {
@@ -263,32 +275,41 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
       gone = true;
       io.disconnect();
       clearTimeout(wait);
+      steps.forEach(clearTimeout);
     };
   }, []);
 
-  function scroll() {
+  function scroll(flicks = 2, every = FLICK_EVERY) {
     const strip = els.current["ide-strip"];
     if (!strip) return;
     for (const k of ["ide", "ide-glow"]) els.current[k]?.style.setProperty("visibility", "visible");
     const end = IDE.lines - IDE.shown;
     const from = ideAt.current;
-    const to = (ideAt.current = from >= end ? 0 : Math.min(end, from + 2 * FLICK_LINES));
+    const top = from >= end;
+    const to = (ideAt.current = top ? 0 : Math.min(end, from + flicks * FLICK_LINES));
     const y = (l: number) => `translateY(${(-l * IDE.line).toFixed(3)}px)`;
     const css = getComputedStyle(strip).transform; // where it is, mid-scroll or not
     const now = `translateY(${css === "none" ? 0 : new DOMMatrixReadOnly(css).m42}px)`;
     ideAnim.current?.cancel();
     strip.style.transform = y(to);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const two = to - from > FLICK_LINES;
-    const frames: Keyframe[] = two
-      ? [
-          { transform: now, easing: FLICK },
-          { transform: y(from + FLICK_LINES), offset: 0.32, easing: "linear" },
-          { transform: y(from + FLICK_LINES), offset: 0.68, easing: FLICK },
-          { transform: y(to) },
-        ]
-      : [{ transform: now, easing: FLICK }, { transform: y(to) }];
-    ideAnim.current = strip.animate(frames, { duration: two ? SCROLL_MS : TO_TOP_MS });
+    if (top) {
+      ideAnim.current = strip.animate([{ transform: now }, { transform: y(0) }], { duration: TO_TOP_MS, easing: FLICK });
+      return;
+    }
+    // each flick eases out onto its line and holds there until the next
+    const n = Math.ceil((to - from) / FLICK_LINES);
+    const ms = (n - 1) * every + FLICK_MS;
+    const frames: Keyframe[] = [{ transform: now, easing: FLICK }];
+    for (let k = 1; k < n; k++) {
+      const line = y(from + k * FLICK_LINES);
+      frames.push(
+        { transform: line, offset: ((k - 1) * every + FLICK_MS) / ms, easing: "linear" },
+        { transform: line, offset: (k * every) / ms, easing: FLICK },
+      );
+    }
+    frames.push({ transform: y(to) });
+    ideAnim.current = strip.animate(frames, { duration: ms });
   }
 
   // The monitor's code is drawn in the frame's px, scaled to the studio's width.
@@ -343,11 +364,11 @@ export default function StudioScene({ name, intro }: { name: ReactNode; intro: R
     return best;
   }
 
-  function animate(key: string, frames: Keyframe[], ms: number, easing = "ease-out") {
+  function animate(key: string, frames: Keyframe[], ms: number, easing = "ease-out", iterations = 1) {
     const el = els.current[key];
     if (!el) return;
     moving.current[key]?.cancel();
-    moving.current[key] = el.animate(frames, { duration: ms, easing });
+    moving.current[key] = el.animate(frames, { duration: ms, easing, iterations });
   }
 
   // The painting and the computer's lights move one variant on, back to the room's own after the last.
